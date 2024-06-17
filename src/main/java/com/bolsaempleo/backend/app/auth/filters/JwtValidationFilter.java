@@ -48,10 +48,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
         String token = header.replace(ComunEnum.PREFIX_TOKEN, "");
         byte[] tokenDecodeBytes = Base64.getDecoder().decode(token);
         String tokenDecode = new String(tokenDecodeBytes);
-        System.out.println(tokenDecode);
-
         String[] tokenArr = tokenDecode.split(":");
-        System.out.println(tokenArr.length);
         String secret = tokenArr[0];
         String username = tokenArr[1];
 

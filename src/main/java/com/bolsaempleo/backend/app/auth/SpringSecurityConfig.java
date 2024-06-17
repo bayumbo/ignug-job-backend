@@ -23,7 +23,7 @@ public class SpringSecurityConfig {
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();//encripta el password con un metodo mas seguro
     }
     
     @Bean
@@ -34,11 +34,11 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/professional").permitAll()
+                .requestMatchers(HttpMethod.GET, "/report/**","/professional").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))
-                .addFilter(new JwtValidationFilter(authenticationConfiguration.getAuthenticationManager()))
+                .addFilter(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))//este filtro ejecuta metodo login(Post) y genera token
+                .addFilter(new JwtValidationFilter(authenticationConfiguration.getAuthenticationManager()))//Este filtro valida el token
                 .csrf(config -> config.disable())
                 .sessionManagement(managment -> managment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();

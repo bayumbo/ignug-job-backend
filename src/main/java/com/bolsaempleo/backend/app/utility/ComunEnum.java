@@ -40,6 +40,8 @@ PATRON_FECHA1("yyyy/MM/dd"),
 	 */
 	ACTIVO("1"),
 	INACTIVO("0"),
+    MENSAJECORRECTO("OK"),
+    MENSAJEINCORRECTO("FAILED"),
 	/**
 	 * VALOR PARA EL CAMPO TODOS
 	 */
@@ -110,11 +112,17 @@ PATRON_FECHA1("yyyy/MM/dd"),
     public static final Integer NOIMPLEMENTADO = 501;//La solicitud no tiene soporte en la API de REST de IBM® Business Process Manager
     public static final Integer TIMEOUT = 100;//El servidor no responde.
     /**
-	 * RESPUESTA ESTADO WEB SERVICE 
+	 * JWT metodo login - Autenticacion - Filtro de autenticacion y validacion del token 
      * 
      **/
     public final static String SECRET_KEY = "algun_token_con_alguna_frase_secreta";
     public final static String PREFIX_TOKEN = "Bearer ";
     public final static String HEADER_AUTHORIZATION = "Authorization";
+    /**
+	 * Tipologia de los reportes 
+     * 
+     **/
+    public final static String EXCEL = "EXCEL";
+    public final static String PDF = "PDF ";
 
 }
