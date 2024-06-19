@@ -5,7 +5,7 @@ import java.io.ByteArrayInputStream;
 import lombok.Getter;
 import lombok.Setter;
 
-public class ReporteProfessionalDto {
+public class ProfessionalReporteDto {
     
     /* Propiedades para poder pasar el archivo al controlador,
      el servicio entrega en bytes, debo transformarlo en archivo */

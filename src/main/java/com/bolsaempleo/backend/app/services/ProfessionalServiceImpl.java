@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bolsaempleo.backend.app.dto.ProfessionalDto;
-import com.bolsaempleo.backend.app.entities.Professional;
+import com.bolsaempleo.backend.app.entities.job_board.Professional;
 import com.bolsaempleo.backend.app.repositories.ProfessionalRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -34,7 +34,7 @@ public class ProfessionalServiceImpl implements ProfessionalService{
 
     @Override
     @Transactional(readOnly = true )
-    public ProfessionalDto findByIdDto (Long id){
+    public ProfessionalDto findByIdDto (Long id){//
         Optional<Professional> professionalsFinded = professionalsRepository.findById(id);
         if (professionalsFinded.isEmpty()){
             throw new EntityNotFoundException("Error");

@@ -2,7 +2,7 @@ package com.bolsaempleo.backend.app.controller;
 
 
 import com.bolsaempleo.backend.app.dto.ProfessionalDto;
-import com.bolsaempleo.backend.app.entities.Professional;
+import com.bolsaempleo.backend.app.entities.job_board.Professional;
 import com.bolsaempleo.backend.app.services.ProfessionalService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

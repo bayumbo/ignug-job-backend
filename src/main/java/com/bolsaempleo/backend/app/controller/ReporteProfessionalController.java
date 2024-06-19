@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.InputStreamResource;
-import com.bolsaempleo.backend.app.dto.ReporteProfessionalDto;
+import com.bolsaempleo.backend.app.dto.ProfessionalReporteDto;
 import com.bolsaempleo.backend.app.services.ReporteProfessionalService;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
-import com.bolsaempleo.backend.app.utility.TipoReporteEnum;
 
 import org.springframework.http.MediaType;
 import net.sf.jasperreports.engine.JRException;
@@ -29,7 +28,7 @@ public class ReporteProfessionalController {
 	@GetMapping(path = "/professional/download")
 	public ResponseEntity<Resource> download(@RequestParam Map<String, Object> params)
 			throws JRException, IOException, SQLException {
-		ReporteProfessionalDto reporteProfessionalDto = reporteProfessionalService.obtenerReporteProfessional(params);
+		ProfessionalReporteDto reporteProfessionalDto = reporteProfessionalService.obtenerReporteProfessional(params);
 
 		InputStreamResource streamResource = new InputStreamResource(reporteProfessionalDto.getStream());
 		MediaType mediaType = null;
@@ -38,7 +37,6 @@ public class ReporteProfessionalController {
 		} else {
 			mediaType = MediaType.APPLICATION_PDF;
 		} 
-
 		return ResponseEntity.ok().header("Content-Disposition", "attachment; filename=\"" + reporteProfessionalDto.getFileName() + "\"")
 				.contentLength(reporteProfessionalDto.getLength()).contentType(mediaType).body(streamResource);
 	}

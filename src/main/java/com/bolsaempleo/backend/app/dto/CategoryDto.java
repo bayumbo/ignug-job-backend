@@ -3,7 +3,7 @@ package com.bolsaempleo.backend.app.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CategoryModelDto {
+public class CategoryDto {
 
     @Getter
     @Setter

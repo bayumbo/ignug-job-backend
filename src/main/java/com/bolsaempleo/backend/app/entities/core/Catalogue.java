@@ -1,4 +1,4 @@
-package com.bolsaempleo.backend.app.entities;
+package com.bolsaempleo.backend.app.entities.core;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
@@ -6,18 +6,21 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the skills database table.
+ * The persistent class for the catalogues database table.
  * 
  */
 @Entity
-@Table(name="skills")
-@NamedQuery(name="Skill.findAll", query="SELECT s FROM Skill s")
-public class Skill implements Serializable {
+@Table(name="catalogues",schema = "core")
+public class Catalogue implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+
+	private String code;
+
+	private String color;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -27,17 +30,21 @@ public class Skill implements Serializable {
 
 	private String description;
 
-	@Column(name="type_id")
-	private Long typeId;
+	private String icon;
+
+	private String name;
+
+	private String type;
 
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
-	//bi-directional many-to-one association to Professional
+	//bi-directional many-to-one association to Catalogue
 	@ManyToOne
-	private Professional professional;
+	@JoinColumn(name="parent_id")
+	private Catalogue catalogue;
 
-	public Skill() {
+	public Catalogue() {
 	}
 
 	public Long getId() {
@@ -46,6 +53,22 @@ public class Skill implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getColor() {
+		return this.color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 	public Timestamp getCreatedAt() {
@@ -72,12 +95,28 @@ public class Skill implements Serializable {
 		this.description = description;
 	}
 
-	public Long getTypeId() {
-		return this.typeId;
+	public String getIcon() {
+		return this.icon;
 	}
 
-	public void setTypeId(Long typeId) {
-		this.typeId = typeId;
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getType() {
+		return this.type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public Timestamp getUpdatedAt() {
@@ -87,13 +126,17 @@ public class Skill implements Serializable {
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-
-	public Professional getProfessional() {
-		return this.professional;
+	
+	public Catalogue getCatalogue() {
+		return this.catalogue;
 	}
 
-	public void setProfessional(Professional professional) {
-		this.professional = professional;
+	public void setCatalogue(Catalogue catalogue) {
+		this.catalogue = catalogue;
 	}
+
+
+
+
 
 }

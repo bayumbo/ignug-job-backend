@@ -1,4 +1,4 @@
-package com.bolsaempleo.backend.app.entities;
+package com.bolsaempleo.backend.app.entities.job_board;
 
 import java.io.Serializable;
 import jakarta.persistence.*;
@@ -6,13 +6,13 @@ import java.sql.Timestamp;
 
 
 /**
- * The persistent class for the offer_professional database table.
+ * The persistent class for the company_professional database table.
  * 
  */
 @Entity
-@Table(name="offer_professional")
-@NamedQuery(name="OfferProfessional.findAll", query="SELECT o FROM OfferProfessional o")
-public class OfferProfessional implements Serializable {
+@Table(name="company_professional",schema = "job_board")
+@NamedQuery(name="CompanyProfessional.findAll", query="SELECT c FROM CompanyProfessional c")
+public class CompanyProfessional implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -28,15 +28,15 @@ public class OfferProfessional implements Serializable {
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
-	//bi-directional many-to-one association to Offer
+	//bi-directional many-to-one association to Company
 	@ManyToOne
-	private Offer offer;
+	private Company company;
 
 	//bi-directional many-to-one association to Professional
 	@ManyToOne
 	private Professional professional;
 
-	public OfferProfessional() {
+	public CompanyProfessional() {
 	}
 
 	public Long getId() {
@@ -71,12 +71,12 @@ public class OfferProfessional implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Offer getOffer() {
-		return this.offer;
+	public Company getCompany() {
+		return this.company;
 	}
 
-	public void setOffer(Offer offer) {
-		this.offer = offer;
+	public void setCompany(Company company) {
+		this.company = company;
 	}
 
 	public Professional getProfessional() {

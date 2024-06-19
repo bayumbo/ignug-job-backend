@@ -9,9 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-
 import com.bolsaempleo.backend.app.utility.ComunEnum;
-import com.bolsaempleo.backend.app.utility.TipoReporteEnum;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;

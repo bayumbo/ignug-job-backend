@@ -1,4 +1,4 @@
-package com.bolsaempleo.backend.app.entities;
+package com.bolsaempleo.backend.app.entities.job_board;
 
 import java.io.Serializable;
 

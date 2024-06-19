@@ -1,4 +1,4 @@
-package com.bolsaempleo.backend.app.entities;
+package com.bolsaempleo.backend.app.entities.authentication;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

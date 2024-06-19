@@ -11,7 +11,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
-import com.bolsaempleo.backend.app.entities.User;
+import com.bolsaempleo.backend.app.entities.authentication.User;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;

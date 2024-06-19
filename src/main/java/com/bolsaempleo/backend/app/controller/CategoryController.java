@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.bolsaempleo.backend.app.dto.CategoryRespuestaDto;
+import com.bolsaempleo.backend.app.dto.CategoryResponseDto;
 import com.bolsaempleo.backend.app.services.CategoryService;
 
 @RestController
@@ -16,7 +16,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping("/{id}")
-    public CategoryRespuestaDto showCategoryAndSubCategoriesByCategoryId (@PathVariable(name = "id") Long id){
+    public CategoryResponseDto showCategoryAndSubCategoriesByCategoryId (@PathVariable(name = "id") Long id){
         return categoryService.findByIdDto(id);
     }
 }
