@@ -12,7 +12,6 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="academic_formations",schema = "job_board")
-@NamedQuery(name="AcademicFormation.findAll", query="SELECT a FROM AcademicFormation a")
 public class AcademicFormation implements Serializable {
 	private static final long serialVersionUID = 1L;
 

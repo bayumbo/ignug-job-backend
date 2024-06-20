@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="experiences")
+@Table(name="experiences",schema = "job_board")
 @NamedQuery(name="Experience.findAll", query="SELECT e FROM Experience e")
 public class Experience implements Serializable {
 	private static final long serialVersionUID = 1L;

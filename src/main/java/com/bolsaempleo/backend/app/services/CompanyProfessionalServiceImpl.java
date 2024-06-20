@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.bolsaempleo.backend.app.dto.CompanyProfessionalModelDto;
+import com.bolsaempleo.backend.app.dto.CompanyProfessionalDto;
 import com.bolsaempleo.backend.app.dto.CompanyProfessionalResponseDto;
 import com.bolsaempleo.backend.app.entities.job_board.CompanyProfessional;
 import com.bolsaempleo.backend.app.repositories.CompanyProfessionalRepository;
@@ -20,7 +20,7 @@ public class CompanyProfessionalServiceImpl implements CompanyProfessionalServic
 
     @Override
     public List<CompanyProfessional> findAll() {
-        return  companyProfessionalRepository.findAll();
+        return  (List<CompanyProfessional>) companyProfessionalRepository.findAll();
     }
 
 
@@ -30,7 +30,7 @@ public class CompanyProfessionalServiceImpl implements CompanyProfessionalServic
         try {
             //companyProfessionals = (List<CompanyProfessional>)companyProfessionalRepository.findAll();
             companyProfessionals = companyProfessionalRepository.findAllCompanyProfessional();
-            List<CompanyProfessionalModelDto> companyProfessionalModelDto = new ArrayList<>();
+            List<CompanyProfessionalDto> companyProfessionalModelDto = new ArrayList<>();
             if (companyProfessionals.size()>0){
                 for (CompanyProfessional c : companyProfessionals){
                     companyProfessionalModelDto.add(crearModelo(c));  
@@ -53,8 +53,8 @@ public class CompanyProfessionalServiceImpl implements CompanyProfessionalServic
         return companyProfessionalResponseDto;
     }
 
-    public CompanyProfessionalModelDto crearModelo(CompanyProfessional c){
-        CompanyProfessionalModelDto companyProfessionalModelDto = new CompanyProfessionalModelDto();
+    public CompanyProfessionalDto crearModelo(CompanyProfessional c){
+        CompanyProfessionalDto companyProfessionalModelDto = new CompanyProfessionalDto();
         if (c.getId() != null){companyProfessionalModelDto.setId(c.getId().toString());}
         if (c.getCreatedAt() != null){companyProfessionalModelDto.setCreatedAt(c.getCreatedAt().toString());}
         if (c.getUpdatedAt() != null){companyProfessionalModelDto.setUpdatedAt(c.getUpdatedAt().toString());}

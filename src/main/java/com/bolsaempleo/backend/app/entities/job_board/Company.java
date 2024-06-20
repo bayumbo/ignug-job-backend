@@ -12,7 +12,6 @@ import java.util.List;
  */
 @Entity
 @Table(name="companies",schema = "job_board")
-@NamedQuery(name="Company.findAll", query="SELECT c FROM Company c")
 public class Company implements Serializable {
 	private static final long serialVersionUID = 1L;
 

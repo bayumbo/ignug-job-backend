@@ -133,17 +133,10 @@ public class CatalogueServiceImpl implements CatalogueService {
         if(c.getDescription() != null){catalogue.setDescription(c.getDescription());}
         if(c.getColor() != null){catalogue.setColor(c.getColor());}
         if(c.getCode() != null){catalogue.setCode(c.getCode());}
-        /*if(c.getCreatedAt() != null){catalogue.setCreatedAt(c.getCreatedAt());}
-        if(c.getUpdatedAt() != null){catalogue.setUpdatedAt(c.getUpdatedAt());}
-        if(c.getDeletedAt() != null){catalogue.setDeletedAt(c.getDeletedAt());}
-        if(c.getCatalogue() != null){catalogue.setCatalogue(c.getCatalogue());}
-        */
         if(c.getCreatedAt() != null){catalogue.setCreatedAt(FechasUtil.getFechaTimestamp());}
         if(c.getUpdatedAt() != null){catalogue.setUpdatedAt(FechasUtil.getFechaTimestamp());}
         if(c.getDeletedAt() != null){catalogue.setDeletedAt(null);}
         if(c.getCatalogue() != null){catalogue.setCatalogue(null);}
-
-    
         return catalogue;
     }
 

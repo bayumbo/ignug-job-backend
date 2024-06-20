@@ -6,10 +6,8 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CompanyProfessionalResponseDto implements Serializable{
+public class UsersResponseDto implements Serializable{
 
-
- 
     @Getter
 	@Setter
 	private String code;
@@ -18,9 +16,8 @@ public class CompanyProfessionalResponseDto implements Serializable{
     private String message;
 	@Getter
 	@Setter
-    private CompanyProfessionalDto  companyProfessional;
+    private UsersDto  User;
 	@Getter
 	@Setter
-    private List<CompanyProfessionalDto> listCompanyProfessional;
-
+    private List<UsersDto> listUsers;
 }

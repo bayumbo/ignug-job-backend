@@ -4,7 +4,7 @@ package com.bolsaempleo.backend.app.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-public class CompanyProfessionalModelDto {
+public class CompanyProfessionalDto {
 
     @Getter
     @Setter

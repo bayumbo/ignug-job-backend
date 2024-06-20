@@ -10,8 +10,7 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="skills")
-@NamedQuery(name="Skill.findAll", query="SELECT s FROM Skill s")
+@Table(name="skills",schema = "job_board")
 public class Skill implements Serializable {
 	private static final long serialVersionUID = 1L;
 

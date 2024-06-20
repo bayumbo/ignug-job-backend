@@ -12,10 +12,10 @@ import com.bolsaempleo.backend.app.entities.core.Catalogue;
 public interface CatalogueRepository extends CrudRepository<Catalogue, Long>{
 
 
-    @Query("select c from Catalogue c where c.id=:id")
+    @Query("select c from Catalogue c where c.id=:id AND c.deletedAt IS NULL")
     Catalogue findCatalogueById(@Param("id")Long id);
 
-    @Query("select c from Catalogue c where UPPER(c.type) like UPPER(?1)")
+    @Query("select c from Catalogue c where UPPER(c.type) like UPPER(?1) AND c.deletedAt IS NULL")
     List<Catalogue> findByTypeDescription(@Param("type")String type);
 
 }
