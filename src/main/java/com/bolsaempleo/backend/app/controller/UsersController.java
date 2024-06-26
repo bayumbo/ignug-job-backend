@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.bolsaempleo.backend.app.dto.CatalogueDto;
 import com.bolsaempleo.backend.app.dto.UsersDto;
 import com.bolsaempleo.backend.app.dto.UsersResponseDto;
 import com.bolsaempleo.backend.app.services.UsersService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @Controller
 @RequestMapping("/users")
@@ -38,5 +38,11 @@ public class UsersController {
     @ResponseBody
     public UsersResponseDto saveUser (@RequestBody UsersDto usersDto){
         return usersService.saveUserDto(usersDto);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    public UsersResponseDto deleteUser (@PathVariable(name = "id") Long id) {
+        return usersService.deteleUserDto(id);
     }
 }

@@ -34,16 +34,21 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             FilterChain chain)
             throws IOException, ServletException {
         String header = request.getHeader(ComunEnum.HEADER_AUTHORIZATION);
-        if (header == null || !header.startsWith(ComunEnum.PREFIX_TOKEN)) {
+        if (header == null || !header.startsWith(ComunEnum.PREFIX_TOKEN)) {// no todos los endpoints vienen con la cabecera authorization
             chain.doFilter(request, response);
             return;
         }
         String token = header.replace(ComunEnum.PREFIX_TOKEN, "");
+        System.out.println(token);
         byte[] tokenDecodeBytes = Base64.getDecoder().decode(token);
+        System.out.println(tokenDecodeBytes);
         String tokenDecode = new String(tokenDecodeBytes);
         String[] tokenArr = tokenDecode.split(":");
+        System.out.println(tokenArr);
         String secret = tokenArr[0];
+        System.out.println(secret);
         String username = tokenArr[1];
+        System.out.println(username);
         if (ComunEnum.SECRET_KEY.equals(secret)) {
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
