@@ -14,7 +14,6 @@ import org.springframework.core.io.InputStreamResource;
 import com.bolsaempleo.backend.app.dto.ProfessionalReporteDto;
 import com.bolsaempleo.backend.app.services.ReporteProfessionalService;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
-
 import org.springframework.http.MediaType;
 import net.sf.jasperreports.engine.JRException;
 

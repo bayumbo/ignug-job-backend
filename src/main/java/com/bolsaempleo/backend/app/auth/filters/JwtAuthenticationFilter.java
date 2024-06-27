@@ -1,21 +1,20 @@
 package com.bolsaempleo.backend.app.auth.filters;
 
 import java.io.IOException;
-import java.util.Base64;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-
-import com.bolsaempleo.backend.app.entities.authentication.User;
+import com.bolsaempleo.backend.app.entities.authentication.Users;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,14 +32,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException {
 
-        User user = null;
+        Users users = null;
         String username = null;
         String password = null;
         
         try {
-            user = new ObjectMapper().readValue(request.getInputStream(), User.class);
-            username = user.getUsername();
-            password = user.getPassword();
+            users = new ObjectMapper().readValue(request.getInputStream(), Users.class);
+            username = users.getUsername();
+            password = users.getPassword();
 
             //logger.info("Username desde request InputStream (raw) " + username);
             //logger.info("Password desde request InputStream (raw) " + password);
@@ -62,8 +61,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String username = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal())
                 .getUsername();
-        String originalInput = ComunEnum.SECRET_KEY+":" + username;
-        String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
+
+        //String originalInput = ComunEnum.SECRET_KEY+":" + username;
+        //String token = Base64.getEncoder().encodeToString(originalInput.getBytes());
+
+        String token = Jwts.builder()
+                        .setSubject(username)// pasamos como payload el username
+                        .signWith(ComunEnum.SECRET_KEY)
+                        .setIssuedAt(new Date())
+                        .setExpiration(new Date(System.currentTimeMillis() + 3600000))//tiempo que dura el tocken en milisegundos
+                        .compact();
 
         response.addHeader("Authorization", "Bearer " + token);
 

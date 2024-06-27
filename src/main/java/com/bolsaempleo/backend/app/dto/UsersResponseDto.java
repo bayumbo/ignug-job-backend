@@ -20,4 +20,5 @@ public class UsersResponseDto implements Serializable{
 	@Getter
 	@Setter
     private List<UsersDto> listUsers;
+
 }
