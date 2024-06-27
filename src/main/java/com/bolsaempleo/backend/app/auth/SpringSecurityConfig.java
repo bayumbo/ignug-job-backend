@@ -34,7 +34,7 @@ public class SpringSecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, "/report/**","/professional","/companyProfessional").permitAll()
+                .requestMatchers(HttpMethod.GET, "/report/**","/professional","/companyProfessional","/languages","/skills","/references").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilter(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))//este filtro ejecuta metodo login(Post) y genera token
