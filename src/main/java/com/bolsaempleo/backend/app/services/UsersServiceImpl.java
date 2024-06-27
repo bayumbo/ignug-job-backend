@@ -110,23 +110,21 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public UsersResponseDto saveUserDto(UsersDto usersDto) {
         UsersResponseDto usersResponseDto = new UsersResponseDto();
-
-        if (!UsuarioValidation.isIdentificacionValida(usersDto.getUsername())){
-            try {
-                Users u = new Users();
-                u = usersRepository.save(crearObjeto(usersDto));
-                usersResponseDto.setUser(crearModelo(u));
-            
-                if (usersResponseDto.getUser()!= null){
-                    usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
-                    usersResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.toString());
-                }    
-            } catch (Exception e) {
-                // TODO: handle exception
+        try {
+            if (!UsuarioValidation.isIdentificacionValida(usersDto.getUsername())){
+                    Users u = new Users();
+                    u = usersRepository.save(crearObjeto(usersDto));
+                    usersResponseDto.setUser(crearModelo(u));
+                    if (usersResponseDto.getUser()!= null){
+                        usersResponseDto.setCode(ComunEnum.RECURSOCREADO.toString());
+                        usersResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.toString());
+                    }    
+            }else{
+                usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
             }
-        }else{
-            usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
-            usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
+        } catch (Exception e) {
+            // TODO: handle exception
         }
         return usersResponseDto;
     }

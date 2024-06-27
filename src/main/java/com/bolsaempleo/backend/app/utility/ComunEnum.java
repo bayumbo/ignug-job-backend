@@ -1,8 +1,10 @@
 package com.bolsaempleo.backend.app.utility;
 
 import java.math.RoundingMode;
+import java.security.Key;
 import java.util.Locale;
 import java.util.TimeZone;
+import io.jsonwebtoken.Jwts;
 
 public enum ComunEnum {
 PATRON_FECHA1("yyyy/MM/dd"),
@@ -120,7 +122,7 @@ PATRON_FECHA1("yyyy/MM/dd"),
 	 * JWT metodo login - Autenticacion - Filtro de autenticacion y validacion del token 
      * 
      **/
-    public final static String SECRET_KEY = "algun_token_con_alguna_frase_secreta";
+    public final static Key SECRET_KEY = Jwts.SIG.HS256.key().build();//generando key con JWT libreria jjwt-api (esta en el pom)
     public final static String PREFIX_TOKEN = "Bearer ";
     public final static String HEADER_AUTHORIZATION = "Authorization";
     /**

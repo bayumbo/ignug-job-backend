@@ -3,6 +3,7 @@ package com.bolsaempleo.backend.app.entities.authentication;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.sql.Timestamp;
 
 
@@ -75,6 +76,8 @@ public class Users implements Serializable {
 
 	private String username;
 
+	@ManyToMany
+	private List<Role> roles; 
 
 	public Long getId() {
 		return this.id;
@@ -252,4 +255,11 @@ public class Users implements Serializable {
 		this.username = username;
 	}
 
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+	
+	public List<Role> getRoles() {
+		return roles;
+	}
 }

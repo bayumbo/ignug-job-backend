@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.bolsaempleo.backend.app.dto.ProfessionalDto;
 import com.bolsaempleo.backend.app.entities.job_board.Professional;
 import com.bolsaempleo.backend.app.repositories.ProfessionalRepository;

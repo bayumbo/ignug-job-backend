@@ -2,7 +2,6 @@ package com.bolsaempleo.backend.app.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.bolsaempleo.backend.app.dto.CatalogueDto;
 import com.bolsaempleo.backend.app.dto.CatalogueResponseDto;
 import com.bolsaempleo.backend.app.entities.core.Catalogue;

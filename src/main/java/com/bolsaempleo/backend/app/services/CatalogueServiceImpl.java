@@ -60,9 +60,9 @@ public class CatalogueServiceImpl implements CatalogueService {
                 for( Catalogue c : catalogues){
                     catalogueDto.add(crearModelo(c));
                 }
-                catalogueResponseDto.setSubCatalogues(catalogueDto);
                 catalogueResponseDto.setCode(ComunEnum.CORRECTO.toString());
                 catalogueResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
+                catalogueResponseDto.setSubCatalogues(catalogueDto);
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -111,8 +111,8 @@ public class CatalogueServiceImpl implements CatalogueService {
         try {
             catalogueResponseDto.setCatalogue(crearModelo(catalogueRepository.save(crearObjeto(catalogueDto))));
             if (catalogueResponseDto.getCatalogue()!= null){
-                catalogueResponseDto.setCode(ComunEnum.CORRECTO.toString());
-                catalogueResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
+                catalogueResponseDto.setCode(ComunEnum.RECURSOCREADO.toString());
+                catalogueResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.toString());
             }
             else{
                 catalogueResponseDto.setCode(ComunEnum.INCORRECTO.toString());

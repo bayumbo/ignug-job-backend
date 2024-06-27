@@ -11,6 +11,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,26 +43,25 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             return;
         }
         String token = header.replace(ComunEnum.PREFIX_TOKEN, "");
-        System.out.println(token);
-        byte[] tokenDecodeBytes = Base64.getDecoder().decode(token);
-        System.out.println(tokenDecodeBytes);
-        String tokenDecode = new String(tokenDecodeBytes);
-        String[] tokenArr = tokenDecode.split(":");
-        System.out.println(tokenArr);
-        String secret = tokenArr[0];
-        System.out.println(secret);
-        String username = tokenArr[1];
-        System.out.println(username);
-        if (ComunEnum.SECRET_KEY.equals(secret)) {
+        try {
+            /*esta parte es para validar el token */
+            Claims claims = Jwts.parser()
+                            .setSigningKey(ComunEnum.SECRET_KEY)// aqui valida la firma con la misma llave que fue generado
+                            .build()
+                            .parseClaimsJws(token)
+                            .getBody();//con getbody obtenemos los claims y con los claims los datos
+
+            String claimsUserName = claims.getSubject();
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(username, null,
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(claimsUserName, null,
                     authorities);
                     //Con este setAuthentication nos autenticamos y dejamos pasar al recurso invocado
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
-        } else {
+        } catch (JwtException e) {
             Map<String, String> body = new HashMap<>();
+            body.put("error", e.getMessage());
             body.put("message", "El token JWT no es valido!");
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));
             response.setStatus(403);

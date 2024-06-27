@@ -2,7 +2,6 @@ package com.bolsaempleo.backend.app.services;
 
 import java.util.List;
 import java.util.Optional;
-
 import com.bolsaempleo.backend.app.dto.ProfessionalDto;
 import com.bolsaempleo.backend.app.entities.job_board.Professional;
 
