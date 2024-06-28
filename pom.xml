@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.0</version>
+		<version>3.3.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bolsaempleo.backend</groupId>
@@ -14,7 +14,7 @@
 	<name>app</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-		<java.version>21</java.version>
+		<java.version>17</java.version> <!-- Cambia 21 a 17 -->
 		<querydsl.version>5.1.0</querydsl.version>
 	</properties>
 	<dependencies>
@@ -88,10 +88,25 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+
+		    <!-- ModelMapper -->
+    <dependency>
+        <groupId>org.modelmapper</groupId>
+        <artifactId>modelmapper</artifactId>
+        <version>2.4.4</version> <!-- Puedes verificar la última versión en https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+    </dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId> <!-- Asegúrate de usar una versión adecuada del plugin -->
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -106,5 +121,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
