@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.bolsaempleo.backend.app.dto.UsersDto;
@@ -25,6 +26,8 @@ public class UsersServiceImpl implements UsersService{
     private UsersRepository usersRepository;
     @Autowired
     private CatalogueRepository catalogueRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional(readOnly = true )
@@ -73,7 +76,7 @@ public class UsersServiceImpl implements UsersService{
         if (u.getSexId() != null){usersDto.setSexId(u.getSexId().toString());}
         if (u.getUpdatedAt() != null){usersDto.setUpdatedAt(u.getUpdatedAt().toString());}
         if (u.getUsername() != null){usersDto.setUsername(u.getUsername());}
-
+        if (u.getPassword() != null){usersDto.setPassword(u.getPassword());}
         return usersDto;
     }
 
@@ -107,56 +110,112 @@ public class UsersServiceImpl implements UsersService{
     @Override
     public UsersResponseDto saveUserDto(UsersDto usersDto) {
         UsersResponseDto usersResponseDto = new UsersResponseDto();
-
-        if (!UsuarioValidation.isIdentificacionValida(usersDto.getUsername())){
-            try {
-                Users u = new Users();
-                u = usersRepository.save(crearObjeto(usersDto));
-                usersResponseDto.setUser(crearModelo(u));
-            
-                if (usersResponseDto.getUser()!= null){
-                    usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
-                    usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
-                }    
-            } catch (Exception e) {
-                // TODO: handle exception
+        try {
+            if (!UsuarioValidation.isIdentificacionValida(usersDto.getUsername())){
+                    Users u = new Users();
+                    u = usersRepository.save(crearObjeto(usersDto));
+                    usersResponseDto.setUser(crearModelo(u));
+                    if (usersResponseDto.getUser()!= null){
+                        usersResponseDto.setCode(ComunEnum.RECURSOCREADO.toString());
+                        usersResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.toString());
+                    }    
+            }else{
+                usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
             }
-        }else{
-            usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
-            usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
+        } catch (Exception e) {
+            // TODO: handle exception
         }
         return usersResponseDto;
     }
 
     public Users crearObjeto(UsersDto u){
         Users users = new Users();
-        if (u.getName() != null){users.setName(u.getName());}
-        if (u.getLastname() != null){users.setLastname(u.getLastname());}
-        if (u.getUsername() != null){users.setUsername(u.getUsername());}
-        if (u.getEmail() != null){users.setEmail(u.getEmail());}
-        if (u.getPassword()!= null){users.setPassword(u.getPassword());}
-        if (u.getPasswordChanged() != null){users.setPasswordChanged(Boolean.parseBoolean(u.getPasswordChanged()));}
-        if (u.getRememberToken() != null){users.setRememberToken(u.getRememberToken());}
-        if (u.getMaxAttempts() != null){users.setMaxAttempts(Integer.valueOf(u.getMaxAttempts()));}
-        if (u.getEmailVerifiedAt() != null){
-            try {
-                users.setEmailVerifiedAt(FechasUtil.convertirStringATimestampSql(u.getEmailVerifiedAt(),ComunEnum.PATRON_TIMESTAMP2.getDescripcion()));
-            } catch (Exception e) {
-				Log.error("Service", "Error en carga de fecha creacion", e);
-			}
-            } 
-        if (u.getPhone() != null){users.setPhone(u.getPhone());}
-        if (u.getAvatar() != null){users.setAvatar(u.getAvatar());}
-        if (u.getBirthdate() != null){users.setBirthdate(Date.valueOf(u.getBirthdate()));}
-        if (u.getCreatedAt() != null){users.setCreatedAt(FechasUtil.getFechaTimestamp());}
-        if (u.getDeletedAt() != null){users.setDeletedAt(null);}
-        if (u.getUpdatedAt() != null){users.setUpdatedAt(FechasUtil.getFechaTimestamp());}
-        if (u.getBloodTypeId() != null){users.setBloodTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getBloodTypeId())).getId());}
-        if (u.getCivilStatusId() != null){users.setCivilStatusId(catalogueRepository.findCatalogueById(Long.parseLong(u.getCivilStatusId())).getId());}
-        if (u.getEthnicOriginId() != null){users.setEthnicOriginId(catalogueRepository.findCatalogueById(Long.parseLong(u.getEthnicOriginId())).getId());}
-        if (u.getGenderId() != null){users.setGenderId(catalogueRepository.findCatalogueById(Long.parseLong(u.getGenderId())).getId());}
-        if (u.getIdentificationTypeId() != null){users.setIdentificationTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getIdentificationTypeId())).getId());}
-        if (u.getSexId() != null){users.setSexId(catalogueRepository.findCatalogueById(Long.parseLong(u.getSexId())).getId());}
+        Users uFinded = usersRepository.findByUsername(u.getUsername());
+        if (uFinded == null){
+            if (u.getName() != null){users.setName(u.getName());}
+            if (u.getLastname() != null){users.setLastname(u.getLastname());}
+            if (u.getUsername() != null){users.setUsername(u.getUsername());}
+            if (u.getEmail() != null){users.setEmail(u.getEmail());}
+            if (u.getPassword()!= null){users.setPassword(passwordEncoder.encode(u.getPassword()));}
+            if (u.getPasswordChanged() != null){users.setPasswordChanged(Boolean.parseBoolean(u.getPasswordChanged()));}
+            if (u.getRememberToken() != null){users.setRememberToken(u.getRememberToken());}
+            if (u.getMaxAttempts() != null){users.setMaxAttempts(Integer.valueOf(u.getMaxAttempts()));}
+            if (u.getEmailVerifiedAt() != null){
+                try {
+                    users.setEmailVerifiedAt(FechasUtil.convertirStringATimestampSql(u.getEmailVerifiedAt(),ComunEnum.PATRON_TIMESTAMP2.getDescripcion()));
+                } catch (Exception e) {
+                    Log.error("Service", "Error en carga de fecha creacion", e);
+                }} 
+            if (u.getPhone() != null){users.setPhone(u.getPhone());}
+            if (u.getAvatar() != null){users.setAvatar(u.getAvatar());}
+            if (u.getBirthdate() != null){users.setBirthdate(Date.valueOf(u.getBirthdate()));}
+            if (u.getCreatedAt() != null){users.setCreatedAt(FechasUtil.getFechaTimestamp());}
+            if (u.getDeletedAt() != null){users.setDeletedAt(null);}
+            if (u.getUpdatedAt() != null){users.setUpdatedAt(FechasUtil.getFechaTimestamp());}
+            if (u.getBloodTypeId() != null){users.setBloodTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getBloodTypeId())).getId());}
+            if (u.getCivilStatusId() != null){users.setCivilStatusId(catalogueRepository.findCatalogueById(Long.parseLong(u.getCivilStatusId())).getId());}
+            if (u.getEthnicOriginId() != null){users.setEthnicOriginId(catalogueRepository.findCatalogueById(Long.parseLong(u.getEthnicOriginId())).getId());}
+            if (u.getGenderId() != null){users.setGenderId(catalogueRepository.findCatalogueById(Long.parseLong(u.getGenderId())).getId());}
+            if (u.getIdentificationTypeId() != null){users.setIdentificationTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getIdentificationTypeId())).getId());}
+            if (u.getSexId() != null){users.setSexId(catalogueRepository.findCatalogueById(Long.parseLong(u.getSexId())).getId());}
+        }else{
+            users.setId(uFinded.getId());
+            users.setName(u.getName());
+            users.setLastname(u.getLastname());
+            users.setUsername(u.getUsername());
+            users.setEmail(u.getEmail());
+            users.setPassword(u.getPassword());
+            users.setPasswordChanged(Boolean.parseBoolean(u.getPasswordChanged()));
+            users.setRememberToken(u.getRememberToken());
+            users.setMaxAttempts(Integer.valueOf(u.getMaxAttempts()));
+                try {
+                    users.setEmailVerifiedAt(FechasUtil.convertirStringATimestampSql(u.getEmailVerifiedAt(),ComunEnum.PATRON_TIMESTAMP2.getDescripcion()));
+                    users.setCreatedAt(FechasUtil.convertirStringATimestampSql(u.getCreatedAt(),ComunEnum.PATRON_TIMESTAMP2.getDescripcion()));
+                    users.setDeletedAt(FechasUtil.convertirStringATimestampSql(u.getDeletedAt(),ComunEnum.PATRON_TIMESTAMP2.getDescripcion()));
+                    users.setUpdatedAt(FechasUtil.convertirStringATimestampSql(u.getUpdatedAt(),ComunEnum.PATRON_TIMESTAMP2.getDescripcion()));
+                } catch (Exception e) {
+                    Log.error("Service", "Error en carga de fechas", e);
+                }
+            users.setPhone(u.getPhone());
+            users.setAvatar(u.getAvatar());
+            users.setBirthdate(Date.valueOf(u.getBirthdate()));
+            users.setBloodTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getBloodTypeId())).getId());
+            users.setCivilStatusId(catalogueRepository.findCatalogueById(Long.parseLong(u.getCivilStatusId())).getId());
+            users.setEthnicOriginId(catalogueRepository.findCatalogueById(Long.parseLong(u.getEthnicOriginId())).getId());
+            users.setGenderId(catalogueRepository.findCatalogueById(Long.parseLong(u.getGenderId())).getId());
+            users.setIdentificationTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getIdentificationTypeId())).getId());
+            users.setSexId(catalogueRepository.findCatalogueById(Long.parseLong(u.getSexId())).getId());
+        }
         return users;
     }
+
+    @Override
+    public UsersResponseDto deteleUserDto(Long Id) {
+        UsersResponseDto usersResponseDto = new UsersResponseDto();
+        UsersDto usersDto = new UsersDto();
+        Users user = new Users();
+        try {
+            user=usersRepository.findUserById(Id);
+        if (user != null){
+            usersDto = crearModelo(user);
+            usersDto.setDeletedAt(FechasUtil.getFechaTimestamp().toString());
+            usersRepository.saveAndFlush(crearObjeto(usersDto));
+            user=usersRepository.findUserById(Id);
+            if (user == null){
+                usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJERECURSOELINADO.toString());
+            }
+        }else{
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJERECURSONOEXISTE.toString());
+        }    
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        
+        return usersResponseDto;
+    }
+
+
 }

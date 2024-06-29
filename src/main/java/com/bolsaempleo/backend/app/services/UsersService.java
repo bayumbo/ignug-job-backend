@@ -12,4 +12,5 @@ public interface UsersService {
     UsersResponseDto findAllDto();
     UsersResponseDto findByIdDto(Long Id);
     UsersResponseDto saveUserDto(UsersDto usersDto);
+    UsersResponseDto deteleUserDto(Long Id);
 }

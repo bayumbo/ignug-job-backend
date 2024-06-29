@@ -11,7 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
 import com.bolsaempleo.backend.app.auth.filters.JwtAuthenticationFilter;
 import com.bolsaempleo.backend.app.auth.filters.JwtValidationFilter;
 
@@ -32,16 +31,15 @@ public class SpringSecurityConfig {
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .authorizeHttpRequests(authorize -> authorize
-                    .requestMatchers(HttpMethod.GET, "/report/**", "/professional", "/companyProfessional").permitAll()
-
-                    .anyRequest().authenticated()
-                )
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtValidationFilter(authenticationManager()))
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        return http.authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, "/report/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/users").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .addFilter(new JwtAuthenticationFilter(authenticationConfiguration.getAuthenticationManager()))//este filtro ejecuta metodo login(Post) y genera token
+                .addFilter(new JwtValidationFilter(authenticationConfiguration.getAuthenticationManager()))//Este filtro valida el token
+                .csrf(config -> config.disable())
+                .sessionManagement(managment -> managment.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();
     }
 }

@@ -18,9 +18,8 @@ public class AcademicFormationResponseDto implements Serializable {
     private Date registeredAt;
     private String senescytCode;
     private Timestamp updatedAt;
-    private String categoryName; // Nombre de la categoría asociada
-    private String professionalName; // Nombre del profesional asociado
+    private String categoryName;
+    private String professionalName;
 
-    // Constructor vacío y con todos los campos si es necesario
-    // Getters y Setters
+
 }
