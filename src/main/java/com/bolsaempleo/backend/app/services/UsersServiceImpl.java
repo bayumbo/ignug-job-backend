@@ -41,12 +41,12 @@ public class UsersServiceImpl implements UsersService{
                     usersDto.add(crearModelo(u));
                 }
                 usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
-                usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
                 usersResponseDto.setUser(null);
                 usersResponseDto.setListUsers(usersDto);
             }else{
                 usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
-                usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -94,11 +94,11 @@ public class UsersServiceImpl implements UsersService{
             Users users = usersRepository.findUserById(Id);
             if (users != null){
                 usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
-                usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
                 usersResponseDto.setUser(crearModelo(users));
             }else{
                 usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
-                usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -117,11 +117,11 @@ public class UsersServiceImpl implements UsersService{
                     usersResponseDto.setUser(crearModelo(u));
                     if (usersResponseDto.getUser()!= null){
                         usersResponseDto.setCode(ComunEnum.RECURSOCREADO.toString());
-                        usersResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.toString());
+                        usersResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.getDescripcion());
                     }    
             }else{
                 usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
-                usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJECEDULAINVALIDA.getDescripcion());
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -204,11 +204,11 @@ public class UsersServiceImpl implements UsersService{
             user=usersRepository.findUserById(Id);
             if (user == null){
                 usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
-                usersResponseDto.setMessage(ComunEnum.MENSAJERECURSOELINADO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJERECURSOELINADO.getDescripcion());
             }
         }else{
             usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
-                usersResponseDto.setMessage(ComunEnum.MENSAJERECURSONOEXISTE.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJERECURSONOEXISTE.getDescripcion());
         }    
         } catch (Exception e) {
             // TODO: handle exception
