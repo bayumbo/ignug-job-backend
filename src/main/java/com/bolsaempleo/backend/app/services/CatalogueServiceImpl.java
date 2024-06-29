@@ -79,15 +79,15 @@ public class CatalogueServiceImpl implements CatalogueService {
             Catalogue catalogue = catalogueRepository.findCatalogueById(Id);
           if (catalogue != null){
             catalogueResponseDto.setCode(ComunEnum.CORRECTO.toString());
-            catalogueResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
+            catalogueResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
             catalogueResponseDto.setCatalogue(crearModelo(catalogue));
           }else{
             catalogueResponseDto.setCode(ComunEnum.INCORRECTO.toString());
-            catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.toString());
+            catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
           }
         } catch (Exception e) {
             catalogueResponseDto.setCode(ComunEnum.ERRORINTERNOSERVIDOR.toString());
-            catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.toString());
+            catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
         return catalogueResponseDto;
     }
@@ -112,11 +112,11 @@ public class CatalogueServiceImpl implements CatalogueService {
             catalogueResponseDto.setCatalogue(crearModelo(catalogueRepository.save(crearObjeto(catalogueDto))));
             if (catalogueResponseDto.getCatalogue()!= null){
                 catalogueResponseDto.setCode(ComunEnum.RECURSOCREADO.toString());
-                catalogueResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.toString());
+                catalogueResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.getDescripcion());
             }
             else{
                 catalogueResponseDto.setCode(ComunEnum.INCORRECTO.toString());
-                catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.toString());
+                catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
             // TODO: handle exception

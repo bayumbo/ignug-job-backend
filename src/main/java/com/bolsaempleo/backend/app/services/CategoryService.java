@@ -30,7 +30,7 @@ public class CategoryService {
             
             if ( categories!=null){
                 categoryRespuestaDto.setCode(ComunEnum.CORRECTO.toString());
-                categoryRespuestaDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
+                categoryRespuestaDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
                 for (Category c : categories ){
                     categoryModelDtos.add(crearModel(c));
                 }
@@ -39,12 +39,12 @@ public class CategoryService {
                 categoryRespuestaDto.setCategories(crearModel(category));
             }else {
                 categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
-                categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.toString());
+                categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
             System.out.println(e);
             categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
-            categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.toString());
+            categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
 
         return categoryRespuestaDto;
