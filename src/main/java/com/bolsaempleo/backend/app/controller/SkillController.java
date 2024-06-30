@@ -1,6 +1,7 @@
 package com.bolsaempleo.backend.app.controller;
 
-import com.bolsaempleo.backend.app.entities.job_board.Skill;
+import com.bolsaempleo.backend.app.dto.SkillDto;
+import com.bolsaempleo.backend.app.dto.SkillResponseDto;
 import com.bolsaempleo.backend.app.services.SkillService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,14 +22,14 @@ public class SkillController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Skill>> getAllSkills() {
-        List<Skill> skills = skillService.findAll();
+    public ResponseEntity<List<SkillResponseDto>> getAllSkills() {
+        List<SkillResponseDto> skills = skillService.findAll();
         return ResponseEntity.ok(skills);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Skill> getSkillById(@PathVariable Long id) {
-        Skill skill = skillService.findById(id);
+    public ResponseEntity<SkillResponseDto> getSkillById(@PathVariable Long id) {
+        SkillResponseDto skill = skillService.findById(id);
         if (skill != null) {
             return ResponseEntity.ok(skill);
         } else {
@@ -37,14 +38,14 @@ public class SkillController {
     }
 
     @PostMapping
-    public ResponseEntity<Skill> createSkill(@RequestBody Skill skill) {
-        Skill createdSkill = skillService.save(skill);
+    public ResponseEntity<SkillResponseDto> createSkill(@RequestBody SkillDto SkillDto) {
+        SkillResponseDto createdSkill = skillService.save(SkillDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSkill);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Skill> updateSkill(@PathVariable Long id, @RequestBody Skill skill) {
-        Skill updatedSkill = skillService.update(id, skill);
+    public ResponseEntity<SkillResponseDto> updateSkill(@PathVariable Long id, @RequestBody SkillDto SkillDto) {
+        SkillResponseDto updatedSkill = skillService.update(id, SkillDto);
         if (updatedSkill != null) {
             return ResponseEntity.ok(updatedSkill);
         } else {
