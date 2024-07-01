@@ -2,17 +2,15 @@ package com.bolsaempleo.backend.app.dto;
 
 import java.sql.Timestamp;
 
-public class LanguageResponseDto {
+public class SkillResponseDto {
     private Long id;
-    private Long idiomId;
-    private Long readLevelId;
-    private Long spokenLevelId;
-    private Long writtenLevelId;
+    private String description;
+    private Long typeId;
     private Long professionalId;
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -21,36 +19,20 @@ public class LanguageResponseDto {
         this.id = id;
     }
 
-    public Long getIdiomId() {
-        return idiomId;
+    public String getDescription() {
+        return description;
     }
 
-    public void setIdiomId(Long idiomId) {
-        this.idiomId = idiomId;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Long getReadLevelId() {
-        return readLevelId;
+    public Long getTypeId() {
+        return typeId;
     }
 
-    public void setReadLevelId(Long readLevelId) {
-        this.readLevelId = readLevelId;
-    }
-
-    public Long getSpokenLevelId() {
-        return spokenLevelId;
-    }
-
-    public void setSpokenLevelId(Long spokenLevelId) {
-        this.spokenLevelId = spokenLevelId;
-    }
-
-    public Long getWrittenLevelId() {
-        return writtenLevelId;
-    }
-
-    public void setWrittenLevelId(Long writtenLevelId) {
-        this.writtenLevelId = writtenLevelId;
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
     }
 
     public Long getProfessionalId() {
