@@ -28,7 +28,7 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public List<LanguageResponseDto> findAll() {
-        List<Language> languages = languageRepository.findAll();
+        List<Language> languages = languageRepository.findAllByDeletedAtIsNull();
         return languages.stream()
                 .map(this::convertToResponseDTO)
                 .collect(Collectors.toList());
@@ -36,7 +36,7 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public LanguageResponseDto findById(Long id) {
-        Optional<Language> optionalLanguage = languageRepository.findById(id);
+        Optional<Language> optionalLanguage = languageRepository.findByIdAndDeletedAtIsNull(id);
         return optionalLanguage.map(this::convertToResponseDTO).orElse(null);
     }
 
@@ -50,7 +50,7 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public LanguageResponseDto updateLanguage(Long id, LanguageDto languageDto) {
-        Optional<Language> optionalLanguage = languageRepository.findById(id);
+        Optional<Language> optionalLanguage = languageRepository.findByIdAndDeletedAtIsNull(id);
         if (optionalLanguage.isPresent()) {
             Language language = optionalLanguage.get();
             language = updateEntity(language, languageDto);
@@ -63,7 +63,12 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public void deleteById(Long id) {
-        languageRepository.deleteById(id);
+        Optional<Language> optionalLanguage = languageRepository.findById(id);
+        if (optionalLanguage.isPresent()) {
+            Language language = optionalLanguage.get();
+            language.setDeletedAt(new Timestamp(System.currentTimeMillis()));
+            languageRepository.save(language);
+        }
     }
 
     private Language convertToEntity(LanguageDto dto) {

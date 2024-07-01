@@ -28,7 +28,7 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public List<SkillResponseDto> findAll() {
-        List<Skill> skills = skillRepository.findAll();
+        List<Skill> skills = skillRepository.findAllByDeletedAtIsNull();
         return skills.stream()
                 .map(this::convertToResponseDTO)
                 .collect(Collectors.toList());
@@ -36,41 +36,53 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public SkillResponseDto findById(Long id) {
-        Optional<Skill> optionalSkill = skillRepository.findById(id);
+        Optional<Skill> optionalSkill = skillRepository.findByIdAndDeletedAtIsNull(id);
         return optionalSkill.map(this::convertToResponseDTO).orElse(null);
     }
 
     @Override
-    public SkillResponseDto save(SkillDto SkillDto) {
-        Skill skill = convertToEntity(SkillDto);
+    public SkillResponseDto save(SkillDto skillDto) {
+        Skill skill = convertToEntity(skillDto);
         skill.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         Skill savedSkill = skillRepository.save(skill);
         return convertToResponseDTO(savedSkill);
     }
 
     @Override
-    public SkillResponseDto update(Long id, SkillDto SkillDto) {
-        if (!skillRepository.existsById(id)) {
-            return null;
+    public SkillResponseDto update(Long id, SkillDto skillDto) {
+        Optional<Skill> optionalSkill = skillRepository.findByIdAndDeletedAtIsNull(id);
+        if (optionalSkill.isPresent()) {
+            Skill skill = optionalSkill.get();
+            skill = updateEntity(skill, skillDto);
+            skill.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            Skill updatedSkill = skillRepository.save(skill);
+            return convertToResponseDTO(updatedSkill);
         }
-        Skill skill = convertToEntity(SkillDto);
-        skill.setId(id);
-        skill.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        Skill updatedSkill = skillRepository.save(skill);
-        return convertToResponseDTO(updatedSkill);
+        return null;
     }
 
     @Override
     public boolean delete(Long id) {
-        if (!skillRepository.existsById(id)) {
-            return false;
+        Optional<Skill> optionalSkill = skillRepository.findByIdAndDeletedAtIsNull(id);
+        if (optionalSkill.isPresent()) {
+            Skill skill = optionalSkill.get();
+            skill.setDeletedAt(new Timestamp(System.currentTimeMillis()));
+            skillRepository.save(skill);
+            return true;
         }
-        skillRepository.deleteById(id);
-        return true;
+        return false;
     }
 
     private Skill convertToEntity(SkillDto dto) {
         Skill skill = new Skill();
+        skill.setDescription(dto.getDescription());
+        skill.setTypeId(dto.getTypeId());
+        Optional<Professional> professional = professionalRepository.findById(dto.getProfessionalId());
+        professional.ifPresent(skill::setProfessional);
+        return skill;
+    }
+
+    private Skill updateEntity(Skill skill, SkillDto dto) {
         skill.setDescription(dto.getDescription());
         skill.setTypeId(dto.getTypeId());
         Optional<Professional> professional = professionalRepository.findById(dto.getProfessionalId());

@@ -26,7 +26,7 @@ public class SkillController {
         List<SkillResponseDto> skills = skillService.findAll();
         return ResponseEntity.ok(skills);
     }
-
+    //metodo para mostrar 
     @GetMapping("/{id}")
     public ResponseEntity<SkillResponseDto> getSkillById(@PathVariable Long id) {
         SkillResponseDto skill = skillService.findById(id);
@@ -36,23 +36,23 @@ public class SkillController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    //metodo para crear
     @PostMapping
-    public ResponseEntity<SkillResponseDto> createSkill(@RequestBody SkillDto SkillDto) {
-        SkillResponseDto createdSkill = skillService.save(SkillDto);
+    public ResponseEntity<SkillResponseDto> createSkill(@RequestBody SkillDto skillDto) {
+        SkillResponseDto createdSkill = skillService.save(skillDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdSkill);
     }
-
+    //metodo para actualizar
     @PutMapping("/{id}")
-    public ResponseEntity<SkillResponseDto> updateSkill(@PathVariable Long id, @RequestBody SkillDto SkillDto) {
-        SkillResponseDto updatedSkill = skillService.update(id, SkillDto);
+    public ResponseEntity<SkillResponseDto> updateSkill(@PathVariable Long id, @RequestBody SkillDto skillDto) {
+        SkillResponseDto updatedSkill = skillService.update(id, skillDto);
         if (updatedSkill != null) {
             return ResponseEntity.ok(updatedSkill);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-
+    //metodo para eliminar
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSkill(@PathVariable Long id) {
         boolean deleted = skillService.delete(id);

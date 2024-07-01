@@ -25,7 +25,7 @@ public class LanguageController {
     public List<LanguageResponseDto> getAllLanguages() {
         return languageService.findAll();
     }
-
+    //metodo para mostrar
     @GetMapping("/{id}")
     public ResponseEntity<LanguageResponseDto> getLanguageById(@PathVariable Long id) {
         LanguageResponseDto languageDto = languageService.findById(id);
@@ -34,13 +34,13 @@ public class LanguageController {
         }
         return ResponseEntity.ok(languageDto);
     }
-
+    //metodo para crear
     @PostMapping
     public ResponseEntity<LanguageResponseDto> createLanguage(@RequestBody LanguageDto languageDto) {
         LanguageResponseDto createdLanguageDto = languageService.save(languageDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdLanguageDto);
     }
-
+    //metodo para actualizar
     @PutMapping("/{id}")
     public ResponseEntity<LanguageResponseDto> updateLanguage(@PathVariable Long id, @RequestBody LanguageDto languageDto) {
         LanguageResponseDto updatedLanguageDto = languageService.updateLanguage(id, languageDto);
@@ -49,7 +49,7 @@ public class LanguageController {
         }
         return ResponseEntity.ok(updatedLanguageDto);
     }
-
+    //metodo para eliminar
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteLanguage(@PathVariable Long id) {
         languageService.deleteById(id);

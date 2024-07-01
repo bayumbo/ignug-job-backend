@@ -23,13 +23,13 @@ public class ReferenceService {
     }
 
     public List<ReferenceResponseDto> findAll() {
-        return referenceRepository.findAll().stream()
+        return referenceRepository.findAllByDeletedAtIsNull().stream()
                 .map(this::convertToResponseDTO)
                 .collect(Collectors.toList());
     }
 
     public ReferenceResponseDto findById(Long id) {
-        Optional<Reference> referenceOptional = referenceRepository.findById(id);
+        Optional<Reference> referenceOptional = referenceRepository.findByIdAndDeletedAtIsNull(id);
         return referenceOptional.map(this::convertToResponseDTO).orElse(null);
     }
 
@@ -41,26 +41,39 @@ public class ReferenceService {
     }
 
     public ReferenceResponseDto update(Long id, ReferenceDto referenceDto) {
-        if (!referenceRepository.existsById(id)) {
-            return null;
+        Optional<Reference> optionalReference = referenceRepository.findByIdAndDeletedAtIsNull(id);
+        if (optionalReference.isPresent()) {
+            Reference reference = optionalReference.get();
+            reference = updateEntity(reference, referenceDto);
+            reference.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            Reference updatedReference = referenceRepository.save(reference);
+            return convertToResponseDTO(updatedReference);
         }
-        Reference reference = convertToEntity(referenceDto);
-        reference.setId(id);
-        reference.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
-        Reference updatedReference = referenceRepository.save(reference);
-        return convertToResponseDTO(updatedReference);
+        return null;
     }
 
     public boolean delete(Long id) {
-        if (!referenceRepository.existsById(id)) {
-            return false;
+        Optional<Reference> optionalReference = referenceRepository.findByIdAndDeletedAtIsNull(id);
+        if (optionalReference.isPresent()) {
+            Reference reference = optionalReference.get();
+            reference.setDeletedAt(new Timestamp(System.currentTimeMillis()));
+            referenceRepository.save(reference);
+            return true;
         }
-        referenceRepository.deleteById(id);
-        return true;
+        return false;
     }
 
     private Reference convertToEntity(ReferenceDto dto) {
         Reference reference = new Reference();
+        reference.setContactEmail(dto.getContactEmail());
+        reference.setContactName(dto.getContactName());
+        reference.setContactPhone(dto.getContactPhone());
+        reference.setInstitution(dto.getInstitution());
+        reference.setPosition(dto.getPosition());
+        return reference;
+    }
+
+    private Reference updateEntity(Reference reference, ReferenceDto dto) {
         reference.setContactEmail(dto.getContactEmail());
         reference.setContactName(dto.getContactName());
         reference.setContactPhone(dto.getContactPhone());

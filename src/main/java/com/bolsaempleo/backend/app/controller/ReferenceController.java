@@ -26,7 +26,7 @@ public class ReferenceController {
         List<ReferenceResponseDto> references = referenceService.findAll();
         return ResponseEntity.ok(references);
     }
-
+    //metodo para mostrar
     @GetMapping("/{id}")
     public ResponseEntity<ReferenceResponseDto> getReferenceById(@PathVariable Long id) {
         ReferenceResponseDto reference = referenceService.findById(id);
@@ -36,13 +36,13 @@ public class ReferenceController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    //metodo para crear
     @PostMapping
     public ResponseEntity<ReferenceResponseDto> createReference(@RequestBody ReferenceDto referenceDto) {
         ReferenceResponseDto createdReference = referenceService.save(referenceDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReference);
     }
-
+    //metodo para actualizar
     @PutMapping("/{id}")
     public ResponseEntity<ReferenceResponseDto> updateReference(@PathVariable Long id, @RequestBody ReferenceDto referenceDto) {
         ReferenceResponseDto updatedReference = referenceService.update(id, referenceDto);
@@ -52,7 +52,7 @@ public class ReferenceController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    //metodo para eliminar
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReference(@PathVariable Long id) {
         boolean deleted = referenceService.delete(id);
