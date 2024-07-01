@@ -35,21 +35,27 @@ public class ProfessionalServiceImpl implements ProfessionalService{
     @Transactional(readOnly = true )
     public ProfessionalDto findByIdDto (Long id){//
         Optional<Professional> professionalsFinded = professionalsRepository.findById(id);
-        if (professionalsFinded.isEmpty()){
-            throw new EntityNotFoundException("Error");
-        }
         ProfessionalDto professionalsDto = new ProfessionalDto();
-        professionalsDto.setAboutMe(professionalsFinded.get().getAboutMe());
-        professionalsDto.setIdentificationFamiliarDisabled(professionalsFinded.get().getIdentificationFamiliarDisabled());
-        Date date=new Date(professionalsFinded.get().getCreatedAt().getTime());  
-        professionalsDto.setCreatedAt(date.toString());
-        //professionalsDto.setCreatedAt(professionalsFinded.get().getCreatedAt().toString());
-        professionalsDto.setDeletedAt(professionalsFinded.get().getDeletedAt()+"");
-        professionalsDto.setUpdatedAt(professionalsFinded.get().getUpdatedAt().toString());
-        professionalsDto.setCatastrophicDiseased(professionalsFinded.get().getCatastrophicDiseased());
-        professionalsDto.setFamiliarCatastrophicDiseased(professionalsFinded.get().getFamiliarCatastrophicDiseased());
-        professionalsDto.setFamiliarDisabled(professionalsFinded.get().getFamiliarDisabled());
-        professionalsDto.setTraveled(professionalsFinded.get().getTraveled());
+        try {
+            if (professionalsFinded.isEmpty()){
+                throw new EntityNotFoundException("Error");
+            }
+            
+            professionalsDto.setAboutMe(professionalsFinded.get().getAboutMe());
+            professionalsDto.setIdentificationFamiliarDisabled(professionalsFinded.get().getIdentificationFamiliarDisabled());
+            Date date=new Date(professionalsFinded.get().getCreatedAt().getTime());  
+            professionalsDto.setCreatedAt(date.toString());
+            //professionalsDto.setCreatedAt(professionalsFinded.get().getCreatedAt().toString());
+            professionalsDto.setDeletedAt(professionalsFinded.get().getDeletedAt()+"");
+            professionalsDto.setUpdatedAt(professionalsFinded.get().getUpdatedAt().toString());
+            professionalsDto.setCatastrophicDiseased(professionalsFinded.get().getCatastrophicDiseased());
+            professionalsDto.setFamiliarCatastrophicDiseased(professionalsFinded.get().getFamiliarCatastrophicDiseased());
+            professionalsDto.setFamiliarDisabled(professionalsFinded.get().getFamiliarDisabled());
+            professionalsDto.setTraveled(professionalsFinded.get().getTraveled());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        
         return professionalsDto;
     }
 

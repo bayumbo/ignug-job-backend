@@ -111,7 +111,7 @@ public class UsersServiceImpl implements UsersService{
     public UsersResponseDto saveUserDto(UsersDto usersDto) {
         UsersResponseDto usersResponseDto = new UsersResponseDto();
         try {
-            if (!UsuarioValidation.isIdentificacionValida(usersDto.getUsername())){
+            if (UsuarioValidation.isIdentificacionValida(usersDto.getUsername())){
                     Users u = new Users();
                     u = usersRepository.save(crearObjeto(usersDto));
                     usersResponseDto.setUser(crearModelo(u));
