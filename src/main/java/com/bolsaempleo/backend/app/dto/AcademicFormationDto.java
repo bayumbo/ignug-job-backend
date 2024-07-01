@@ -11,7 +11,6 @@ public class AcademicFormationDto {
     private Long categoryId;
     private Long professionalId;
 
-    // Getters and setters
 
     public Long getId() {
         return id;
