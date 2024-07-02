@@ -11,4 +11,5 @@ public interface CourseService {
     CourseResponseDto findById(Long id);
     CourseResponseDto saveCourse(CourseDto courseDto);
     CourseResponseDto findByType(String type); // Define este método si es necesario
+    void deleteCourse(Long id); // Añadir esta línea
 }

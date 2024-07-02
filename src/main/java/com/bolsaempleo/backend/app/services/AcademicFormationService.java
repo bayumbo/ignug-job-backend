@@ -5,6 +5,8 @@ import com.bolsaempleo.backend.app.repositories.AcademicFormationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +21,11 @@ public class AcademicFormationService {
     }
 
     public List<AcademicFormation> getAllAcademicFormations() {
-        return academicFormationRepository.findAll();
+        return academicFormationRepository.findByDeletedAtIsNull();
     }
 
     public Optional<AcademicFormation> getAcademicFormationById(Long id) {
-        return academicFormationRepository.findById(id);
+        return academicFormationRepository.findById(id).filter(academicFormation -> academicFormation.getDeletedAt() == null);
     }
 
     public AcademicFormation saveOrUpdateAcademicFormation(AcademicFormation academicFormation) {
@@ -31,6 +33,13 @@ public class AcademicFormationService {
     }
 
     public void deleteAcademicFormation(Long id) {
-        academicFormationRepository.deleteById(id);
+        Optional<AcademicFormation> existingAcademicFormation = academicFormationRepository.findById(id);
+        if (existingAcademicFormation.isPresent()) {
+            AcademicFormation academicFormation = existingAcademicFormation.get();
+            academicFormation.setDeletedAt(Timestamp.from(Instant.now()));
+            academicFormationRepository.save(academicFormation);
+        } else {
+            throw new RuntimeException("AcademicFormation not found");
+        }
     }
 }

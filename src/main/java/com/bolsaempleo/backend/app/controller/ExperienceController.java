@@ -40,4 +40,9 @@ public class ExperienceController {
         HttpStatus status = responseDto.getCode().equals(ComunEnum.CORRECTO.toString()) ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
         return new ResponseEntity<>(responseDto, status);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteExperience(@PathVariable Long id) {
+        experienceService.deleteExperience(id);
+    }
 }

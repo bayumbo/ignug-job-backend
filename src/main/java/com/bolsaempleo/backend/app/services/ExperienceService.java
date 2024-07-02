@@ -10,6 +10,7 @@ public interface ExperienceService {
     List<Experience> findAll();
     ExperienceResponseDto findById(Long id);
     ExperienceResponseDto saveExperience(ExperienceDto experienceDto);
-    ExperienceResponseDto findByType(String type);
-    ExperienceDto crearModelo(Experience experience); // Añade este método en la interfaz
+    ExperienceResponseDto findByType(String type); // Define este método si es necesario
+    ExperienceDto crearModelo(Experience experience);
+    void deleteExperience(Long id); // Añadir esta línea
 }

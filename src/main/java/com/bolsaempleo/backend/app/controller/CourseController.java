@@ -31,5 +31,8 @@ public class CourseController {
         return courseService.saveCourse(courseDto);
     }
 
-
+    @DeleteMapping("/{id}")
+    public void deleteCourse(@PathVariable(name = "id") Long id) {
+        courseService.deleteCourse(id);
+    }
 }

@@ -8,7 +8,8 @@ import com.bolsaempleo.backend.app.utility.ComunEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -19,14 +20,14 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Cours> findAll() {
-        return courseRepository.findAll();
+        return courseRepository.findByDeletedAtIsNull();
     }
 
     @Override
     public CourseResponseDto findById(Long id) {
         CourseResponseDto responseDto = new CourseResponseDto();
         try {
-            Cours course = courseRepository.findById(id).orElse(null);
+            Cours course = courseRepository.findById(id).filter(c -> c.getDeletedAt() == null).orElse(null);
             if (course != null) {
                 responseDto.setCode(ComunEnum.CORRECTO.toString());
                 responseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
@@ -51,7 +52,7 @@ public class CourseServiceImpl implements CourseService {
             // Asignar los valores del DTO al entity Course
             course.setCertificationTypeId(courseDto.getCertificationTypeId());
             course.setCreatedAt(courseDto.getCreatedAt());
-            course.setDeletedAt(courseDto.getDeletedAt());
+            course.setDeletedAt(null); // Ensure deletedAt is null when creating or updating
             course.setDescription(courseDto.getDescription());
             course.setEndedAt(courseDto.getEndedAt());
             course.setHours(courseDto.getHours());
@@ -80,6 +81,13 @@ public class CourseServiceImpl implements CourseService {
     public CourseResponseDto findByType(String type) {
         // Implementa la lógica para buscar cursos por tipo si es necesario
         return null;
+    }
+
+    @Override
+    public void deleteCourse(Long id) {
+        Cours course = courseRepository.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
+        course.setDeletedAt(Timestamp.from(Instant.now()));
+        courseRepository.save(course);
     }
 
     private CourseDto crearModelo(Cours course) {

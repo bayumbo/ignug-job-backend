@@ -8,7 +8,8 @@ import com.bolsaempleo.backend.app.utility.ComunEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -99,5 +100,12 @@ public class ExperienceServiceImpl implements ExperienceService {
         experienceDto.setWorked(experience.getWorked());
         experienceDto.setProfessionalId(experience.getProfessional() != null ? experience.getProfessional().getId() : null);
         return experienceDto;
+    }
+
+    @Override
+    public void deleteExperience(Long id) {
+        Experience experience = experienceRepository.findById(id).orElseThrow(() -> new RuntimeException("Experience not found"));
+        experience.setDeletedAt(Timestamp.from(Instant.now()));
+        experienceRepository.save(experience);
     }
 }
