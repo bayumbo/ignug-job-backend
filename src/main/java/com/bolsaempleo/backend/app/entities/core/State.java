@@ -1,8 +1,9 @@
-package model;
+package com.bolsaempleo.backend.app.entities.core;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 
 /**
@@ -31,6 +32,10 @@ public class State implements Serializable {
 
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
+
+	//bi-directional many-to-one association to Stateable
+	@OneToMany(mappedBy="state")
+	private List<Stateable> stateables;
 
 	public State() {
 	}
@@ -81,6 +86,28 @@ public class State implements Serializable {
 
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public List<Stateable> getStateables() {
+		return this.stateables;
+	}
+
+	public void setStateables(List<Stateable> stateables) {
+		this.stateables = stateables;
+	}
+
+	public Stateable addStateable(Stateable stateable) {
+		getStateables().add(stateable);
+		stateable.setState(this);
+
+		return stateable;
+	}
+
+	public Stateable removeStateable(Stateable stateable) {
+		getStateables().remove(stateable);
+		stateable.setState(null);
+
+		return stateable;
 	}
 
 }

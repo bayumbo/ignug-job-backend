@@ -1,7 +1,7 @@
-package model;
+package com.bolsaempleo.backend.app.entities.core;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -52,9 +52,6 @@ public class Location implements Serializable {
 	@Column(name="top_level_domain")
 	private String topLevelDomain;
 
-	@Column(name="type_id")
-	private Long typeId;
-
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
@@ -66,6 +63,19 @@ public class Location implements Serializable {
 	//bi-directional many-to-one association to Location
 	@OneToMany(mappedBy="location")
 	private List<Location> locations;
+
+	//bi-directional many-to-one association to Address
+	@OneToMany(mappedBy="location")
+	private List<Address> addresses;
+
+	//bi-directional many-to-one association to Catalogue
+	@ManyToOne
+	@JoinColumn(name="type_id")
+	private Catalogue catalogue;
+
+	//bi-directional many-to-one association to Phone
+	@OneToMany(mappedBy="location")
+	private List<Phone> phones;
 
 	public Location() {
 	}
@@ -182,14 +192,6 @@ public class Location implements Serializable {
 		this.topLevelDomain = topLevelDomain;
 	}
 
-	public Long getTypeId() {
-		return this.typeId;
-	}
-
-	public void setTypeId(Long typeId) {
-		this.typeId = typeId;
-	}
-
 	public Timestamp getUpdatedAt() {
 		return this.updatedAt;
 	}
@@ -226,6 +228,58 @@ public class Location implements Serializable {
 		location.setLocation(null);
 
 		return location;
+	}
+
+	public List<Address> getAddresses() {
+		return this.addresses;
+	}
+
+	public void setAddresses(List<Address> addresses) {
+		this.addresses = addresses;
+	}
+
+	public Address addAddress(Address address) {
+		getAddresses().add(address);
+		address.setLocation(this);
+
+		return address;
+	}
+
+	public Address removeAddress(Address address) {
+		getAddresses().remove(address);
+		address.setLocation(null);
+
+		return address;
+	}
+
+	public Catalogue getCatalogue() {
+		return this.catalogue;
+	}
+
+	public void setCatalogue(Catalogue catalogue) {
+		this.catalogue = catalogue;
+	}
+
+	public List<Phone> getPhones() {
+		return this.phones;
+	}
+
+	public void setPhones(List<Phone> phones) {
+		this.phones = phones;
+	}
+
+	public Phone addPhone(Phone phone) {
+		getPhones().add(phone);
+		phone.setLocation(this);
+
+		return phone;
+	}
+
+	public Phone removePhone(Phone phone) {
+		getPhones().remove(phone);
+		phone.setLocation(null);
+
+		return phone;
 	}
 
 }
