@@ -1,7 +1,10 @@
 package com.bolsaempleo.backend.app.services;
 
+import com.bolsaempleo.backend.app.dto.CompanyProfessionalDto;
+import com.bolsaempleo.backend.app.dto.CompanyProfessionalResponseDto;
 import com.bolsaempleo.backend.app.dto.CourseDto;
 import com.bolsaempleo.backend.app.dto.CourseResponseDto;
+import com.bolsaempleo.backend.app.entities.job_board.CompanyProfessional;
 import com.bolsaempleo.backend.app.entities.job_board.Cours;
 import com.bolsaempleo.backend.app.repositories.CourseRepository;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +22,7 @@ public class CourseServiceImpl implements CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
+     
     @Override
     public List<Cours> findAll() {
         return courseRepository.findByDeletedAtIsNull();
@@ -31,7 +36,7 @@ public class CourseServiceImpl implements CourseService {
             if (course != null) {
                 responseDto.setCode(ComunEnum.CORRECTO.toString());
                 responseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
-                responseDto.setCourseDto(crearModelo(course));
+                responseDto.setData(crearModelo(course));
             } else {
                 responseDto.setCode(ComunEnum.RECURSOVACIO.toString());
                 responseDto.setMessage(ComunEnum.MENSAJESINDATOS.getDescripcion());
@@ -68,7 +73,7 @@ public class CourseServiceImpl implements CourseService {
             // Preparar la respuesta
             responseDto.setCode(ComunEnum.CORRECTO.toString());
             responseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
-            responseDto.setCourseDto(crearModelo(course));
+            responseDto.setData(crearModelo(course));
         } catch (Exception e) {
             responseDto.setCode(ComunEnum.RECURSOVACIO.toString());
             responseDto.setMessage(ComunEnum.MENSAJESINDATOS.getDescripcion());
@@ -107,5 +112,15 @@ public class CourseServiceImpl implements CourseService {
         courseDto.setAreaId(course.getCategory() != null ? course.getCategory().getId() : null);
         courseDto.setProfessionalId(course.getProfessional() != null ? course.getProfessional().getId() : null);
         return courseDto;
+    }
+
+    @Override
+    public CourseResponseDto findAllDto() {
+        CourseResponseDto courseResponseDto= new CourseResponseDto();
+        List<Cours>cours = new ArrayList<>(); 
+        cours= courseRepository.findAll();
+
+
+        return courseResponseDto;
     }
 }

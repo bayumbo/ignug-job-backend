@@ -9,6 +9,7 @@ import com.bolsaempleo.backend.app.dto.CategoryResponseDto;
 import com.bolsaempleo.backend.app.entities.job_board.Category;
 import com.bolsaempleo.backend.app.repositories.CategoryRepository;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
+import com.bolsaempleo.backend.app.utility.FechasUtil;
 
 @Component
 public class CategoryService {
@@ -23,20 +24,12 @@ public class CategoryService {
 
     public CategoryResponseDto findByIdDto (Long entrada){
         CategoryResponseDto categoryRespuestaDto = new CategoryResponseDto();
-        List<CategoryDto> categoryModelDtos = new ArrayList<>();
         try {
-            Category category = categoryRepository.findCategoriesById(entrada);
-            List<Category> categories= categoryRepository.getSubCategoriesById(category);
-            
-            if ( categories!=null){
+            Category category = categoryRepository.findCategoryById(entrada);
+            if ( category!=null){
                 categoryRespuestaDto.setCode(ComunEnum.CORRECTO.toString());
                 categoryRespuestaDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
-                for (Category c : categories ){
-                    categoryModelDtos.add(crearModel(c));
-                }
-                categoryRespuestaDto.setSubCategories(categoryModelDtos);
-                
-                categoryRespuestaDto.setCategories(crearModel(category));
+                categoryRespuestaDto.setData(crearModel(category));
             }else {
                 categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
                 categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
@@ -78,4 +71,62 @@ public class CategoryService {
     }
     
 
+    public CategoryResponseDto findBySubCategoryId (Long entrada){
+        CategoryResponseDto categoryRespuestaDto = new CategoryResponseDto();
+        List<CategoryDto> categoryModelDtos = new ArrayList<>();
+        try {
+            Category category = categoryRepository.findCategoryById(entrada);
+            List<Category> categories= categoryRepository.getSubCategoriesById(category);
+            if ( categories!=null){
+                categoryRespuestaDto.setCode(ComunEnum.CORRECTO.toString());
+                categoryRespuestaDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
+                for (Category c : categories ){
+                    categoryModelDtos.add(crearModel(c));
+                }
+                categoryRespuestaDto.setData(categoryModelDtos);
+            }else {
+                categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
+                categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
+            categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+        }
+
+        return categoryRespuestaDto;
+    }
+    public CategoryResponseDto findCategoryAndSubCategoriesByCategoryId (Long entrada){
+        CategoryResponseDto categoryRespuestaDto = new CategoryResponseDto();
+        List<CategoryDto> categoryModelDtos = new ArrayList<>();
+        try {
+            Category category = categoryRepository.findCategoryById(entrada);
+            List<Category> cats = categoryRepository.getCategoriesAndSubCategoriesById(entrada,category);
+            if ( cats!=null){
+                categoryRespuestaDto.setCode(ComunEnum.CORRECTO.toString());
+                categoryRespuestaDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
+                for (Category c : cats ){
+                    categoryModelDtos.add(crearModel(c));
+                }
+                categoryRespuestaDto.setData(categoryModelDtos);
+            }else {
+                categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
+                categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
+            categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+        }
+        return categoryRespuestaDto;
+    }
+
+    public Category update(Long id, Category category) {
+        if (!categoryRepository.existsById(id)) {
+            return null;
+        }
+        category.setId(id);
+        category.setUpdatedAt(FechasUtil.getFechaTimestamp());
+        return categoryRepository.save(category);
+    }
 }

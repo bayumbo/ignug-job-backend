@@ -21,7 +21,7 @@ public class Offer implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	private Object activities;
+	private String activities;
 
 	@Column(name="additional_information")
 	private String additionalInformation;
@@ -63,7 +63,7 @@ public class Offer implements Serializable {
 
 	private String remuneration;
 
-	private Object requirements;
+	private String requirements;
 
 	@Column(name="sector_id")
 	private Long sectorId;
@@ -109,11 +109,11 @@ public class Offer implements Serializable {
 		this.id = id;
 	}
 
-	public Object getActivities() {
+	public String getActivities() {
 		return this.activities;
 	}
 
-	public void setActivities(Object activities) {
+	public void setActivities(String activities) {
 		this.activities = activities;
 	}
 
@@ -229,11 +229,11 @@ public class Offer implements Serializable {
 		this.remuneration = remuneration;
 	}
 
-	public Object getRequirements() {
+	public String getRequirements() {
 		return this.requirements;
 	}
 
-	public void setRequirements(Object requirements) {
+	public void setRequirements(String requirements) {
 		this.requirements = requirements;
 	}
 

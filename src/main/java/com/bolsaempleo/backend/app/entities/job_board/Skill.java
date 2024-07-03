@@ -1,5 +1,6 @@
 package com.bolsaempleo.backend.app.entities.job_board;
 
+
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
@@ -11,6 +12,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="skills",schema = "job_board")
+@NamedQuery(name="Skill.findAll", query="SELECT s FROM Skill s")
 public class Skill implements Serializable {
 	private static final long serialVersionUID = 1L;
 

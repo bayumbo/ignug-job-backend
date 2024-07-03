@@ -1,5 +1,6 @@
 package com.bolsaempleo.backend.app.controller;
 
+import com.bolsaempleo.backend.app.dto.ObjectResponse;
 import com.bolsaempleo.backend.app.entities.job_board.Company;
 import com.bolsaempleo.backend.app.services.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +22,21 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Company>> getAllCompanies() {
+    public ResponseEntity<ObjectResponse> getAllCompanies() {
         List<Company> companies = companyService.findAll();
-    
-        return ResponseEntity.ok(companies);
+        ObjectResponse objectResponse= new ObjectResponse();
+        objectResponse.setData(companies);
+        return ResponseEntity.ok(objectResponse);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Company> getCompanyById(@PathVariable Long id) {
+    public ResponseEntity<ObjectResponse> getCompanyById(@PathVariable Long id) {
         Company company = companyService.findById(id);
+        ObjectResponse objectResponse = new ObjectResponse();
         if (company != null && company.getDeletedAt() ==null) {
-            return ResponseEntity.ok(company);
+            objectResponse.setData(company);
+            return ResponseEntity.status(HttpStatus.CREATED).body(objectResponse);
+
         } else {
             return ResponseEntity.notFound().build();
         }

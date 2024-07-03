@@ -62,7 +62,7 @@ public class CatalogueServiceImpl implements CatalogueService {
                 }
                 catalogueResponseDto.setCode(ComunEnum.CORRECTO.toString());
                 catalogueResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.toString());
-                catalogueResponseDto.setSubCatalogues(catalogueDto);
+                catalogueResponseDto.setData(catalogueDto);
             }
         } catch (Exception e) {
             // TODO: handle exception
@@ -80,7 +80,7 @@ public class CatalogueServiceImpl implements CatalogueService {
           if (catalogue != null){
             catalogueResponseDto.setCode(ComunEnum.CORRECTO.toString());
             catalogueResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
-            catalogueResponseDto.setCatalogue(crearModelo(catalogue));
+            catalogueResponseDto.setData(crearModelo(catalogue));
           }else{
             catalogueResponseDto.setCode(ComunEnum.INCORRECTO.toString());
             catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
@@ -109,8 +109,8 @@ public class CatalogueServiceImpl implements CatalogueService {
     public CatalogueResponseDto saveCatalogue (CatalogueDto catalogueDto){
         CatalogueResponseDto catalogueResponseDto = new  CatalogueResponseDto();
         try {
-            catalogueResponseDto.setCatalogue(crearModelo(catalogueRepository.save(crearObjeto(catalogueDto))));
-            if (catalogueResponseDto.getCatalogue()!= null){
+            catalogueResponseDto.setData(crearModelo(catalogueRepository.save(crearObjeto(catalogueDto))));
+            if (catalogueResponseDto.getData()!= null){
                 catalogueResponseDto.setCode(ComunEnum.RECURSOCREADO.toString());
                 catalogueResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.getDescripcion());
             }

@@ -11,6 +11,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="references",schema = "job_board")
+@NamedQuery(name="Reference.findAll", query="SELECT r FROM Reference r")
 public class Reference implements Serializable {
 	private static final long serialVersionUID = 1L;
 

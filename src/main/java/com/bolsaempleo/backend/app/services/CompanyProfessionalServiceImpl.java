@@ -37,7 +37,7 @@ public class CompanyProfessionalServiceImpl implements CompanyProfessionalServic
                 }
                 companyProfessionalResponseDto.setCode(ComunEnum.CORRECTO.toString());
                 companyProfessionalResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
-                companyProfessionalResponseDto.setListCompanyProfessional(companyProfessionalModelDto);
+                companyProfessionalResponseDto.setData(companyProfessionalModelDto);
             }else {
                 companyProfessionalResponseDto.setCode(ComunEnum.RECURSOVACIO.toString());
                 companyProfessionalResponseDto.setMessage(ComunEnum.MENSAJESINDATOS.getDescripcion());

@@ -1,26 +1,16 @@
 package com.bolsaempleo.backend.app.dto;
 
 import java.io.Serializable;
-import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class CompanyProfessionalResponseDto implements Serializable{
 
 
- 
-    @Getter
-	@Setter
 	private String code;
-	@Getter
-	@Setter
     private String message;
-	@Getter
-	@Setter
-    private CompanyProfessionalDto  companyProfessional;
-	@Getter
-	@Setter
-    private List<CompanyProfessionalDto> listCompanyProfessional;
+    private Object data;
 
 }

@@ -7,15 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryResponseDto implements Serializable{
+public class OfferResponseDto implements Serializable{
 
-    private static final long serialVersionUID = 6977507763706405105L;
-
-	private String code;
+    private String code;
     private String message;
     private Object data;
-
-	
-
-
 }

@@ -42,8 +42,7 @@ public class UsersServiceImpl implements UsersService{
                 }
                 usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
                 usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
-                usersResponseDto.setUser(null);
-                usersResponseDto.setListUsers(usersDto);
+                usersResponseDto.setData(usersDto);
             }else{
                 usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
                 usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
@@ -95,7 +94,7 @@ public class UsersServiceImpl implements UsersService{
             if (users != null){
                 usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
                 usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
-                usersResponseDto.setUser(crearModelo(users));
+                usersResponseDto.setData(crearModelo(users));
             }else{
                 usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
                 usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
@@ -114,8 +113,8 @@ public class UsersServiceImpl implements UsersService{
             if (UsuarioValidation.isIdentificacionValida(usersDto.getUsername())){
                     Users u = new Users();
                     u = usersRepository.save(crearObjeto(usersDto));
-                    usersResponseDto.setUser(crearModelo(u));
-                    if (usersResponseDto.getUser()!= null){
+                    usersResponseDto.setData(crearModelo(u));
+                    if (usersResponseDto.getData()!= null){
                         usersResponseDto.setCode(ComunEnum.RECURSOCREADO.toString());
                         usersResponseDto.setMessage(ComunEnum.MENSAJERECURSOCREADO.getDescripcion());
                     }    

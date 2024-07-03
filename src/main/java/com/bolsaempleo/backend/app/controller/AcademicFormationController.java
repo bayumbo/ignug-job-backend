@@ -1,5 +1,6 @@
 package com.bolsaempleo.backend.app.controller;
 
+import com.bolsaempleo.backend.app.dto.ObjectResponse;
 import com.bolsaempleo.backend.app.entities.job_board.AcademicFormation;
 import com.bolsaempleo.backend.app.services.AcademicFormationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,11 @@ public class AcademicFormationController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AcademicFormation>> getAllAcademicFormations() {
+    public ResponseEntity<ObjectResponse> getAllAcademicFormations() {
         List<AcademicFormation> academicFormations = academicFormationService.getAllAcademicFormations();
-        return ResponseEntity.ok(academicFormations);
+        ObjectResponse objectResponse = new ObjectResponse();
+        objectResponse.setData(academicFormations);
+        return ResponseEntity.ok(objectResponse);
     }
 
     @GetMapping("/{id}")

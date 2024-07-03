@@ -23,5 +23,6 @@ public class CourseDto {
     private Timestamp updatedAt;
     private Long areaId; 
     private Long professionalId; 
+    
 }
 

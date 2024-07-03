@@ -10,10 +10,14 @@ import com.bolsaempleo.backend.app.entities.job_board.Category;
 @Repository
 public interface CategoryRepository extends CrudRepository<Category,Long>{
 
+
+    @Query("select c from Category c where c.id=:id AND c.deletedAt IS NULL")
+    Category findCategoryById(@Param("id")Long id);
+
     @Query("select c from Category c where c.category=:category AND c.deletedAt IS NULL")
     List<Category> getSubCategoriesById(@Param("category")Category id);
 
-    @Query("select c from Category c where c.id=:id AND c.deletedAt IS NULL")
-    Category findCategoriesById(@Param("id")Long id);
-    
+    @Query("select c from Category c where c.id=:id OR c.category=:category AND c.deletedAt IS NULL")
+    List<Category> getCategoriesAndSubCategoriesById(@Param("id")Long id,@Param("category")Category ids);
+
 }

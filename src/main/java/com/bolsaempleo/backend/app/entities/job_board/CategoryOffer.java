@@ -4,12 +4,14 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 
+
 /**
  * The persistent class for the category_offer database table.
  * 
  */
 @Entity
 @Table(name="category_offer",schema = "job_board")
+@NamedQuery(name="CategoryOffer.findAll", query="SELECT c FROM CategoryOffer c")
 public class CategoryOffer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
