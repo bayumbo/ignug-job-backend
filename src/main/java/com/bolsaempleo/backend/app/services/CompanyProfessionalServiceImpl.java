@@ -1,8 +1,9 @@
 package com.bolsaempleo.backend.app.services;
 
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bolsaempleo.backend.app.dto.CompanyProfessionalDto;
@@ -19,48 +20,106 @@ public class CompanyProfessionalServiceImpl implements CompanyProfessionalServic
     private CompanyProfessionalRepository companyProfessionalRepository;
 
     @Override
-    public List<CompanyProfessional> findAll() {
-        return  (List<CompanyProfessional>) companyProfessionalRepository.findAll();
+    public CompanyProfessionalResponseDto findAll() {
+        List<CompanyProfessional> companyProfessionals = companyProfessionalRepository.findAll().stream()
+                .collect(Collectors.toList());
+
+        List<CompanyProfessionalDto> companyProfessionalDtos = companyProfessionals.stream()
+                .map(this::toCompanyProfessionalDto)
+                .collect(Collectors.toList());
+
+        return createResponseDto(companyProfessionalDtos, ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
+    }
+private CompanyProfessionalDto toCompanyProfessionalDto(CompanyProfessional companyProfessional) {
+    CompanyProfessionalDto dto = new CompanyProfessionalDto();
+        dto.setProfessional(companyProfessional.getProfessional() != null ? companyProfessional.getProfessional() : null);
+        dto.setCreatedAt(companyProfessional.getCreatedAt());
+        dto.setUpdatedAt(companyProfessional.getUpdatedAt());
+        dto.setCompany(companyProfessional.getCompany()!= null ? companyProfessional.getCompany() : null);
+        dto.setStateId(companyProfessional.getStateId());
+        return dto;
     }
 
+    private CompanyProfessionalResponseDto createResponseDto(List<CompanyProfessionalDto> data, String code, String message) {
+        CompanyProfessionalResponseDto responseDto = new CompanyProfessionalResponseDto();
+        responseDto.setCode(code);
+        responseDto.setMessage(message);
+        responseDto.setData(data);
+        return responseDto;
+    }
 
-    public CompanyProfessionalResponseDto findAllModel(){
-        CompanyProfessionalResponseDto companyProfessionalResponseDto = new CompanyProfessionalResponseDto();
-        List<CompanyProfessional> companyProfessionals = new ArrayList<>();
-        try {
-            //companyProfessionals = (List<CompanyProfessional>)companyProfessionalRepository.findAll();
-            companyProfessionals = companyProfessionalRepository.findAllCompanyProfessional();
-            List<CompanyProfessionalDto> companyProfessionalModelDto = new ArrayList<>();
-            if (companyProfessionals.size()>0){
-                for (CompanyProfessional c : companyProfessionals){
-                    companyProfessionalModelDto.add(crearModelo(c));  
-                }
-                companyProfessionalResponseDto.setCode(ComunEnum.CORRECTO.toString());
-                companyProfessionalResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
-                companyProfessionalResponseDto.setData(companyProfessionalModelDto);
-            }else {
-                companyProfessionalResponseDto.setCode(ComunEnum.RECURSOVACIO.toString());
-                companyProfessionalResponseDto.setMessage(ComunEnum.MENSAJESINDATOS.getDescripcion());
-            }
-        } catch (NullPointerException e) {
-            System.out.println(e);
-            companyProfessionalResponseDto.setCode(ComunEnum.RECURSOVACIO.toString());
-            companyProfessionalResponseDto.setMessage(ComunEnum.MENSAJESINDATOS.getDescripcion());
-            e.printStackTrace();
-        }  catch (Exception e) {
-            e.printStackTrace();
+    @Override
+    public CompanyProfessionalResponseDto findById(Long id) {
+        CompanyProfessional companyProfessional = companyProfessionalRepository.findById(id)
+                .orElse(null);
+
+        if (companyProfessional == null) {
+            return createResponseDto(null, ComunEnum.RECURSOVACIO.toString(), ComunEnum.MENSAJESINDATOS.getDescripcion());
         }
-        return companyProfessionalResponseDto;
+
+        return createResponseDto(List.of(toCompanyProfessionalDto(companyProfessional)), ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
     }
 
-    public CompanyProfessionalDto crearModelo(CompanyProfessional c){
-        CompanyProfessionalDto companyProfessionalModelDto = new CompanyProfessionalDto();
-        if (c.getId() != null){companyProfessionalModelDto.setId(c.getId().toString());}
-        if (c.getCreatedAt() != null){companyProfessionalModelDto.setCreatedAt(c.getCreatedAt().toString());}
-        if (c.getUpdatedAt() != null){companyProfessionalModelDto.setUpdatedAt(c.getUpdatedAt().toString());}
-        if (c.getCompany().getId() != null){companyProfessionalModelDto.setCompany(c.getCompany().getId().toString());}
-        if (c.getProfessional().getId() != null){companyProfessionalModelDto.setProfessional(c.getProfessional().getId().toString());}
-        return companyProfessionalModelDto;
+    @Override
+    public CompanyProfessionalResponseDto update(Long id, CompanyProfessionalDto companyProfessionalDto) {
+        CompanyProfessional companyProfessional = companyProfessionalRepository.findById(id)
+                .orElse(null);
+
+        if (companyProfessional == null) {
+            return createResponseDto(null, ComunEnum.RECURSOVACIO.toString(), ComunEnum.MENSAJESINDATOS.getDescripcion());
+        }
+
+        updateLocationFromDto(companyProfessionalDto, companyProfessional);
+        companyProfessional.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        CompanyProfessional updatedCompany = companyProfessionalRepository.save(companyProfessional);
+
+        return createResponseDto(List.of(toCompanyProffesionalDto(updatedCompany)), ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
     }
 
+    @Override
+    public CompanyProfessionalResponseDto deleteById(Long id) {
+        CompanyProfessional companyProfessional = companyProfessionalRepository.findById(id).orElse(null);
+
+        if (companyProfessional == null) {
+            return createResponseDto(null, ComunEnum.RECURSOVACIO.toString(), ComunEnum.MENSAJESINDATOS.getDescripcion());
+        }
+        companyProfessionalRepository.save(companyProfessional);
+        return createResponseDto(null, ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
+    }
+
+    private void updateLocationFromDto(CompanyProfessionalDto dto, CompanyProfessional companyProfessional) {
+        companyProfessional.setProfessional(dto.getProfessional());
+        companyProfessional.setCreatedAt(dto.getCreatedAt());
+        companyProfessional.setUpdatedAt(dto.getUpdatedAt());
+        companyProfessional.setCompany(dto.getCompany());
+        companyProfessional.setStateId(dto.getStateId());
+    }
+
+
+    @Override
+    public CompanyProfessionalResponseDto save(CompanyProfessionalDto companyProfessionalDto) {
+        CompanyProfessional companyProfessional = toCompanyProffesional(companyProfessionalDto);
+        companyProfessional.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        CompanyProfessional savedCompanyProffesional = companyProfessionalRepository.save(companyProfessional);
+        return createResponseDto(List.of(toCompanyProffesionalDto(savedCompanyProffesional)), ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
+    }
+
+    private CompanyProfessional toCompanyProffesional(CompanyProfessionalDto dto) {
+        CompanyProfessional companyProfessional = new CompanyProfessional();
+        dto.setProfessional(companyProfessional.getProfessional() );
+        dto.setCreatedAt(companyProfessional.getCreatedAt());
+        dto.setUpdatedAt(companyProfessional.getUpdatedAt());
+        dto.setCompany(companyProfessional.getCompany());
+        dto.setStateId(companyProfessional.getStateId());
+        return companyProfessional;
+    }
+    private CompanyProfessionalDto toCompanyProffesionalDto(CompanyProfessional companyProfessional) {
+        CompanyProfessionalDto dto = new CompanyProfessionalDto();
+        dto.setProfessional(companyProfessional.getProfessional() );
+        dto.setCreatedAt(companyProfessional.getCreatedAt());
+        dto.setUpdatedAt(companyProfessional.getUpdatedAt());
+        dto.setCompany(companyProfessional.getCompany());
+        dto.setStateId(companyProfessional.getStateId());
+        return dto;
+    }
 }

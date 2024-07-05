@@ -1,14 +1,15 @@
 package com.bolsaempleo.backend.app.services;
 
-import java.util.List;
 
-import com.bolsaempleo.backend.app.dto.RoleRequest;
-import com.bolsaempleo.backend.app.entities.authentication.Role;
+import com.bolsaempleo.backend.app.dto.LocationDto;
+import com.bolsaempleo.backend.app.dto.RoleResponseDto;
 
 public interface RoleService {
-
-    Role save (RoleRequest roleRequest);
-    List<Role> findAll();
-    Role getRole(Long id);
+ 
+    RoleResponseDto findAll();
+    RoleResponseDto findById(Long id);
+    RoleResponseDto save(LocationDto locationDto);
+    RoleResponseDto update(Long id, LocationDto locationDto);
+    RoleResponseDto deleteById(Long id);
    
 }

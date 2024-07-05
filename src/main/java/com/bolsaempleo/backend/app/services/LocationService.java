@@ -1,6 +1,5 @@
 package com.bolsaempleo.backend.app.services;
 
-import java.util.List;
 import com.bolsaempleo.backend.app.dto.LocationDto;
 import com.bolsaempleo.backend.app.dto.LocationResponseDto;
 

@@ -1,5 +1,6 @@
 package com.bolsaempleo.backend.app.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import lombok.Getter;
@@ -7,7 +8,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ReferenceResponseDto {
+public class ReferenceResponseDto implements Serializable{
     
     private Long id;
     private String contactEmail;

@@ -1,12 +1,14 @@
 package com.bolsaempleo.backend.app.dto;
 
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UsersDto {
+public class UsersDto implements Serializable{
 
 
     private String avatar;

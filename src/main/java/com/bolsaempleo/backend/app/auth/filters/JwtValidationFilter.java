@@ -9,6 +9,8 @@ import java.util.Map;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import com.bolsaempleo.backend.app.dto.TokenResponseDto;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -60,9 +62,10 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             chain.doFilter(request, response);
         } catch (JwtException e) {
-            Map<String, String> body = new HashMap<>();
-            body.put("error", e.getMessage());
-            body.put("message", "El token JWT no es valido!");
+            TokenResponseDto body = new TokenResponseDto();
+            body.setCode(ComunEnum.INCORRECTO.toString());
+            body.setMessage(ComunEnum.MENSAJETOKENINVALIDO.getDescripcion());
+            body.setData(e.getMessage());
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));
             response.setStatus(403);
             response.setContentType("application/json");

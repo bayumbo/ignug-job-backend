@@ -14,12 +14,8 @@ import java.util.List;
 @RequestMapping("/references")
 public class ReferenceController {
 
-    private final ReferenceService referenceService;
-
     @Autowired
-    public ReferenceController(ReferenceService referenceService) {
-        this.referenceService = referenceService;
-    }
+    private ReferenceService referenceService;
 
     @GetMapping
     public ResponseEntity<List<ReferenceResponseDto>> getAllReferences() {

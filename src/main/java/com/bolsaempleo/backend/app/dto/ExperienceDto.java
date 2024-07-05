@@ -1,5 +1,6 @@
 package com.bolsaempleo.backend.app.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -9,7 +10,7 @@ import lombok.Setter;
 
 @Getter 
 @Setter
-public class ExperienceDto {
+public class ExperienceDto implements Serializable{
     
     private Long id;
     private String activities;

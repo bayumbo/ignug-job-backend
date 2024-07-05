@@ -6,7 +6,6 @@ import com.bolsaempleo.backend.app.entities.job_board.Reference;
 import com.bolsaempleo.backend.app.repositories.ReferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
