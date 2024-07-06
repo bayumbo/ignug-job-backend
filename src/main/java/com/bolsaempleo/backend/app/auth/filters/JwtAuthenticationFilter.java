@@ -9,7 +9,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-
 import com.bolsaempleo.backend.app.dto.LoginJWTResponseDto;
 import com.bolsaempleo.backend.app.entities.authentication.Users;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
@@ -75,10 +74,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                         .compact();
 
         response.addHeader("Authorization", "Bearer " + token);
+
+        Map<String, Object> bodyToken = new HashMap<>();
+        bodyToken.put("token", token);
+
         LoginJWTResponseDto body = new LoginJWTResponseDto();
         body.setCode(ComunEnum.CORRECTO.toString());
         body.setMessage(username+" "+ComunEnum.MENSAJELOGINSUCCESSFUL.getDescripcion());
-        body.setData(token);
+        body.setData(bodyToken);
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(200);
         response.setContentType("application/json");
