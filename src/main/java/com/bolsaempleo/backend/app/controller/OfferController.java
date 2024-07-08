@@ -24,7 +24,7 @@ public class OfferController {
 
     
         @GetMapping
-    public ResponseEntity<OfferResponseDto> getAllLocations() {
+    public ResponseEntity<OfferResponseDto> getAll() {
         OfferResponseDto responseDto = offersService.findAll();
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -37,20 +37,20 @@ public class OfferController {
     }
 
     @PostMapping
-    public ResponseEntity<OfferResponseDto> createLocation(@RequestBody OfferDto offerDto) {
+    public ResponseEntity<OfferResponseDto> create(@RequestBody OfferDto offerDto) {
         OfferResponseDto responseDto = offersService.save(offerDto);
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OfferResponseDto> updateLocation(@PathVariable Long id, @RequestBody OfferDto offerDto) {
+    public ResponseEntity<OfferResponseDto> update(@PathVariable Long id, @RequestBody OfferDto offerDto) {
         OfferResponseDto responseDto = offersService.update(id, offerDto);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<OfferResponseDto> deleteLocation(@PathVariable Long id) {
+    public ResponseEntity<OfferResponseDto> delete(@PathVariable Long id) {
         OfferResponseDto responseDto = offersService.deleteById(id);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);
