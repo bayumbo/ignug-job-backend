@@ -3,12 +3,13 @@ package com.bolsaempleo.backend.app.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Getter
 @Setter
-public class CourseDto {
+public class CourseDto implements Serializable{
     private Long id;
     private Long certificationTypeId;
     private Timestamp createdAt;

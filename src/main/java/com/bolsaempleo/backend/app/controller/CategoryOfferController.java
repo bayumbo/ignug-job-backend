@@ -13,12 +13,9 @@ import java.util.List;
 @RequestMapping("/category-offers")
 public class CategoryOfferController {
 
-    private final CategoryOfferService categoryOfferService;
-
     @Autowired
-    public CategoryOfferController(CategoryOfferService categoryOfferService) {
-        this.categoryOfferService = categoryOfferService;
-    }
+    private CategoryOfferService categoryOfferService;
+
 
     @GetMapping
     public ResponseEntity<List<CategoryOffer>> getAllCategoryOffers() {

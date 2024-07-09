@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import com.bolsaempleo.backend.app.dto.LoginJWTResponseDto;
 import com.bolsaempleo.backend.app.entities.authentication.Users;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 import com.fasterxml.jackson.core.exc.StreamReadException;
@@ -74,10 +75,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         response.addHeader("Authorization", "Bearer " + token);
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("token", token);
-        body.put("message", String.format("Hola %s, has iniciado sesion con exito!", username));
-        body.put("username", username);
+        Map<String, Object> bodyToken = new HashMap<>();
+        bodyToken.put("token", token);
+
+        LoginJWTResponseDto body = new LoginJWTResponseDto();
+        body.setCode(ComunEnum.CORRECTO.toString());
+        body.setMessage(username+" "+ComunEnum.MENSAJELOGINSUCCESSFUL.getDescripcion());
+        body.setData(bodyToken);
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(200);
         response.setContentType("application/json");
@@ -87,10 +91,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
 
-        Map<String, Object> body = new HashMap<>();
-        body.put("message", "Error en la autenticacion username o password incorrecto!");
-        body.put("error", failed.getMessage());
-
+        LoginJWTResponseDto body = new LoginJWTResponseDto();
+        body.setCode(ComunEnum.CORRECTO.toString());
+        body.setMessage(ComunEnum.MENSAJELOGINUNSUCCESSFUL.getDescripcion());
+        body.setData(null);
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));
         response.setStatus(401);
         response.setContentType("application/json");

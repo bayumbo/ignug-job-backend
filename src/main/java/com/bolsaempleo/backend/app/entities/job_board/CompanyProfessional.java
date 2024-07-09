@@ -29,11 +29,13 @@ public class CompanyProfessional implements Serializable {
 	private Timestamp updatedAt;
 
 	//bi-directional many-to-one association to Company
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Company company;
 
 	//bi-directional many-to-one association to Professional
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Professional professional;
 
 	public CompanyProfessional() {

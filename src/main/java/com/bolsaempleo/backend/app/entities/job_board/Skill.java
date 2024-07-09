@@ -35,7 +35,8 @@ public class Skill implements Serializable {
 	private Timestamp updatedAt;
 
 	//bi-directional many-to-one association to Professional
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Professional professional;
 
 	public Skill() {

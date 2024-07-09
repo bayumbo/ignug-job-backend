@@ -1,11 +1,13 @@
 package com.bolsaempleo.backend.app.dto;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryDto {
+public class CategoryDto implements Serializable{
 
     private String id;
     private String code;

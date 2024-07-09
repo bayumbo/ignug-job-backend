@@ -14,12 +14,8 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
 
-    private final CompanyService companyService;
-
     @Autowired
-    public CompanyController(CompanyService companyService) {
-        this.companyService = companyService;
-    }
+    private CompanyService companyService;
 
     @GetMapping
     public ResponseEntity<ObjectResponse> getAllCompanies() {

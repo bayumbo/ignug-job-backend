@@ -52,12 +52,14 @@ public class Cours implements Serializable {
 	private Timestamp updatedAt;
 
 	//bi-directional many-to-one association to Category
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="area_id")
 	private Category category;
 
 	//bi-directional many-to-one association to Professional
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Professional professional;
 
 	public Cours() {

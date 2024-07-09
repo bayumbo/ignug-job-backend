@@ -1,14 +1,11 @@
 package com.bolsaempleo.backend.app.controller;
 
-import com.bolsaempleo.backend.app.dto.CompanyProfessionalResponseDto;
+
 import com.bolsaempleo.backend.app.dto.CourseDto;
 import com.bolsaempleo.backend.app.dto.CourseResponseDto;
-import com.bolsaempleo.backend.app.dto.ObjectResponse;
 import com.bolsaempleo.backend.app.entities.job_board.Cours;
 import com.bolsaempleo.backend.app.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

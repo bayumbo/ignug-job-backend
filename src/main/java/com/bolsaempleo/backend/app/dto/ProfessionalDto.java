@@ -1,10 +1,12 @@
 package com.bolsaempleo.backend.app.dto;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 @Getter
 @Setter
-public class ProfessionalDto {
+public class ProfessionalDto implements Serializable{
 
 
     private String createdAt;

@@ -1,5 +1,6 @@
 package com.bolsaempleo.backend.app.dto;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 import lombok.Getter;
@@ -8,7 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 
-public class LocationDto {
+public class LocationDto implements Serializable{
+    
     private Long id;
     private String alpha2Code;
     private String alpha3Code;

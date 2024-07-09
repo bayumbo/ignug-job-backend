@@ -1,11 +1,13 @@
 package com.bolsaempleo.backend.app.dto;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ReferenceDto {
+public class ReferenceDto implements Serializable{
 
     private String contactEmail;
     private String contactName;

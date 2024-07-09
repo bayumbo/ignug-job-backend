@@ -47,7 +47,8 @@ public class AcademicFormation implements Serializable {
 	private Category category;
 
 	//bi-directional many-to-one association to Professional
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Professional professional;
 
 	public AcademicFormation() {

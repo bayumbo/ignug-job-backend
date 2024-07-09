@@ -1,12 +1,14 @@
 package com.bolsaempleo.backend.app.services;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.bolsaempleo.backend.app.dto.OfferResponseDto;
-import com.bolsaempleo.backend.app.dto.OffersDto;
+import com.bolsaempleo.backend.app.dto.OfferDto;
 import com.bolsaempleo.backend.app.entities.job_board.Offer;
 import com.bolsaempleo.backend.app.repositories.OffersRepository;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
@@ -18,57 +20,168 @@ public class OffersServiceImpl implements OfferService{
     private OffersRepository offersRepository;
 
 
+
     @Override
     @Transactional(readOnly = true )
-    public OfferResponseDto findAllDto(){
-        OfferResponseDto offerResponseDto = new OfferResponseDto();
-        List<Offer> offers = offersRepository.findAllOffers();
-        List<OffersDto> offersDto = new ArrayList<>();
-        try {
-            if (offers.size()>0){
-                for (Offer o : offers){
-                    offersDto.add(crearModelo(o));
-                }
-                offerResponseDto.setCode(ComunEnum.CORRECTO.toString());
-                offerResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
-                offerResponseDto.setData(offersDto);      
-            }else{
-                offerResponseDto.setCode(ComunEnum.INCORRECTO.toString());
-                offerResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
-            }
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        return offerResponseDto;
-    } 
+    public OfferResponseDto findAll() {
+        List<Offer> offers = offersRepository.findAll().stream()
+                .filter(offer -> offer.getDeletedAt() == null)
+                .collect(Collectors.toList());
 
-    public OffersDto crearModelo (Offer offer){
-        OffersDto offersDto = new OffersDto();
-        if (offer.getActivities() != null){offersDto.setActivities(offer.getActivities());}
-        if (offer.getAdditionalInformation() != null){offersDto.setAdditionalInformation(offer.getAdditionalInformation());}
-        if (offer.getCode() != null){offersDto.setCode(offer.getCode());}
-        if (offer.getContactCellphone() != null){offersDto.setContactCellphone(offer.getContactCellphone());}
-        if (offer.getContactEmail() != null){offersDto.setContactEmail(offer.getContactEmail());}
-        if (offer.getContactName() != null){offersDto.setContactName(offer.getContactName());}
-        if (offer.getContactPhone() != null){offersDto.setContactPhone(offer.getContactPhone());}
-        if (offer.getContractTypeId() != null){offersDto.setContractTypeId(offer.getContractTypeId());}
-        if (offer.getCreatedAt() != null){offersDto.setCreatedAt(offer.getCreatedAt());}
-        if (offer.getDeletedAt() != null){offersDto.setDeletedAt(offer.getDeletedAt());}
-        if (offer.getEndedAt() != null){offersDto.setEndedAt(offer.getEndedAt());}
-        if (offer.getExperienceTimeId() != null){offersDto.setExperienceTimeId(offer.getExperienceTimeId());}
-        if (offer.getLocationId() != null){offersDto.setLocationId(offer.getLocationId());}
-        if (offer.getPosition() != null){offersDto.setPosition(offer.getPosition());}
-        if (offer.getRemuneration() != null){offersDto.setRemuneration(offer.getRemuneration());}
-        if (offer.getRequirements() != null){offersDto.setRequirements(offer.getRequirements());}
-        if (offer.getSectorId() != null){offersDto.setSectorId(offer.getSectorId());}
-        if (offer.getStartedAt() != null){offersDto.setStartedAt(offer.getStartedAt());}
-        if (offer.getStateId() != null){offersDto.setStateId(offer.getStateId());}
-        if (offer.getTrainingHoursId() != null){offersDto.setTrainingHoursId(offer.getTrainingHoursId());}
-        if (offer.getUpdatedAt() != null){offersDto.setUpdatedAt(offer.getUpdatedAt());}
-        if (offer.getVacancies() != null){offersDto.setVacancies(offer.getVacancies());}
-        if (offer.getWorkingDayId() != null){offersDto.setWorkingDayId(offer.getWorkingDayId());}
-        if (offer.getCompany() != null){offersDto.setCompany(offer.getCompany());}
-        return offersDto;
+        List<OfferDto> offerDtos = offers.stream()
+                .map(this::toOfferDto)
+                .collect(Collectors.toList());
+        return createResponseDto(offerDtos, ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
     }
+
+    private OfferResponseDto createResponseDto(List<OfferDto> data, String code, String message) {
+        OfferResponseDto responseDto = new OfferResponseDto();
+        responseDto.setCode(code);
+        responseDto.setMessage(message);
+        responseDto.setData(data);
+        return responseDto;
+    }
+    private OfferDto toOfferDto(Offer offer) {
+        OfferDto dto = new OfferDto();
+        dto.setActivities(offer.getActivities());
+        dto.setAdditionalInformation(offer.getAdditionalInformation());
+        dto.setCode(offer.getCode());
+        dto.setContactCellphone(offer.getContactCellphone());
+        dto.setContactEmail(offer.getContactEmail());
+        dto.setContactName(offer.getContactName());
+        dto.setContactPhone(offer.getContactPhone());
+        dto.setContractTypeId(offer.getContractTypeId());
+        dto.setCreatedAt(offer.getCreatedAt());
+        dto.setCode(offer.getCode());
+        dto.setDeletedAt(offer.getDeletedAt());
+        dto.setEndedAt(offer.getEndedAt());
+        dto.setExperienceTimeId(offer.getExperienceTimeId());
+        dto.setLocationId(offer.getLocationId());
+        dto.setPosition(offer.getPosition());
+        dto.setRemuneration(offer.getRemuneration());
+        dto.setRequirements(offer.getRequirements());
+        dto.setSectorId(offer.getSectorId());
+        dto.setStartedAt(offer.getStartedAt());
+        dto.setStateId(offer.getStateId());
+        dto.setTrainingHoursId(offer.getTrainingHoursId());
+        dto.setUpdatedAt(offer.getUpdatedAt());
+        dto.setVacancies(offer.getVacancies());
+        dto.setWorkingDayId(offer.getWorkingDayId());
+        dto.setCompany(offer.getCompany());
+        return dto;
+    }
+
+    
+    @Override
+    public OfferResponseDto findById(Long id) {
+        Offer offer = offersRepository.findById(id)
+                .filter(loc -> loc.getDeletedAt() == null)
+                .orElse(null);
+
+        if (offer == null) {
+            return createResponseDto(null, ComunEnum.RECURSOVACIO.toString(), ComunEnum.MENSAJESINDATOS.getDescripcion());
+        }
+        return createResponseDto(List.of(toOfferDto(offer)), ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
+    }
+
+
+    @Override
+    public OfferResponseDto save(OfferDto offerDto) {
+        Offer offer = toOffer(offerDto);
+        offer.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        Offer savedOffer = offersRepository.save(offer);
+        return createResponseDto(List.of(toOfferDto(savedOffer)), ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
+    }
+
+    private Offer toOffer(OfferDto dto) {
+        Offer offer = new Offer();
+        dto.setActivities(offer.getActivities());
+        dto.setAdditionalInformation(offer.getAdditionalInformation());
+        dto.setCode(offer.getCode());
+        dto.setContactCellphone(offer.getContactCellphone());
+        dto.setContactEmail(offer.getContactEmail());
+        dto.setContactName(offer.getContactName());
+        dto.setContactPhone(offer.getContactPhone());
+        dto.setContractTypeId(offer.getContractTypeId());
+        dto.setCreatedAt(offer.getCreatedAt());
+        dto.setCode(offer.getCode());
+        dto.setDeletedAt(offer.getDeletedAt());
+        dto.setEndedAt(offer.getEndedAt());
+        dto.setExperienceTimeId(offer.getExperienceTimeId());
+        dto.setLocationId(offer.getLocationId());
+        dto.setPosition(offer.getPosition());
+        dto.setRemuneration(offer.getRemuneration());
+        dto.setRequirements(offer.getRequirements());
+        dto.setSectorId(offer.getSectorId());
+        dto.setStartedAt(offer.getStartedAt());
+        dto.setStateId(offer.getStateId());
+        dto.setTrainingHoursId(offer.getTrainingHoursId());
+        dto.setUpdatedAt(offer.getUpdatedAt());
+        dto.setVacancies(offer.getVacancies());
+        dto.setWorkingDayId(offer.getWorkingDayId());
+        dto.setCompany(offer.getCompany());
+        return offer;
+    }
+    @Override
+    public OfferResponseDto update(Long id, OfferDto offerDto) {
+        Offer offer = offersRepository.findById(id)
+                .filter(loc -> loc.getDeletedAt() == null)
+                .orElse(null);
+
+        if (offer == null) {
+            return createResponseDto(null, ComunEnum.RECURSOVACIO.toString(), ComunEnum.MENSAJESINDATOS.getDescripcion());
+        }
+
+        updateLocationFromDto(offerDto, offer);
+        offer.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+        Offer updatedOffer = offersRepository.save(offer);
+
+        return createResponseDto(List.of(toOfferDto(updatedOffer)), ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
+    }
+
+    private void updateLocationFromDto(OfferDto dto, Offer offer) {
+        dto.setActivities(offer.getActivities());
+        dto.setAdditionalInformation(offer.getAdditionalInformation());
+        dto.setCode(offer.getCode());
+        dto.setContactCellphone(offer.getContactCellphone());
+        dto.setContactEmail(offer.getContactEmail());
+        dto.setContactName(offer.getContactName());
+        dto.setContactPhone(offer.getContactPhone());
+        dto.setContractTypeId(offer.getContractTypeId());
+        dto.setCreatedAt(offer.getCreatedAt());
+        dto.setCode(offer.getCode());
+        dto.setDeletedAt(offer.getDeletedAt());
+        dto.setEndedAt(offer.getEndedAt());
+        dto.setExperienceTimeId(offer.getExperienceTimeId());
+        dto.setLocationId(offer.getLocationId());
+        dto.setPosition(offer.getPosition());
+        dto.setRemuneration(offer.getRemuneration());
+        dto.setRequirements(offer.getRequirements());
+        dto.setSectorId(offer.getSectorId());
+        dto.setStartedAt(offer.getStartedAt());
+        dto.setStateId(offer.getStateId());
+        dto.setTrainingHoursId(offer.getTrainingHoursId());
+        dto.setUpdatedAt(offer.getUpdatedAt());
+        dto.setVacancies(offer.getVacancies());
+        dto.setWorkingDayId(offer.getWorkingDayId());
+        dto.setCompany(offer.getCompany());
+    }
+
+    @Override
+    public OfferResponseDto deleteById(Long id) {
+        Offer offer = offersRepository.findById(id).orElse(null);
+
+        if (offer == null || offer.getDeletedAt() != null) {
+            return createResponseDto(null, ComunEnum.RECURSOVACIO.toString(), ComunEnum.MENSAJESINDATOS.getDescripcion());
+        }
+
+        offer.setDeletedAt(new Timestamp(System.currentTimeMillis()));
+        offersRepository.save(offer);
+        return createResponseDto(null, ComunEnum.CORRECTO.toString(), ComunEnum.MENSAJECORRECTO.getDescripcion());
+    }
+
+
+
+
     
 }

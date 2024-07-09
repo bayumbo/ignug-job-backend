@@ -9,7 +9,6 @@ import com.bolsaempleo.backend.app.dto.LocationDto;
 import com.bolsaempleo.backend.app.dto.LocationResponseDto;
 import com.bolsaempleo.backend.app.entities.core.Location;
 import com.bolsaempleo.backend.app.repositories.LocationRepository;
-import com.bolsaempleo.backend.app.services.LocationService;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 
 @Service

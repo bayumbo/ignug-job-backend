@@ -1,16 +1,13 @@
 package com.bolsaempleo.backend.app.services;
 
-import com.bolsaempleo.backend.app.dto.CompanyProfessionalDto;
-import com.bolsaempleo.backend.app.dto.CompanyProfessionalResponseDto;
+
 import com.bolsaempleo.backend.app.dto.CourseDto;
 import com.bolsaempleo.backend.app.dto.CourseResponseDto;
-import com.bolsaempleo.backend.app.entities.job_board.CompanyProfessional;
 import com.bolsaempleo.backend.app.entities.job_board.Cours;
 import com.bolsaempleo.backend.app.repositories.CourseRepository;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
