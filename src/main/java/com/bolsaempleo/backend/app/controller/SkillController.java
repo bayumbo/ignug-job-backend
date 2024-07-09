@@ -23,6 +23,7 @@ public class SkillController {
         return ResponseEntity.ok(skills);
     }
     //metodo para mostrar 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/{id}")
     public ResponseEntity<SkillResponseDto> getSkillById(@PathVariable Long id) {
         SkillResponseDto skill = skillService.findById(id);

@@ -40,7 +40,8 @@ public class Category implements Serializable {
 	private List<AcademicFormation> academicFormations;
 
 	//bi-directional many-to-one association to Category
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="parent_id")
 	private Category category;
 

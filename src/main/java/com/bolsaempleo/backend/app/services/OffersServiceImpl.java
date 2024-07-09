@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.bolsaempleo.backend.app.dto.OfferResponseDto;
 import com.bolsaempleo.backend.app.dto.OfferDto;
 import com.bolsaempleo.backend.app.entities.job_board.Offer;
@@ -20,6 +22,7 @@ public class OffersServiceImpl implements OfferService{
 
 
     @Override
+    @Transactional(readOnly = true )
     public OfferResponseDto findAll() {
         List<Offer> offers = offersRepository.findAll().stream()
                 .filter(offer -> offer.getDeletedAt() == null)

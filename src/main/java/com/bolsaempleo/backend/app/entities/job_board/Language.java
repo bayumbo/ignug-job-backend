@@ -41,7 +41,8 @@ public class Language implements Serializable {
 	private Long writtenLevelId;
 
 	//bi-directional many-to-one association to Professional
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Professional professional;
 
 	public Language() {

@@ -52,7 +52,8 @@ public class Experience implements Serializable {
 	private Boolean worked;
 
 	//bi-directional many-to-one association to Professional
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Professional professional;
 
 	public Experience() {

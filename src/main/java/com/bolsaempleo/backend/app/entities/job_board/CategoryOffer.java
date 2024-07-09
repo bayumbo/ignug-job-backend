@@ -26,11 +26,13 @@ public class CategoryOffer implements Serializable {
 	private Timestamp updatedAt;
 
 	//bi-directional many-to-one association to Category
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Category category;
 
 	//bi-directional many-to-one association to Offer
-	@ManyToOne
+	//@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Offer offer;
 
 	public CategoryOffer() {
