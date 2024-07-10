@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
-@RequestMapping("/OfferProfessional")
+@RequestMapping("/offerprofessional")
 public class OfferProfessionalController {
 
 

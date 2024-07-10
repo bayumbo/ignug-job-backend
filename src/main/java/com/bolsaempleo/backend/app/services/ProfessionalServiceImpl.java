@@ -36,7 +36,7 @@ public class ProfessionalServiceImpl implements ProfessionalService{
     public ProfessionalDto findByIdDto (Long id){//
         Optional<Professional> professionalsFinded = professionalsRepository.findById(id);
         ProfessionalDto professionalsDto = new ProfessionalDto();
-        try {
+     
             if (professionalsFinded.isEmpty()){
                 throw new EntityNotFoundException("Error");
             }
@@ -52,10 +52,7 @@ public class ProfessionalServiceImpl implements ProfessionalService{
             professionalsDto.setFamiliarCatastrophicDiseased(professionalsFinded.get().getFamiliarCatastrophicDiseased());
             professionalsDto.setFamiliarDisabled(professionalsFinded.get().getFamiliarDisabled());
             professionalsDto.setTraveled(professionalsFinded.get().getTraveled());
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        
+       
         return professionalsDto;
     }
 

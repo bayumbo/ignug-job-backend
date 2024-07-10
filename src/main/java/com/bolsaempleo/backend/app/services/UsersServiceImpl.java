@@ -48,7 +48,8 @@ public class UsersServiceImpl implements UsersService{
                 usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
         return usersResponseDto;
     }
@@ -100,7 +101,8 @@ public class UsersServiceImpl implements UsersService{
                 usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
 
         return usersResponseDto;
@@ -123,7 +125,8 @@ public class UsersServiceImpl implements UsersService{
                 usersResponseDto.setMessage(ComunEnum.MENSAJECEDULAINVALIDA.getDescripcion());
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
         return usersResponseDto;
     }
@@ -210,7 +213,8 @@ public class UsersServiceImpl implements UsersService{
                 usersResponseDto.setMessage(ComunEnum.MENSAJERECURSONOEXISTE.getDescripcion());
         }    
         } catch (Exception e) {
-            // TODO: handle exception
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
         
         return usersResponseDto;

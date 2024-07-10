@@ -35,7 +35,6 @@ public class CategoryService {
                 categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
-            System.out.println(e);
             categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
             categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
@@ -89,7 +88,6 @@ public class CategoryService {
                 categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
-            System.out.println(e);
             categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
             categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
@@ -114,7 +112,6 @@ public class CategoryService {
                 categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
-            System.out.println(e);
             categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
             categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }

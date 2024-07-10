@@ -65,7 +65,8 @@ public class CatalogueServiceImpl implements CatalogueService {
                 catalogueResponseDto.setData(catalogueDto);
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            catalogueResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
         return catalogueResponseDto;
     }
@@ -119,7 +120,8 @@ public class CatalogueServiceImpl implements CatalogueService {
                 catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            catalogueResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            catalogueResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
         }
 
         return catalogueResponseDto;
