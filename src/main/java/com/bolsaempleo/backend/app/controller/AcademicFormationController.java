@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/academic-formations")
@@ -31,7 +32,7 @@ public class AcademicFormationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AcademicFormation> getAcademicFormationById(@PathVariable Long id) {
+    public ResponseEntity<AcademicFormation> getAcademicFormationById(@PathVariable UUID id) {
         Optional<AcademicFormation> academicFormation = academicFormationService.getAcademicFormationById(id);
         return academicFormation.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -43,14 +44,14 @@ public class AcademicFormationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AcademicFormation> updateAcademicFormation(@PathVariable Long id, @RequestBody AcademicFormation academicFormation) {
+    public ResponseEntity<AcademicFormation> updateAcademicFormation(@PathVariable UUID id, @RequestBody AcademicFormation academicFormation) {
         academicFormation.setId(id);
         AcademicFormation updatedFormation = academicFormationService.saveOrUpdateAcademicFormation(academicFormation);
         return ResponseEntity.ok(updatedFormation);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAcademicFormation(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAcademicFormation(@PathVariable UUID id) {
         academicFormationService.deleteAcademicFormation(id);
         return ResponseEntity.noContent().build();
     }

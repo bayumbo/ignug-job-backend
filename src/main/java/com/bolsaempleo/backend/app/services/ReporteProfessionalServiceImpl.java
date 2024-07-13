@@ -49,6 +49,7 @@ public class ReporteProfessionalServiceImpl implements ReporteProfessionalServic
 			} catch (Exception e) {
 				errorDto.setCode(ComunEnum.INCORRECTO.toString());
 				errorDto.setMessage(ComunEnum.MENSAJEREPORTFAILED.getDescripcion());
+				errorDto.setData(e.getMessage());
 			}
 			return dto;
 	}

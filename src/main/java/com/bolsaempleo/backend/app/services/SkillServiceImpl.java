@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +36,7 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public SkillResponseDto findById(Long id) {
+    public SkillResponseDto findById(UUID id) {
         Optional<Skill> optionalSkill = skillRepository.findByIdAndDeletedAtIsNull(id);
         return optionalSkill.map(this::convertToResponseDTO).orElse(null);
     }
@@ -49,7 +50,7 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public SkillResponseDto update(Long id, SkillDto skillDto) {
+    public SkillResponseDto update(UUID id, SkillDto skillDto) {
         Optional<Skill> optionalSkill = skillRepository.findByIdAndDeletedAtIsNull(id);
         if (optionalSkill.isPresent()) {
             Skill skill = optionalSkill.get();
@@ -62,7 +63,7 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(UUID id) {
         Optional<Skill> optionalSkill = skillRepository.findByIdAndDeletedAtIsNull(id);
         if (optionalSkill.isPresent()) {
             Skill skill = optionalSkill.get();

@@ -1,11 +1,21 @@
 package com.bolsaempleo.backend.app.entities.authentication;
 
-import java.io.Serializable;
-import jakarta.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
-import java.sql.Timestamp;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -14,12 +24,15 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="users",schema = "authentication")
-public class Users implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Users implements Serializable{
+
+private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
 	private String avatar;
 
@@ -80,11 +93,11 @@ public class Users implements Serializable {
 	@ManyToMany
 	private List<Role> roles; 
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

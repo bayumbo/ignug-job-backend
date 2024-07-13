@@ -4,6 +4,9 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -17,14 +20,17 @@ public class Company implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
-	@Column(name="activity_type_id")
+
+	@Column(name="activity_type_id", nullable=false)
 	private Long activityTypeId;
 
-	@Column(name="commercial_activities")
-	private Object commercialActivities;
+	@Column(name="commercial_activities", length=1000)
+	private String commercialActivities;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -32,39 +38,40 @@ public class Company implements Serializable {
 	@Column(name="deleted_at")
 	private Timestamp deletedAt;
 
-	@Column(name="person_type_id")
+	@Column(name="person_type_id", nullable=false)
 	private Long personTypeId;
 
-	@Column(name="trade_name")
+	@Column(name="trade_name", nullable=false, length=2147483647)
 	private String tradeName;
 
-	@Column(name="type_id")
+	@Column(name="type_id", nullable=false)
 	private Long typeId;
 
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
-	@Column(name="user_id")
+	@Column(name="user_id", nullable=false)
 	private Long userId;
 
+	@Column(length=255)
 	private String web;
 
 	//bi-directional many-to-one association to CompanyProfessional
-	@OneToMany(mappedBy="company")
+	@OneToMany(mappedBy="company", fetch=FetchType.EAGER)
 	private List<CompanyProfessional> companyProfessionals;
 
 	//bi-directional many-to-one association to Offer
-	@OneToMany(mappedBy="company")
+	@OneToMany(mappedBy="company", fetch=FetchType.EAGER)
 	private List<Offer> offers;
 
 	public Company() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
@@ -76,11 +83,11 @@ public class Company implements Serializable {
 		this.activityTypeId = activityTypeId;
 	}
 
-	public Object getCommercialActivities() {
+	public String getCommercialActivities() {
 		return this.commercialActivities;
 	}
 
-	public void setCommercialActivities(Object commercialActivities) {
+	public void setCommercialActivities(String commercialActivities) {
 		this.commercialActivities = commercialActivities;
 	}
 

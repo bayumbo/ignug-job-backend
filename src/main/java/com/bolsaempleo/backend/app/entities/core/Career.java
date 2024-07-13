@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="careers")
+@Table(name="careers",schema = "core")
 @NamedQuery(name="Career.findAll", query="SELECT c FROM Career c")
 public class Career implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -28,7 +29,7 @@ public class ExperienceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExperienceResponseDto> getExperienceById(@PathVariable Long id) {
+    public ResponseEntity<ExperienceResponseDto> getExperienceById(@PathVariable UUID id) {
         ExperienceResponseDto responseDto = experienceService.findById(id);
         HttpStatus status = responseDto.getCode().equals(ComunEnum.CORRECTO.toString()) ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);
@@ -42,7 +43,7 @@ public class ExperienceController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteExperience(@PathVariable Long id) {
+    public void deleteExperience(@PathVariable UUID id) {
         experienceService.deleteExperience(id);
     }
 }

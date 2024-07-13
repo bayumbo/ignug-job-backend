@@ -1,6 +1,7 @@
 package com.bolsaempleo.backend.app.dto;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,6 @@ public class LanguageDto implements Serializable{
     private Long readLevelId;
     private Long spokenLevelId;
     private Long writtenLevelId;
-    private Long professionalId;
+    private UUID professionalId;
 
 }

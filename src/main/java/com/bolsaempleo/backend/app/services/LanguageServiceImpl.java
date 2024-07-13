@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +36,7 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public LanguageResponseDto findById(Long id) {
+    public LanguageResponseDto findById(UUID id) {
         Optional<Language> optionalLanguage = languageRepository.findByIdAndDeletedAtIsNull(id);
         return optionalLanguage.map(this::convertToResponseDTO).orElse(null);
     }
@@ -49,7 +50,7 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public LanguageResponseDto updateLanguage(Long id, LanguageDto languageDto) {
+    public LanguageResponseDto updateLanguage(UUID id, LanguageDto languageDto) {
         Optional<Language> optionalLanguage = languageRepository.findByIdAndDeletedAtIsNull(id);
         if (optionalLanguage.isPresent()) {
             Language language = optionalLanguage.get();
@@ -62,7 +63,7 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(UUID id) {
         Optional<Language> optionalLanguage = languageRepository.findById(id);
         if (optionalLanguage.isPresent()) {
             Language language = optionalLanguage.get();

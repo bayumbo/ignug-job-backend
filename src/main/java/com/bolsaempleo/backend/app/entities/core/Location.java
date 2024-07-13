@@ -47,7 +47,7 @@ public class Location implements Serializable {
 
 	private String subregion;
 
-	private Object timezones;
+	private String timezones;
 
 	@Column(name="top_level_domain")
 	private String topLevelDomain;
@@ -176,11 +176,11 @@ public class Location implements Serializable {
 		this.subregion = subregion;
 	}
 
-	public Object getTimezones() {
+	public String getTimezones() {
 		return this.timezones;
 	}
 
-	public void setTimezones(Object timezones) {
+	public void setTimezones(String timezones) {
 		this.timezones = timezones;
 	}
 

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bolsaempleo.backend.app.dto.OfferDto;
 import com.bolsaempleo.backend.app.dto.OfferResponseDto;
 import com.bolsaempleo.backend.app.services.OffersServiceImpl;
+
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +33,7 @@ public class OfferController {
     }
    
        @GetMapping("/{id}")
-    public ResponseEntity<OfferResponseDto> getOfferById(@PathVariable Long id) {
+    public ResponseEntity<OfferResponseDto> getOfferById(@PathVariable UUID id) {
         OfferResponseDto responseDto = offersService.findById(id);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);
@@ -43,14 +46,14 @@ public class OfferController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OfferResponseDto> update(@PathVariable Long id, @RequestBody OfferDto offerDto) {
+    public ResponseEntity<OfferResponseDto> update(@PathVariable UUID id, @RequestBody OfferDto offerDto) {
         OfferResponseDto responseDto = offersService.update(id, offerDto);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<OfferResponseDto> delete(@PathVariable Long id) {
+    public ResponseEntity<OfferResponseDto> delete(@PathVariable UUID id) {
         OfferResponseDto responseDto = offersService.deleteById(id);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);

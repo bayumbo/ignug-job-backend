@@ -2,6 +2,8 @@ package com.bolsaempleo.backend.app.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.bolsaempleo.backend.app.dto.CategoryDto;
@@ -22,7 +24,7 @@ public class CategoryService {
 		this.categoryRepository = categoryRepository;
 	}
 
-    public CategoryResponseDto findByIdDto (Long entrada){
+    public CategoryResponseDto findByIdDto (UUID entrada){
         CategoryResponseDto categoryRespuestaDto = new CategoryResponseDto();
         try {
             Category category = categoryRepository.findCategoryById(entrada);
@@ -37,6 +39,7 @@ public class CategoryService {
         } catch (Exception e) {
             categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
             categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            categoryRespuestaDto.setData(e.getMessage());
         }
 
         return categoryRespuestaDto;
@@ -70,7 +73,7 @@ public class CategoryService {
     }
     
 
-    public CategoryResponseDto findBySubCategoryId (Long entrada){
+    public CategoryResponseDto findBySubCategoryId (UUID entrada){
         CategoryResponseDto categoryRespuestaDto = new CategoryResponseDto();
         List<CategoryDto> categoryModelDtos = new ArrayList<>();
         try {
@@ -90,11 +93,12 @@ public class CategoryService {
         } catch (Exception e) {
             categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
             categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            categoryRespuestaDto.setData(e.getMessage());
         }
 
         return categoryRespuestaDto;
     }
-    public CategoryResponseDto findCategoryAndSubCategoriesByCategoryId (Long entrada){
+    public CategoryResponseDto findCategoryAndSubCategoriesByCategoryId (UUID entrada){
         CategoryResponseDto categoryRespuestaDto = new CategoryResponseDto();
         List<CategoryDto> categoryModelDtos = new ArrayList<>();
         try {
@@ -114,11 +118,12 @@ public class CategoryService {
         } catch (Exception e) {
             categoryRespuestaDto.setCode(ComunEnum.INCORRECTO.toString());
             categoryRespuestaDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            categoryRespuestaDto.setData(e.getMessage());
         }
         return categoryRespuestaDto;
     }
 
-    public Category update(Long id, Category category) {
+    public Category update(UUID id, Category category) {
         if (!categoryRepository.existsById(id)) {
             return null;
         }

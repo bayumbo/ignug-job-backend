@@ -1,6 +1,8 @@
 
 package com.bolsaempleo.backend.app.controller;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +32,7 @@ public class UsersController {
 
     @GetMapping("/{id}")
 	@ResponseBody
-    public UsersResponseDto findById (@PathVariable(name = "id") Long id){
+    public UsersResponseDto findById (@PathVariable(name = "id") UUID id){
         return usersService.findByIdDto(id);
     }
 
@@ -42,7 +44,7 @@ public class UsersController {
 
     @PutMapping("/{id}")
     @ResponseBody
-    public UsersResponseDto deleteUser (@PathVariable(name = "id") Long id) {
+    public UsersResponseDto deleteUser (@PathVariable(name = "id") UUID id) {
         return usersService.deteleUserDto(id);
     }
 }

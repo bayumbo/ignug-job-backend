@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AcademicFormationService {
@@ -24,7 +25,7 @@ public class AcademicFormationService {
         return academicFormationRepository.findByDeletedAtIsNull();
     }
 
-    public Optional<AcademicFormation> getAcademicFormationById(Long id) {
+    public Optional<AcademicFormation> getAcademicFormationById(UUID id) {
         return academicFormationRepository.findById(id).filter(academicFormation -> academicFormation.getDeletedAt() == null);
     }
 
@@ -32,7 +33,7 @@ public class AcademicFormationService {
         return academicFormationRepository.save(academicFormation);
     }
 
-    public void deleteAcademicFormation(Long id) {
+    public void deleteAcademicFormation(UUID id) {
         Optional<AcademicFormation> existingAcademicFormation = academicFormationRepository.findById(id);
         if (existingAcademicFormation.isPresent()) {
             AcademicFormation academicFormation = existingAcademicFormation.get();

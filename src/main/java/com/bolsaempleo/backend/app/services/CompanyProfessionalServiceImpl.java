@@ -3,6 +3,7 @@ package com.bolsaempleo.backend.app.services;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,7 @@ private CompanyProfessionalDto toCompanyProfessionalDto(CompanyProfessional comp
     }
 
     @Override
-    public CompanyProfessionalResponseDto findById(Long id) {
+    public CompanyProfessionalResponseDto findById(UUID id) {
         CompanyProfessional companyProfessional = companyProfessionalRepository.findById(id)
                 .orElse(null);
 
@@ -61,7 +62,7 @@ private CompanyProfessionalDto toCompanyProfessionalDto(CompanyProfessional comp
     }
 
     @Override
-    public CompanyProfessionalResponseDto update(Long id, CompanyProfessionalDto companyProfessionalDto) {
+    public CompanyProfessionalResponseDto update(UUID id, CompanyProfessionalDto companyProfessionalDto) {
         CompanyProfessional companyProfessional = companyProfessionalRepository.findById(id)
                 .orElse(null);
 
@@ -77,7 +78,7 @@ private CompanyProfessionalDto toCompanyProfessionalDto(CompanyProfessional comp
     }
 
     @Override
-    public CompanyProfessionalResponseDto deleteById(Long id) {
+    public CompanyProfessionalResponseDto deleteById(UUID id) {
         CompanyProfessional companyProfessional = companyProfessionalRepository.findById(id).orElse(null);
 
         if (companyProfessional == null) {

@@ -2,6 +2,7 @@ package com.bolsaempleo.backend.app.services;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,7 +74,7 @@ public class OffersServiceImpl implements OfferService{
 
     
     @Override
-    public OfferResponseDto findById(Long id) {
+    public OfferResponseDto findById(UUID id) {
         Offer offer = offersRepository.findById(id)
                 .filter(loc -> loc.getDeletedAt() == null)
                 .orElse(null);
@@ -123,7 +124,7 @@ public class OffersServiceImpl implements OfferService{
         return offer;
     }
     @Override
-    public OfferResponseDto update(Long id, OfferDto offerDto) {
+    public OfferResponseDto update(UUID id, OfferDto offerDto) {
         Offer offer = offersRepository.findById(id)
                 .filter(loc -> loc.getDeletedAt() == null)
                 .orElse(null);
@@ -168,7 +169,7 @@ public class OffersServiceImpl implements OfferService{
     }
 
     @Override
-    public OfferResponseDto deleteById(Long id) {
+    public OfferResponseDto deleteById(UUID id) {
         Offer offer = offersRepository.findById(id).orElse(null);
 
         if (offer == null || offer.getDeletedAt() != null) {

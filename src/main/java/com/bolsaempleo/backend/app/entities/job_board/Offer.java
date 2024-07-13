@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -18,29 +21,33 @@ public class Offer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
+	@Column(nullable=false, length=500)
 	private String activities;
 
-	@Column(name="additional_information")
+	@Column(name="additional_information", length=2147483647)
 	private String additionalInformation;
 
+	@Column(nullable=false, length=255)
 	private String code;
 
-	@Column(name="contact_cellphone")
+	@Column(name="contact_cellphone", length=255)
 	private String contactCellphone;
 
-	@Column(name="contact_email")
+	@Column(name="contact_email", nullable=false, length=255)
 	private String contactEmail;
 
-	@Column(name="contact_name")
+	@Column(name="contact_name", nullable=false, length=255)
 	private String contactName;
 
-	@Column(name="contact_phone")
+	@Column(name="contact_phone", length=255)
 	private String contactPhone;
 
-	@Column(name="contract_type_id")
+	@Column(name="contract_type_id", nullable=false)
 	private Long contractTypeId;
 
 	@Column(name="created_at")
@@ -50,32 +57,35 @@ public class Offer implements Serializable {
 	private Timestamp deletedAt;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="ended_at")
+	@Column(name="ended_at", nullable=false)
 	private Date endedAt;
 
-	@Column(name="experience_time_id")
+	@Column(name="experience_time_id", nullable=false)
 	private Long experienceTimeId;
 
-	@Column(name="location_id")
+	@Column(name="location_id", nullable=false)
 	private Long locationId;
 
+	@Column(nullable=false, length=255)
 	private String position;
 
+	@Column(length=255)
 	private String remuneration;
 
+	@Column(nullable=false, length=500)
 	private String requirements;
 
-	@Column(name="sector_id")
+	@Column(name="sector_id", nullable=false)
 	private Long sectorId;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="started_at")
+	@Column(name="started_at", nullable=false)
 	private Date startedAt;
 
-	@Column(name="state_id")
+	@Column(name="state_id", nullable=false)
 	private Long stateId;
 
-	@Column(name="training_hours_id")
+	@Column(name="training_hours_id", nullable=false)
 	private Long trainingHoursId;
 
 	@Column(name="updated_at")
@@ -83,29 +93,30 @@ public class Offer implements Serializable {
 
 	private Integer vacancies;
 
-	@Column(name="working_day_id")
+	@Column(name="working_day_id", nullable=false)
 	private Long workingDayId;
 
 	//bi-directional many-to-one association to CategoryOffer
-	@OneToMany(mappedBy="offer")
+	@OneToMany(mappedBy="offer", fetch=FetchType.EAGER)
 	private List<CategoryOffer> categoryOffers;
 
 	//bi-directional many-to-one association to OfferProfessional
-	@OneToMany(mappedBy="offer")
+	@OneToMany(mappedBy="offer", fetch=FetchType.EAGER)
 	private List<OfferProfessional> offerProfessionals;
 
 	//bi-directional many-to-one association to Company
 	@ManyToOne
+	@JoinColumn(name="company_id", nullable=false)
 	private Company company;
 
 	public Offer() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

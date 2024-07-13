@@ -6,11 +6,12 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.UUID;
 
 @Getter
 @Setter
 public class CourseDto implements Serializable{
-    private Long id;
+    private UUID id;
     private Long certificationTypeId;
     private Timestamp createdAt;
     private Timestamp deletedAt;
@@ -22,8 +23,8 @@ public class CourseDto implements Serializable{
     private Date startedAt;
     private Long typeId;
     private Timestamp updatedAt;
-    private Long areaId; 
-    private Long professionalId; 
+    private UUID areaId; 
+    private UUID professionalId; 
     
 }
 

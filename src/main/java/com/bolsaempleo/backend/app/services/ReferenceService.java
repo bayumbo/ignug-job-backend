@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +28,7 @@ public class ReferenceService {
                 .collect(Collectors.toList());
     }
 
-    public ReferenceResponseDto findById(Long id) {
+    public ReferenceResponseDto findById(UUID id) {
         Optional<Reference> referenceOptional = referenceRepository.findByIdAndDeletedAtIsNull(id);
         return referenceOptional.map(this::convertToResponseDTO).orElse(null);
     }
@@ -39,7 +40,7 @@ public class ReferenceService {
         return convertToResponseDTO(savedReference);
     }
 
-    public ReferenceResponseDto update(Long id, ReferenceDto referenceDto) {
+    public ReferenceResponseDto update(UUID id, ReferenceDto referenceDto) {
         Optional<Reference> optionalReference = referenceRepository.findByIdAndDeletedAtIsNull(id);
         if (optionalReference.isPresent()) {
             Reference reference = optionalReference.get();
@@ -51,7 +52,7 @@ public class ReferenceService {
         return null;
     }
 
-    public boolean delete(Long id) {
+    public boolean delete(UUID id) {
         Optional<Reference> optionalReference = referenceRepository.findByIdAndDeletedAtIsNull(id);
         if (optionalReference.isPresent()) {
             Reference reference = optionalReference.get();

@@ -3,6 +3,9 @@ package com.bolsaempleo.backend.app.entities.authentication;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -11,12 +14,16 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name="roles",schema = "authentication")
-public class Role implements Serializable {
-	private static final long serialVersionUID = 1L;
+public class Role implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -34,11 +41,11 @@ public class Role implements Serializable {
 	public Role() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

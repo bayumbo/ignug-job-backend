@@ -3,6 +3,10 @@ package com.bolsaempleo.backend.app.entities.job_board;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import java.sql.Timestamp;
 
 
@@ -17,10 +21,12 @@ public class Cours implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
-	@Column(name="certification_type_id")
+	@Column(name="certification_type_id", nullable=false)
 	private Long certificationTypeId;
 
 	@Column(name="created_at")
@@ -29,47 +35,50 @@ public class Cours implements Serializable {
 	@Column(name="deleted_at")
 	private Timestamp deletedAt;
 
+	@Column(length=2147483647)
 	private String description;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="ended_at")
+	@Column(name="ended_at", nullable=false)
 	private Date endedAt;
 
+	@Column(nullable=false)
 	private Integer hours;
 
+	@Column(nullable=false, length=255)
 	private String institution;
 
+	@Column(nullable=false, length=2147483647)
 	private String name;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="started_at")
+	@Column(name="started_at", nullable=false)
 	private Date startedAt;
 
-	@Column(name="type_id")
+	@Column(name="type_id", nullable=false)
 	private Long typeId;
 
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
 	//bi-directional many-to-one association to Category
-	//@ManyToOne
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="area_id")
+	@ManyToOne
+	@JoinColumn(name="area_id", nullable=false)
 	private Category category;
 
 	//bi-directional many-to-one association to Professional
-	//@ManyToOne
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name="professional_id", nullable=false)
 	private Professional professional;
 
 	public Cours() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

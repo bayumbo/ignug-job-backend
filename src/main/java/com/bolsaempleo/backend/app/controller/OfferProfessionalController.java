@@ -8,6 +8,9 @@ import com.bolsaempleo.backend.app.dto.OfferProfessionalDto;
 import com.bolsaempleo.backend.app.dto.OfferProfessionalResponseDto;
 import com.bolsaempleo.backend.app.dto.OfferResponseDto;
 import com.bolsaempleo.backend.app.services.OfferProfessionalService;
+
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +39,7 @@ public class OfferProfessionalController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
      @GetMapping("/{id}")
-    public ResponseEntity<OfferProfessionalResponseDto> getById(@PathVariable Long id) {
+    public ResponseEntity<OfferProfessionalResponseDto> getById(@PathVariable UUID id) {
         OfferProfessionalResponseDto offerProfessionalResponseDto = offersProfessionalService.findById(id);
         HttpStatus status = offerProfessionalResponseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(offerProfessionalResponseDto, status);
@@ -49,14 +52,14 @@ public class OfferProfessionalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<OfferProfessionalResponseDto> update(@PathVariable Long id, @RequestBody OfferProfessionalDto offerProfessionalDto) {
+    public ResponseEntity<OfferProfessionalResponseDto> update(@PathVariable UUID id, @RequestBody OfferProfessionalDto offerProfessionalDto) {
         OfferProfessionalResponseDto responseDto = offersProfessionalService.update(id, offerProfessionalDto);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<OfferProfessionalResponseDto> delete(@PathVariable Long id) {
+    public ResponseEntity<OfferProfessionalResponseDto> delete(@PathVariable UUID id) {
         OfferProfessionalResponseDto responseDto = offersProfessionalService.deleteById(id);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);

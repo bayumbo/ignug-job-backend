@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="socialmediables")
+@Table(name="socialmediables",schema = "core")
 @NamedQuery(name="Socialmediable.findAll", query="SELECT s FROM Socialmediable s")
 public class Socialmediable implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -33,7 +33,7 @@ public class Socialmediable implements Serializable {
 
 	private String url;
 
-	private String user;
+	private String users;
 
 	//bi-directional many-to-one association to Socialmedia
 	@ManyToOne
@@ -91,11 +91,11 @@ public class Socialmediable implements Serializable {
 	}
 
 	public String getUser() {
-		return this.user;
+		return this.users;
 	}
 
-	public void setUser(String user) {
-		this.user = user;
+	public void setUser(String users) {
+		this.users = users;
 	}
 
 	public Socialmedia getSocialmedia() {

@@ -1,6 +1,8 @@
 package com.bolsaempleo.backend.app.controller;
 
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +32,7 @@ public class CompanyProfessionalController {
     }
 
        @GetMapping("/{id}")
-    public ResponseEntity<CompanyProfessionalResponseDto> getCompanyById(@PathVariable Long id) {
+    public ResponseEntity<CompanyProfessionalResponseDto> getCompanyById(@PathVariable UUID id) {
         CompanyProfessionalResponseDto responseDto = companyProfessionalService.findById(id);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);
@@ -43,14 +45,14 @@ public class CompanyProfessionalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CompanyProfessionalResponseDto> updateLocation(@PathVariable Long id, @RequestBody CompanyProfessionalDto companyProfessionalDto) {
+    public ResponseEntity<CompanyProfessionalResponseDto> updateLocation(@PathVariable UUID id, @RequestBody CompanyProfessionalDto companyProfessionalDto) {
         CompanyProfessionalResponseDto responseDto = companyProfessionalService.update(id, companyProfessionalDto);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CompanyProfessionalResponseDto> deleteLocation(@PathVariable Long id) {
+    public ResponseEntity<CompanyProfessionalResponseDto> deleteLocation(@PathVariable UUID id) {
         CompanyProfessionalResponseDto responseDto = companyProfessionalService.deleteById(id);
         HttpStatus status = responseDto.getCode().equals("CORRECTO") ? HttpStatus.OK : HttpStatus.NOT_FOUND;
         return new ResponseEntity<>(responseDto, status);

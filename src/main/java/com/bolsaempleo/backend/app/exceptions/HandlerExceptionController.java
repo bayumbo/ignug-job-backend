@@ -1,6 +1,8 @@
 package com.bolsaempleo.backend.app.exceptions;
 
 import java.sql.SQLDataException;
+import java.sql.SQLException;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -95,6 +97,15 @@ public class HandlerExceptionController{
         errorDto.setData("Se ha producido un Error de tipo JDBC: "+e.getMessage());
     return ResponseEntity.internalServerError().body(errorDto);
     }
+    @ExceptionHandler(SQLException.class)
+    public ResponseEntity<ErrorDto> errorSqlException(Exception e){
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value()+"");
+        errorDto.setMessage(ComunEnum.MENSAJEERRORINTERNOSERVIDOR.getDescripcion());
+        errorDto.setData("Se ha producido un Error de tipo JDBC: "+e.getMessage());
+    return ResponseEntity.internalServerError().body(errorDto);
+    }
+    
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorDto> errorFilterUsername(Exception e){

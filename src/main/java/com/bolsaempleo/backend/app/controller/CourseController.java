@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/courses")
@@ -29,7 +30,7 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public CourseResponseDto findById(@PathVariable(name = "id") Long id) {
+    public CourseResponseDto findById(@PathVariable(name = "id") UUID id) {
         return courseService.findById(id);
     }
 
@@ -39,7 +40,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCourse(@PathVariable(name = "id") Long id) {
+    public void deleteCourse(@PathVariable(name = "id") UUID id) {
         courseService.deleteCourse(id);
     }
     /* 
