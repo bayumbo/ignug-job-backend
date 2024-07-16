@@ -3,6 +3,11 @@ package com.bolsaempleo.backend.app.entities.job_board;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import java.sql.Timestamp;
 
 
@@ -17,12 +22,15 @@ public class AcademicFormation implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
-	@Column(name="career_id")
+	@Column(name="career_id", nullable=false)
 	private Long careerId;
 
+	@Column(nullable=false)
 	private Boolean certificated;
 
 	@Column(name="created_at")
@@ -35,7 +43,7 @@ public class AcademicFormation implements Serializable {
 	@Column(name="registered_at")
 	private Date registeredAt;
 
-	@Column(name="senescyt_code")
+	@Column(name="senescyt_code", length=255)
 	private String senescytCode;
 
 	@Column(name="updated_at")
@@ -43,22 +51,22 @@ public class AcademicFormation implements Serializable {
 
 	//bi-directional many-to-one association to Category
 	@ManyToOne
-	@JoinColumn(name="professional_degree_id")
+	@JoinColumn(name="professional_degree_id", nullable=false)
 	private Category category;
 
 	//bi-directional many-to-one association to Professional
-	//@ManyToOne
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name="professional_id", nullable=false)
 	private Professional professional;
 
 	public AcademicFormation() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CompanyService {
@@ -24,7 +25,7 @@ public class CompanyService {
         return companyRepository.findAll();
     }
 
-    public Company findById(Long id) {
+    public Company findById(UUID id) {
         Optional<Company> companyOptional = companyRepository.findById(id);
         return companyOptional.orElse(null);
     }
@@ -33,7 +34,7 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    public Company update(Long id, Company company) {
+    public Company update(UUID id, Company company) {
         if (!companyRepository.existsById(id)) {
             return null;
         }
@@ -42,7 +43,7 @@ public class CompanyService {
         return companyRepository.save(company);
     }
 
-    public boolean delete(Long id) {
+    public boolean delete(UUID id) {
         if (!companyRepository.existsById(id)) {
             return false;
         }

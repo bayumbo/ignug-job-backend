@@ -3,6 +3,9 @@ package com.bolsaempleo.backend.app.entities.job_board;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -16,8 +19,10 @@ public class CategoryOffer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -26,23 +31,23 @@ public class CategoryOffer implements Serializable {
 	private Timestamp updatedAt;
 
 	//bi-directional many-to-one association to Category
-	//@ManyToOne
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name="category_id", nullable=false)
 	private Category category;
 
 	//bi-directional many-to-one association to Offer
-	//@ManyToOne
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name="offer_id", nullable=false)
 	private Offer offer;
 
 	public CategoryOffer() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

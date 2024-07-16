@@ -3,6 +3,8 @@ package com.bolsaempleo.backend.app.services;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,7 +50,9 @@ public class UsersServiceImpl implements UsersService{
                 usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            usersResponseDto.setData(e.getMessage());
         }
         return usersResponseDto;
     }
@@ -87,7 +91,7 @@ public class UsersServiceImpl implements UsersService{
 
     @Override
     @Transactional(readOnly = true )
-    public UsersResponseDto findByIdDto(Long Id) {
+    public UsersResponseDto findByIdDto(UUID Id) {
         UsersResponseDto usersResponseDto = new UsersResponseDto();
         try {
             Users users = usersRepository.findUserById(Id);
@@ -100,7 +104,9 @@ public class UsersServiceImpl implements UsersService{
                 usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            usersResponseDto.setData(e.getMessage());
         }
 
         return usersResponseDto;
@@ -123,7 +129,9 @@ public class UsersServiceImpl implements UsersService{
                 usersResponseDto.setMessage(ComunEnum.MENSAJECEDULAINVALIDA.getDescripcion());
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            usersResponseDto.setData(e.getMessage());
         }
         return usersResponseDto;
     }
@@ -190,7 +198,7 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Override
-    public UsersResponseDto deteleUserDto(Long Id) {
+    public UsersResponseDto deteleUserDto(UUID Id) {
         UsersResponseDto usersResponseDto = new UsersResponseDto();
         UsersDto usersDto = new UsersDto();
         Users user = new Users();
@@ -210,7 +218,9 @@ public class UsersServiceImpl implements UsersService{
                 usersResponseDto.setMessage(ComunEnum.MENSAJERECURSONOEXISTE.getDescripcion());
         }    
         } catch (Exception e) {
-            // TODO: handle exception
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            usersResponseDto.setData(e.getMessage());
         }
         
         return usersResponseDto;

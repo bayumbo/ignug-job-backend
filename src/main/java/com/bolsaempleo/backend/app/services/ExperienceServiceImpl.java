@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ExperienceServiceImpl implements ExperienceService {
@@ -24,7 +25,7 @@ public class ExperienceServiceImpl implements ExperienceService {
     }
 
     @Override
-    public ExperienceResponseDto findById(Long id) {
+    public ExperienceResponseDto findById(UUID id) {
         ExperienceResponseDto responseDto = new ExperienceResponseDto();
         try {
             Experience experience = experienceRepository.findById(id).orElse(null);
@@ -103,7 +104,7 @@ public class ExperienceServiceImpl implements ExperienceService {
     }
 
     @Override
-    public void deleteExperience(Long id) {
+    public void deleteExperience(UUID id) {
         Experience experience = experienceRepository.findById(id).orElseThrow(() -> new RuntimeException("Experience not found"));
         experience.setDeletedAt(Timestamp.from(Instant.now()));
         experienceRepository.save(experience);

@@ -2,6 +2,7 @@ package com.bolsaempleo.backend.app.services;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +49,7 @@ public class OfferProfessionalServiceImpl implements OfferProfessionalService{
     }
 
     @Override
-    public OfferProfessionalResponseDto findById(Long id) {
+    public OfferProfessionalResponseDto findById(UUID id) {
         OfferProfessional offerProfessional = offerProfessionalRepository.findById(id)
                 .orElse(null);
 
@@ -77,7 +78,7 @@ public class OfferProfessionalServiceImpl implements OfferProfessionalService{
     }
 
     @Override
-    public OfferProfessionalResponseDto update(Long id, OfferProfessionalDto offerProfessionalDto) {
+    public OfferProfessionalResponseDto update(UUID id, OfferProfessionalDto offerProfessionalDto) {
         OfferProfessional offerProfessional = offerProfessionalRepository.findById(id)
                 .orElse(null);
 
@@ -100,7 +101,7 @@ public class OfferProfessionalServiceImpl implements OfferProfessionalService{
         offerProfessional.setProfessional(dto.getProfessional());
     }
     @Override
-    public OfferProfessionalResponseDto deleteById(Long id) {
+    public OfferProfessionalResponseDto deleteById(UUID id) {
         OfferProfessional offerProfessional = offerProfessionalRepository.findById(id).orElse(null);
 
         if (offerProfessional == null) {

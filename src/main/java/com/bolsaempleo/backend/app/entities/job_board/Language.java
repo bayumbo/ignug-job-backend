@@ -3,6 +3,9 @@ package com.bolsaempleo.backend.app.entities.job_board;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -16,8 +19,10 @@ public class Language implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
 	@Column(name="created_at")
 	private Timestamp createdAt;
@@ -25,34 +30,34 @@ public class Language implements Serializable {
 	@Column(name="deleted_at")
 	private Timestamp deletedAt;
 
-	@Column(name="idiom_id")
+	@Column(name="idiom_id", nullable=false)
 	private Long idiomId;
 
-	@Column(name="read_level_id")
+	@Column(name="read_level_id", nullable=false)
 	private Long readLevelId;
 
-	@Column(name="spoken_level_id")
+	@Column(name="spoken_level_id", nullable=false)
 	private Long spokenLevelId;
 
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
-	@Column(name="written_level_id")
+	@Column(name="written_level_id", nullable=false)
 	private Long writtenLevelId;
 
 	//bi-directional many-to-one association to Professional
-	//@ManyToOne
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name="professional_id", nullable=false)
 	private Professional professional;
 
 	public Language() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

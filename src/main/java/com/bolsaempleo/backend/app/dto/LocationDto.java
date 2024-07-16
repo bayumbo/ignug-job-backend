@@ -21,7 +21,7 @@ public class LocationDto implements Serializable{
     private String name;
     private String region;
     private String subregion;
-    private Object timezones;
+    private String timezones;
     private String topLevelDomain;
     private Timestamp createdAt;
     private Timestamp updatedAt;

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/category-offers")
@@ -24,7 +25,7 @@ public class CategoryOfferController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryOffer> getCategoryOfferById(@PathVariable Long id) {
+    public ResponseEntity<CategoryOffer> getCategoryOfferById(@PathVariable UUID id) {
         CategoryOffer categoryOffer = categoryOfferService.findById(id);
         if (categoryOffer != null) {
             return ResponseEntity.ok(categoryOffer);
@@ -40,7 +41,7 @@ public class CategoryOfferController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryOffer> updateCategoryOffer(@PathVariable Long id, @RequestBody CategoryOffer categoryOffer) {
+    public ResponseEntity<CategoryOffer> updateCategoryOffer(@PathVariable UUID id, @RequestBody CategoryOffer categoryOffer) {
         CategoryOffer updatedCategoryOffer = categoryOfferService.update(id, categoryOffer);
         if (updatedCategoryOffer != null) {
             return ResponseEntity.ok(updatedCategoryOffer);
@@ -50,7 +51,7 @@ public class CategoryOfferController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategoryOffer(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCategoryOffer(@PathVariable UUID id) {
         boolean deleted = categoryOfferService.delete(id);
         if (deleted) {
             return ResponseEntity.noContent().build();

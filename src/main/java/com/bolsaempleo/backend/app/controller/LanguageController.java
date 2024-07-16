@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/languages")
@@ -27,7 +28,7 @@ public class LanguageController {
     }
     //metodo para mostrar
     @GetMapping("/{id}")
-    public ResponseEntity<LanguageResponseDto> getLanguageById(@PathVariable Long id) {
+    public ResponseEntity<LanguageResponseDto> getLanguageById(@PathVariable UUID id) {
         LanguageResponseDto languageDto = languageService.findById(id);
         if (languageDto == null) {
             return ResponseEntity.notFound().build();
@@ -42,7 +43,7 @@ public class LanguageController {
     }
     //metodo para actualizar
     @PutMapping("/{id}")
-    public ResponseEntity<LanguageResponseDto> updateLanguage(@PathVariable Long id, @RequestBody LanguageDto languageDto) {
+    public ResponseEntity<LanguageResponseDto> updateLanguage(@PathVariable UUID id, @RequestBody LanguageDto languageDto) {
         LanguageResponseDto updatedLanguageDto = languageService.updateLanguage(id, languageDto);
         if (updatedLanguageDto == null) {
             return ResponseEntity.notFound().build();
@@ -51,7 +52,7 @@ public class LanguageController {
     }
     //metodo para eliminar
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLanguage(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteLanguage(@PathVariable UUID id) {
         languageService.deleteById(id);
         return ResponseEntity.noContent().build();
     }

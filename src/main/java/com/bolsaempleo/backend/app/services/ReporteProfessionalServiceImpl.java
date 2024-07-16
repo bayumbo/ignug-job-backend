@@ -7,6 +7,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.bolsaempleo.backend.app.dto.ErrorDto;
 import com.bolsaempleo.backend.app.dto.ProfessionalReporteDto;
 import com.bolsaempleo.backend.app.reports.JasperReportManager;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
@@ -29,7 +31,7 @@ public class ReporteProfessionalServiceImpl implements ReporteProfessionalServic
     public ProfessionalReporteDto obtenerReporteProfessional(Map<String, Object> params)
 			 throws JRException, IOException, SQLException {
 		
-			
+			ErrorDto errorDto = new ErrorDto();
 				String fileName = "Professional";
 					ProfessionalReporteDto dto = new ProfessionalReporteDto();
 					String extension = params.get("tipo").toString().equalsIgnoreCase(ComunEnum.EXCEL) ? ".xlsx"
@@ -45,7 +47,9 @@ public class ReporteProfessionalServiceImpl implements ReporteProfessionalServic
 
 					
 			} catch (Exception e) {
-			 System.out.println("Mensaje de la excepcion: " + e);
+				errorDto.setCode(ComunEnum.INCORRECTO.toString());
+				errorDto.setMessage(ComunEnum.MENSAJEREPORTFAILED.getDescripcion());
+				errorDto.setData(e.getMessage());
 			}
 			return dto;
 	}

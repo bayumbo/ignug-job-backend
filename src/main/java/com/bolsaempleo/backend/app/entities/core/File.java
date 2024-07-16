@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  * 
  */
 @Entity
-@Table(name="files")
+@Table(name="files",schema = "core")
 @NamedQuery(name="File.findAll", query="SELECT f FROM File f")
 public class File implements Serializable {
 	private static final long serialVersionUID = 1L;

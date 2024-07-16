@@ -5,12 +5,13 @@ import com.bolsaempleo.backend.app.dto.CourseResponseDto;
 import com.bolsaempleo.backend.app.entities.job_board.Cours;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CourseService {
     List<Cours> findAll();
-    CourseResponseDto findById(Long id);
+    CourseResponseDto findById(UUID id);
     CourseResponseDto saveCourse(CourseDto courseDto);
     CourseResponseDto findByType(String type); // Define este método si es necesario
-    void deleteCourse(Long id); // Añadir esta línea
+    void deleteCourse(UUID id); // Añadir esta línea
     CourseResponseDto findAllDto();
 }

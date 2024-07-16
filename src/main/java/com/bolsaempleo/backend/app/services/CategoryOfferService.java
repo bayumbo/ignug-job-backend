@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CategoryOfferService {
@@ -22,7 +23,7 @@ public class CategoryOfferService {
         return categoryOfferRepository.findAll();
     }
 
-    public CategoryOffer findById(Long id) {
+    public CategoryOffer findById(UUID id) {
         Optional<CategoryOffer> categoryOfferOptional = categoryOfferRepository.findById(id);
         return categoryOfferOptional.orElse(null);
     }
@@ -31,7 +32,7 @@ public class CategoryOfferService {
         return categoryOfferRepository.save(categoryOffer);
     }
 
-    public CategoryOffer update(Long id, CategoryOffer categoryOffer) {
+    public CategoryOffer update(UUID id, CategoryOffer categoryOffer) {
         if (!categoryOfferRepository.existsById(id)) {
             return null;
         }
@@ -39,7 +40,7 @@ public class CategoryOfferService {
         return categoryOfferRepository.save(categoryOffer);
     }
 
-    public boolean delete(Long id) {
+    public boolean delete(UUID id) {
         if (!categoryOfferRepository.existsById(id)) {
             return false;
         }

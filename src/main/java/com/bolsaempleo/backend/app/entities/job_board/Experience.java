@@ -3,6 +3,10 @@ package com.bolsaempleo.backend.app.entities.job_board;
 import java.io.Serializable;
 import jakarta.persistence.*;
 import java.util.Date;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
+
 import java.sql.Timestamp;
 
 
@@ -17,12 +21,15 @@ public class Experience implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
-	private Object activities;
+	@Column(nullable=false)
+	private String activities;
 
-	@Column(name="area_id")
+	@Column(name="area_id", nullable=false)
 	private Long areaId;
 
 	@Column(name="created_at")
@@ -31,47 +38,50 @@ public class Experience implements Serializable {
 	@Column(name="deleted_at")
 	private Timestamp deletedAt;
 
+	@Column(nullable=false, length=255)
 	private String employer;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="ended_at")
 	private Date endedAt;
 
+	@Column(nullable=false, length=255)
 	private String position;
 
-	@Column(name="reason_leave")
+	@Column(name="reason_leave", length=2147483647)
 	private String reasonLeave;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name="started_at")
+	@Column(name="started_at", nullable=false)
 	private Date startedAt;
 
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
+	@Column(nullable=false)
 	private Boolean worked;
 
 	//bi-directional many-to-one association to Professional
-	//@ManyToOne
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name="professional_id", nullable=false)
 	private Professional professional;
 
 	public Experience() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
-	public Object getActivities() {
+	public String getActivities() {
 		return this.activities;
 	}
 
-	public void setActivities(Object activities) {
+	public void setActivities(String activities) {
 		this.activities = activities;
 	}
 

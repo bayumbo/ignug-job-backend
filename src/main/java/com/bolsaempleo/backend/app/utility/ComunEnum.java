@@ -53,6 +53,7 @@ PATRON_FECHA1("yyyy/MM/dd"),
     MENSAJETOKENINVALIDO("EL TOKEN JWT NO ES VALIDO!"),
     MENSAJELOGINSUCCESSFUL("HAS INICIADO SESSION"),
     MENSAJELOGINUNSUCCESSFUL("Error en la autenticacion username o password incorrecto!"),
+    MENSAJEREPORTFAILED("Error en la generacion del reporte"),
 
 	/**
 	 * VALOR PARA EL CAMPO TODOS

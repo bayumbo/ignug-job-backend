@@ -11,6 +11,7 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="socialmedia",schema = "core")
 @NamedQuery(name="Socialmedia.findAll", query="SELECT s FROM Socialmedia s")
 public class Socialmedia implements Serializable {
 	private static final long serialVersionUID = 1L;

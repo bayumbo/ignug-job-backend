@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +33,7 @@ public class ProfessionalController {
      
 
     @GetMapping("/{id}")
-    public ProfessionalDto showById (@PathVariable(name = "id") Long id){
+    public ProfessionalDto showById (@PathVariable(name = "id") UUID id){
         return professionalService.findByIdDto(id);
     }
     
@@ -42,7 +44,7 @@ public class ProfessionalController {
     } 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody Professional professionals,@PathVariable Long id) {
+    public ResponseEntity<?> update(@RequestBody Professional professionals,@PathVariable UUID id) {
         Optional<Professional> obj = professionalService.update(professionals, id);
         if (obj.isPresent()){
             return ResponseEntity.status(HttpStatus.CREATED).body(obj); 

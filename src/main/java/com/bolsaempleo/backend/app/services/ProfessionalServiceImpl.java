@@ -3,6 +3,8 @@ package com.bolsaempleo.backend.app.services;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,16 +29,16 @@ public class ProfessionalServiceImpl implements ProfessionalService{
  
     @Override
     @Transactional(readOnly = true )
-    public Optional<Professional> findById(Long Id) {
+    public Optional<Professional> findById(UUID Id) {
         return professionalsRepository.findById(Id);
     }
 
     @Override
     @Transactional(readOnly = true )
-    public ProfessionalDto findByIdDto (Long id){//
+    public ProfessionalDto findByIdDto (UUID id){//
         Optional<Professional> professionalsFinded = professionalsRepository.findById(id);
         ProfessionalDto professionalsDto = new ProfessionalDto();
-        try {
+     
             if (professionalsFinded.isEmpty()){
                 throw new EntityNotFoundException("Error");
             }
@@ -52,16 +54,13 @@ public class ProfessionalServiceImpl implements ProfessionalService{
             professionalsDto.setFamiliarCatastrophicDiseased(professionalsFinded.get().getFamiliarCatastrophicDiseased());
             professionalsDto.setFamiliarDisabled(professionalsFinded.get().getFamiliarDisabled());
             professionalsDto.setTraveled(professionalsFinded.get().getTraveled());
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        
+       
         return professionalsDto;
     }
 
     @Override
     @Transactional
-    public void remove(Long id) {
+    public void remove(UUID id) {
         professionalsRepository.deleteById(id);;
     }
 
@@ -73,7 +72,7 @@ public class ProfessionalServiceImpl implements ProfessionalService{
 
     @Override
     @Transactional
-    public Optional<Professional> update(Professional professional, Long id) {
+    public Optional<Professional> update(Professional professional, UUID id) {
         Optional<Professional> obj = this.findById(id);
         if (obj.isPresent()){
             Professional professionalsDb = obj.orElseThrow();

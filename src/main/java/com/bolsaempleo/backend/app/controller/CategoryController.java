@@ -16,6 +16,7 @@ import com.bolsaempleo.backend.app.entities.job_board.Category;
 import com.bolsaempleo.backend.app.repositories.CategoryRepository;
 import com.bolsaempleo.backend.app.services.CategoryService;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/category")
@@ -26,17 +27,17 @@ public class CategoryController {
     private CategoryRepository categoryRepository;
 
     @GetMapping("/{id}")
-    public CategoryResponseDto findById (@PathVariable(name = "id") Long id){
+    public CategoryResponseDto findById (@PathVariable(name = "id") UUID id){
         return categoryService.findByIdDto(id);
     }
 
     @GetMapping("/SubCategory/{id}")
-    public CategoryResponseDto findBySubCategoryId (@PathVariable(name = "id") Long id){
+    public CategoryResponseDto findBySubCategoryId (@PathVariable(name = "id") UUID id){
         return categoryService.findBySubCategoryId(id);
     }
 
     @GetMapping("/allCatagories/{id}")
-    public CategoryResponseDto findCategoryAndSubCategoriesByCategoryId (@PathVariable(name = "id") Long id){
+    public CategoryResponseDto findCategoryAndSubCategoriesByCategoryId (@PathVariable(name = "id") UUID id){
         return categoryService.findCategoryAndSubCategoriesByCategoryId(id);
     }
 
@@ -46,7 +47,7 @@ public class CategoryController {
     } 
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<ObjectResponse> delete(@PathVariable Long id) {
+    public ResponseEntity<ObjectResponse> delete(@PathVariable UUID id) {
         Optional<Category> category=categoryRepository.findById(id);
         ObjectResponse objectResponse = new ObjectResponse();
         if (category != null) {

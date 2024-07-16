@@ -4,6 +4,9 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -17,13 +20,15 @@ public class Professional implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
-	@Column(name="about_me")
+	@Column(name="about_me", length=2147483647)
 	private String aboutMe;
 
-	@Column(name="catastrophic_diseased")
+	@Column(name="catastrophic_diseased", nullable=false)
 	private Boolean catastrophicDiseased;
 
 	@Column(name="created_at")
@@ -32,65 +37,67 @@ public class Professional implements Serializable {
 	@Column(name="deleted_at")
 	private Timestamp deletedAt;
 
+	@Column(nullable=false)
 	private Boolean disabled;
 
-	@Column(name="familiar_catastrophic_diseased")
+	@Column(name="familiar_catastrophic_diseased", nullable=false)
 	private Boolean familiarCatastrophicDiseased;
 
-	@Column(name="familiar_disabled")
+	@Column(name="familiar_disabled", nullable=false)
 	private Boolean familiarDisabled;
 
-	@Column(name="identification_familiar_disabled")
+	@Column(name="identification_familiar_disabled", length=255)
 	private String identificationFamiliarDisabled;
 
+	@Column(nullable=false)
 	private Boolean traveled;
 
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
-	@Column(name="user_id")
+	@Column(name="user_id", nullable=false)
 	private Long userId;
 
 	//bi-directional many-to-one association to AcademicFormation
-	@OneToMany(mappedBy="professional")
+	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
 	private List<AcademicFormation> academicFormations;
 
 	//bi-directional many-to-one association to CompanyProfessional
-	@OneToMany(mappedBy="professional")
+	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
 	private List<CompanyProfessional> companyProfessionals;
 
 	//bi-directional many-to-one association to Cours
-	@OneToMany(mappedBy="professional")
+	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
 	private List<Cours> courses;
 
 	//bi-directional many-to-one association to Experience
-	@OneToMany(mappedBy="professional")
+	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
 	private List<Experience> experiences;
 
 	//bi-directional many-to-one association to Language
-	@OneToMany(mappedBy="professional")
+	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
 	private List<Language> languages;
 
 	//bi-directional many-to-one association to OfferProfessional
-	@OneToMany(mappedBy="professional")
+	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
 	private List<OfferProfessional> offerProfessionals;
 
 	//bi-directional many-to-one association to Reference
-	@OneToMany(mappedBy="professional")
+	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
 	private List<Reference> references;
 
 	//bi-directional many-to-one association to Skill
-	@OneToMany(mappedBy="professional")
+	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
 	private List<Skill> skills;
 
 	public Professional() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

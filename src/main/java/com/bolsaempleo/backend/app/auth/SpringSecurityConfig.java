@@ -32,7 +32,7 @@ public class SpringSecurityConfig {
     }
 
     @Bean
-    AuthenticationManager authenticationManager() throws Exception {
+    AuthenticationManager authenticationManager() throws Exception  {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -51,6 +51,7 @@ public class SpringSecurityConfig {
                 .build();
     }
 
+    //Implementando CORS para Angular
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
 
@@ -59,7 +60,6 @@ public class SpringSecurityConfig {
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true);
-        System.out.println("config --- "+config);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

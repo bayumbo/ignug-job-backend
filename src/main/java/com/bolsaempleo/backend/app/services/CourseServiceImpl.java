@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -26,7 +27,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public CourseResponseDto findById(Long id) {
+    public CourseResponseDto findById(UUID id) {
         CourseResponseDto responseDto = new CourseResponseDto();
         try {
             Cours course = courseRepository.findById(id).filter(c -> c.getDeletedAt() == null).orElse(null);
@@ -41,7 +42,7 @@ public class CourseServiceImpl implements CourseService {
         } catch (Exception e) {
             responseDto.setCode(ComunEnum.RECURSOVACIO.toString());
             responseDto.setMessage(ComunEnum.MENSAJESINDATOS.getDescripcion());
-            e.printStackTrace();
+            responseDto.setData(e.getMessage());
         }
         return responseDto;
     }
@@ -74,7 +75,7 @@ public class CourseServiceImpl implements CourseService {
         } catch (Exception e) {
             responseDto.setCode(ComunEnum.RECURSOVACIO.toString());
             responseDto.setMessage(ComunEnum.MENSAJESINDATOS.getDescripcion());
-            e.printStackTrace();
+            responseDto.setData(e.getMessage());
         }
         return responseDto;
     }
@@ -86,7 +87,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(Long id) {
+    public void deleteCourse(UUID id) {
         Cours course = courseRepository.findById(id).orElseThrow(() -> new RuntimeException("Course not found"));
         course.setDeletedAt(Timestamp.from(Instant.now()));
         courseRepository.save(course);

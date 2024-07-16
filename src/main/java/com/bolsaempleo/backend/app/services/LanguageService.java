@@ -4,15 +4,17 @@ import com.bolsaempleo.backend.app.dto.LanguageDto;
 import com.bolsaempleo.backend.app.dto.LanguageResponseDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface LanguageService {
+   
     List<LanguageResponseDto> findAll();
 
-    LanguageResponseDto findById(Long id);
+    LanguageResponseDto findById(UUID id);
 
     LanguageResponseDto save(LanguageDto languageDto);
 
-    LanguageResponseDto updateLanguage(Long id, LanguageDto languageDto);
+    LanguageResponseDto updateLanguage(UUID id, LanguageDto languageDto);
 
-    void deleteById(Long id);
+    void deleteById(UUID id);
 }

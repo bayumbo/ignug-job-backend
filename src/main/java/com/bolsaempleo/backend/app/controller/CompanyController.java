@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/companies")
@@ -26,7 +27,7 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ObjectResponse> getCompanyById(@PathVariable Long id) {
+    public ResponseEntity<ObjectResponse> getCompanyById(@PathVariable UUID id) {
         Company company = companyService.findById(id);
         ObjectResponse objectResponse = new ObjectResponse();
         if (company != null && company.getDeletedAt() ==null) {
@@ -45,7 +46,7 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Company> updateCompany(@PathVariable Long id, @RequestBody Company company) {
+    public ResponseEntity<Company> updateCompany(@PathVariable UUID id, @RequestBody Company company) {
         Company updatedCompany = companyService.update(id, company);
         if (updatedCompany != null) {
             return ResponseEntity.ok(updatedCompany);
@@ -55,7 +56,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCompany(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCompany(@PathVariable UUID id) {
         boolean deleted = companyService.delete(id);
         if (deleted) {
             return ResponseEntity.noContent().build();

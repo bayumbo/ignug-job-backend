@@ -4,6 +4,9 @@ import java.io.Serializable;
 import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -17,9 +20,13 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = "UUID")
+	@SuppressWarnings("deprecation")
+	@GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+	private UUID id;
 
+
+	@Column(length=255)
 	private String code;
 
 	@Column(name="created_at")
@@ -28,43 +35,44 @@ public class Category implements Serializable {
 	@Column(name="deleted_at")
 	private Timestamp deletedAt;
 
+	@Column(length=255)
 	private String icon;
 
+	@Column(nullable=false, length=2147483647)
 	private String name;
 
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
 	//bi-directional many-to-one association to AcademicFormation
-	@OneToMany(mappedBy="category")
+	@OneToMany(mappedBy="category", fetch=FetchType.EAGER)
 	private List<AcademicFormation> academicFormations;
 
 	//bi-directional many-to-one association to Category
-	//@ManyToOne
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="parent_id")
 	private Category category;
 
 	//bi-directional many-to-one association to Category
-	@OneToMany(mappedBy="category")
+	@OneToMany(mappedBy="category", fetch=FetchType.EAGER)
 	private List<Category> categories;
 
 	//bi-directional many-to-one association to CategoryOffer
-	@OneToMany(mappedBy="category")
+	@OneToMany(mappedBy="category", fetch=FetchType.EAGER)
 	private List<CategoryOffer> categoryOffers;
 
 	//bi-directional many-to-one association to Cours
-	@OneToMany(mappedBy="category")
+	@OneToMany(mappedBy="category", fetch=FetchType.EAGER)
 	private List<Cours> courses;
 
 	public Category() {
 	}
 
-	public Long getId() {
+	public UUID getId() {
 		return this.id;
 	}
 
-	public void setId(Long id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

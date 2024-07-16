@@ -67,7 +67,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             body.setMessage(ComunEnum.MENSAJETOKENINVALIDO.getDescripcion());
             body.setData(e.getMessage());
             response.getWriter().write(new ObjectMapper().writeValueAsString(body));
-            response.setStatus(403);
+            response.setStatus(ComunEnum.INCORRECTO);
             response.setContentType("application/json");
         }
     }

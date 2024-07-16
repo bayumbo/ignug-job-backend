@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/references")
@@ -24,7 +25,7 @@ public class ReferenceController {
     }
     //metodo para mostrar
     @GetMapping("/{id}")
-    public ResponseEntity<ReferenceResponseDto> getReferenceById(@PathVariable Long id) {
+    public ResponseEntity<ReferenceResponseDto> getReferenceById(@PathVariable UUID id) {
         ReferenceResponseDto reference = referenceService.findById(id);
         if (reference != null) {
             return ResponseEntity.ok(reference);
@@ -40,7 +41,7 @@ public class ReferenceController {
     }
     //metodo para actualizar
     @PutMapping("/{id}")
-    public ResponseEntity<ReferenceResponseDto> updateReference(@PathVariable Long id, @RequestBody ReferenceDto referenceDto) {
+    public ResponseEntity<ReferenceResponseDto> updateReference(@PathVariable UUID id, @RequestBody ReferenceDto referenceDto) {
         ReferenceResponseDto updatedReference = referenceService.update(id, referenceDto);
         if (updatedReference != null) {
             return ResponseEntity.ok(updatedReference);
@@ -50,7 +51,7 @@ public class ReferenceController {
     }
     //metodo para eliminar
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReference(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteReference(@PathVariable UUID id) {
         boolean deleted = referenceService.delete(id);
         if (deleted) {
             return ResponseEntity.noContent().build();

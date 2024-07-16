@@ -4,15 +4,16 @@ import com.bolsaempleo.backend.app.dto.SkillDto;
 import com.bolsaempleo.backend.app.dto.SkillResponseDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface SkillService {
     List<SkillResponseDto> findAll();
 
-    SkillResponseDto findById(Long id);
+    SkillResponseDto findById(UUID id);
 
     SkillResponseDto save(SkillDto skillDto);
 
-    SkillResponseDto update(Long id, SkillDto skillDto);
+    SkillResponseDto update(UUID id, SkillDto skillDto);
 
-    boolean delete(Long id);
+    boolean delete(UUID id);
 }
