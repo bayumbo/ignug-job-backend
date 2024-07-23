@@ -15,4 +15,6 @@ public interface UsersService {
     UsersResponseDto findByIdDto(UUID Id);
     UsersResponseDto saveUserDto(UsersDto usersDto);
     UsersResponseDto deteleUserDto(UUID Id);
+    UsersResponseDto findByUserName(String userName);
+    UsersResponseDto findByMail(String mail);
 }

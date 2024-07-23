@@ -36,6 +36,18 @@ public class UsersController {
         return usersService.findByIdDto(id);
     }
 
+    @GetMapping("/username/{userName}")
+    @ResponseBody 
+    public UsersResponseDto findByUserName(@PathVariable(name = "userName") String userName){
+        return usersService.findByUserName(userName);
+    }
+    
+    @GetMapping("/mail/{mail}")
+    @ResponseBody 
+    public UsersResponseDto findByMail(@PathVariable(name = "mail") String mail){
+        return usersService.findByMail(mail);
+    }
+
     @PostMapping
     @ResponseBody
     public UsersResponseDto saveUser (@RequestBody UsersDto usersDto){

@@ -226,5 +226,49 @@ public class UsersServiceImpl implements UsersService{
         return usersResponseDto;
     }
 
+    @Override
+    public UsersResponseDto findByUserName(String userName) {
+        UsersResponseDto usersResponseDto = new UsersResponseDto();
+        Users user = usersRepository.findByUsername(userName);
+        try {
+            if (user != null){
+                usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
+                usersResponseDto.setData(user.getUsername());
+            }else{
+                usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+                usersResponseDto.setData("No existe el Username:" + userName);
+            }
+        } catch (Exception e) {
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            usersResponseDto.setData(e.getMessage());
+        }
+        return usersResponseDto;
+    }
+
+    @Override
+    public UsersResponseDto findByMail(String mail) {
+        UsersResponseDto usersResponseDto = new UsersResponseDto();
+        Users user = usersRepository.findByMail(mail);
+        try {
+            if (user != null){
+                usersResponseDto.setCode(ComunEnum.CORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJECORRECTO.getDescripcion());
+                usersResponseDto.setData(user.getEmail());
+            }else{
+                usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+                usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+                usersResponseDto.setData("No existe el email:" + mail);
+            }
+        } catch (Exception e) {
+            usersResponseDto.setCode(ComunEnum.INCORRECTO.toString());
+            usersResponseDto.setMessage(ComunEnum.MENSAJEINCORRECTO.getDescripcion());
+            usersResponseDto.setData(e.getMessage());
+        }
+        return usersResponseDto;
+    }
+
 
 }

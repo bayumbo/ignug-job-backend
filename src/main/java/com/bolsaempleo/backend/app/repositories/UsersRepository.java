@@ -22,10 +22,8 @@ public interface UsersRepository extends JpaRepository<Users,UUID>{
         @Query("select u from Users u where u.username=:userName and u.deletedAt IS NULL")
         Users findByUsername(@Param("userName") String userName);
 
-        //Optional<Users> findByUserNa (String userName);
-
-        //@Query("select u from Users u where u.username=:uName and u.deletedAt IS NULL")
-        //Optional<Users> getUserByUserName (String uName);
+        @Query("select u from Users u where u.email=:mail and u.deletedAt IS NULL")
+        Users findByMail(@Param("mail") String mail);
 
 
 
