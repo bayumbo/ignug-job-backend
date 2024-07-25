@@ -59,6 +59,16 @@ PATRON_FECHA1("yyyy/MM/dd"),
 	 * VALOR PARA EL CAMPO TODOS
 	 */
 	TODOS("%"),
+
+    /**
+	 * VALORES PARA GENERACION DE CORREO - NOTIFICACIONES
+	 */
+    SERVER_SMTP("smtp.gmail.com"),
+	SERVER_PUERTO("587"),
+	SERVER_USUARIO("no-reply@yavirac.edu.ec"),
+	SERVER_CLAVE("nfwjsornflqlswlw"),
+    SERVER_auth("true"),
+    SERVER_starttls("true"),
 	;
 	
    
@@ -138,5 +148,9 @@ PATRON_FECHA1("yyyy/MM/dd"),
     public final static String EXCEL = "EXCEL";
     public final static String PDF = "PDF ";
 
+
+    /*
+     *  Datos para la generacion de correos electronicos
+     */
 
 }

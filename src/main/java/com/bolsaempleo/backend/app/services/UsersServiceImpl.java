@@ -27,6 +27,8 @@ public class UsersServiceImpl implements UsersService{
     @Autowired
     private UsersRepository usersRepository;
     @Autowired
+    private EmailServiceImpl emailServiceImpl;
+    @Autowired
     private CatalogueRepository catalogueRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -119,6 +121,10 @@ public class UsersServiceImpl implements UsersService{
             if (UsuarioValidation.isIdentificacionValida(usersDto.getUsername())){
                     Users u = new Users();
                     u = usersRepository.save(crearObjeto(usersDto));
+                    if (u.getId() != null){
+                        emailServiceImpl.enviarNotificacion(u.getEmail().toString());
+
+                    }
                     usersResponseDto.setData(crearModelo(u));
                     if (usersResponseDto.getData()!= null){
                         usersResponseDto.setCode(ComunEnum.RECURSOCREADO.toString());
