@@ -10,6 +10,8 @@ import java.util.Map;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
+import com.bolsaempleo.backend.app.utility.QRCodeGenerator;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -26,20 +28,25 @@ import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 @Component
 public class JasperReportManager {
 
-    private static final String REPORT_FOLDER = "reports";
-
-	private static final String JASPER = ".jasper";
-
-	public ByteArrayOutputStream export(String fileName, String tipoReporte, Map<String, Object> params,
+    public ByteArrayOutputStream export(String fileName, String tipoReporte, Map<String, Object> params,
 			Connection con) throws JRException, IOException {
 
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();//para el reporte tenerlo en memoria
-		ClassPathResource resource = new ClassPathResource(REPORT_FOLDER + File.separator + fileName + JASPER);
+		ClassPathResource resource = new ClassPathResource(ComunEnum.REPORT_FOLDER.toString() + File.separator + fileName + ComunEnum.JASPER.toString());
 		
 		InputStream inputStream = resource.getInputStream();
-		Boolean paramPp=Boolean.valueOf(params.get("TRAVELED").toString());
+		String paramURLQR = params.get("URLQR").toString();
+
+		/* Generar PATHIMGQR*/
+		QRCodeGenerator QR = new QRCodeGenerator();
+		try {
+			QR.generateQRCodeImage(paramURLQR, ComunEnum.EIDTH,ComunEnum.EIDTH,ComunEnum.QR_CODE_IMAGE_PATH.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Map<String, Object> paramsReport=new HashMap<>();
-		paramsReport.put("TRAVELED",paramPp);
+		paramsReport.put("PATHIMGLOGO",ComunEnum.PATHIMGLOGO.toString());
+		paramsReport.put("PATHIMGQR",ComunEnum.PATHIMGQR.toString());
 		JasperReport jasperReport=(JasperReport)JRLoader.loadObject(inputStream);
 		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, paramsReport, con);
 		if (tipoReporte.equalsIgnoreCase(ComunEnum.EXCEL)) {

@@ -147,10 +147,12 @@ PATRON_FECHA1("yyyy/MM/dd"),
      **/
     public final static String EXCEL = "EXCEL";
     public final static String PDF = "PDF ";
-
-
-    /*
-     *  Datos para la generacion de correos electronicos
-     */
+    public final static String PATHIMGLOGO = "./src/main/resources/images/LogoYavirac.png";
+    public final static String PATHIMGQR = "./src/main/resources/images/QRCodeProfessional.png";
+    public final static Integer EIDTH = 250;
+    public final static Integer HEIGTH = 250;
+    public final static String REPORT_FOLDER = "reports";
+    public final static String JASPER = ".jasper";
+    public final static String QR_CODE_IMAGE_PATH = "./src/main/resources/images/QRCodeProfessional.png";
 
 }

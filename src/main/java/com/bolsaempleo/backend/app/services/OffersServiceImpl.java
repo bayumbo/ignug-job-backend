@@ -96,7 +96,7 @@ public class OffersServiceImpl implements OfferService{
 
     private Offer toOffer(OfferDto dto) {
         Offer offer = new Offer();
-        dto.setActivities(offer.getActivities());
+        offer.setActivities(dto.getActivities());
         dto.setAdditionalInformation(offer.getAdditionalInformation());
         dto.setCode(offer.getCode());
         dto.setContactCellphone(offer.getContactCellphone());
