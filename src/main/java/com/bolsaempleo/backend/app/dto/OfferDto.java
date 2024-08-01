@@ -3,6 +3,7 @@ package com.bolsaempleo.backend.app.dto;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.UUID;
 
 import com.bolsaempleo.backend.app.entities.job_board.Company;
 
@@ -37,5 +38,5 @@ public class OfferDto implements Serializable {
 	private Timestamp updatedAt;
 	private Integer vacancies;
 	private Long workingDayId;
-	private Company company; 
+	private UUID companyId; 
 }

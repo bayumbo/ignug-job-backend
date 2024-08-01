@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bolsaempleo.backend.app.dto.OfferResponseDto;
 import com.bolsaempleo.backend.app.dto.OfferDto;
 import com.bolsaempleo.backend.app.entities.job_board.Offer;
+import com.bolsaempleo.backend.app.repositories.CompanyRepository;
 import com.bolsaempleo.backend.app.repositories.OffersRepository;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 
@@ -19,6 +20,8 @@ public class OffersServiceImpl implements OfferService{
 
     @Autowired
     private OffersRepository offersRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
 
 
@@ -68,7 +71,7 @@ public class OffersServiceImpl implements OfferService{
         dto.setUpdatedAt(offer.getUpdatedAt());
         dto.setVacancies(offer.getVacancies());
         dto.setWorkingDayId(offer.getWorkingDayId());
-        dto.setCompany(offer.getCompany());
+        dto.setCompanyId(offer.getId());
         return dto;
     }
 
@@ -97,30 +100,30 @@ public class OffersServiceImpl implements OfferService{
     private Offer toOffer(OfferDto dto) {
         Offer offer = new Offer();
         offer.setActivities(dto.getActivities());
-        dto.setAdditionalInformation(offer.getAdditionalInformation());
-        dto.setCode(offer.getCode());
-        dto.setContactCellphone(offer.getContactCellphone());
-        dto.setContactEmail(offer.getContactEmail());
-        dto.setContactName(offer.getContactName());
-        dto.setContactPhone(offer.getContactPhone());
-        dto.setContractTypeId(offer.getContractTypeId());
-        dto.setCreatedAt(offer.getCreatedAt());
-        dto.setCode(offer.getCode());
-        dto.setDeletedAt(offer.getDeletedAt());
-        dto.setEndedAt(offer.getEndedAt());
-        dto.setExperienceTimeId(offer.getExperienceTimeId());
-        dto.setLocationId(offer.getLocationId());
-        dto.setPosition(offer.getPosition());
-        dto.setRemuneration(offer.getRemuneration());
-        dto.setRequirements(offer.getRequirements());
-        dto.setSectorId(offer.getSectorId());
-        dto.setStartedAt(offer.getStartedAt());
-        dto.setStateId(offer.getStateId());
-        dto.setTrainingHoursId(offer.getTrainingHoursId());
-        dto.setUpdatedAt(offer.getUpdatedAt());
-        dto.setVacancies(offer.getVacancies());
-        dto.setWorkingDayId(offer.getWorkingDayId());
-        dto.setCompany(offer.getCompany());
+        offer.setAdditionalInformation(dto.getAdditionalInformation());
+        offer.setCode(dto.getCode());
+        offer.setContactCellphone(dto.getContactCellphone());
+        offer.setContactEmail(dto.getContactEmail());
+        offer.setContactName(dto.getContactName());
+        offer.setContactPhone(dto.getContactPhone());
+        offer.setContractTypeId(dto.getContractTypeId());
+        offer.setCreatedAt(dto.getCreatedAt());
+        offer.setCode(dto.getCode());
+        offer.setDeletedAt(dto.getDeletedAt());
+        offer.setEndedAt(dto.getEndedAt());
+        offer.setExperienceTimeId(dto.getExperienceTimeId());
+        offer.setLocationId(dto.getLocationId());
+        offer.setPosition(dto.getPosition());
+        offer.setRemuneration(dto.getRemuneration());
+        offer.setRequirements(dto.getRequirements());
+        offer.setSectorId(dto.getSectorId());
+        offer.setStartedAt(dto.getStartedAt());
+        offer.setStateId(dto.getStateId());
+        offer.setTrainingHoursId(dto.getTrainingHoursId());
+        offer.setUpdatedAt(dto.getUpdatedAt());
+        offer.setVacancies(dto.getVacancies());
+        offer.setWorkingDayId(dto.getWorkingDayId());
+        offer.setCompany(companyRepository.getOne(dto.getCompanyId()));
         return offer;
     }
     @Override
@@ -165,7 +168,7 @@ public class OffersServiceImpl implements OfferService{
         dto.setUpdatedAt(offer.getUpdatedAt());
         dto.setVacancies(offer.getVacancies());
         dto.setWorkingDayId(offer.getWorkingDayId());
-        dto.setCompany(offer.getCompany());
+        dto.setCompanyId(companyRepository.getOne(dto.getCompanyId()).getId());
     }
 
     @Override

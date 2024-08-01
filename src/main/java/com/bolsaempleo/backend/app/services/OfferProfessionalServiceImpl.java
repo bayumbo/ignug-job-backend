@@ -6,11 +6,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.bolsaempleo.backend.app.dto.OfferProfessionalDto;
 import com.bolsaempleo.backend.app.dto.OfferProfessionalResponseDto;
 import com.bolsaempleo.backend.app.entities.job_board.OfferProfessional;
 import com.bolsaempleo.backend.app.repositories.OfferProfessionalRepository;
+import com.bolsaempleo.backend.app.repositories.OffersRepository;
+import com.bolsaempleo.backend.app.repositories.ProfessionalRepository;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 
 @Service
@@ -18,6 +19,10 @@ public class OfferProfessionalServiceImpl implements OfferProfessionalService{
 
     @Autowired
     private OfferProfessionalRepository offerProfessionalRepository;
+    @Autowired
+    private OffersRepository offersRepository;
+    @Autowired
+    private ProfessionalRepository professionalRepository;
 
     @Override
     public OfferProfessionalResponseDto findAll() {
@@ -43,8 +48,8 @@ public class OfferProfessionalServiceImpl implements OfferProfessionalService{
         dto.setStateId(offerProfessional.getStateId());
         dto.setCreatedAt(offerProfessional.getCreatedAt());
         dto.setUpdatedAt(offerProfessional.getUpdatedAt());
-        dto.setOffer(offerProfessional.getOffer());
-        dto.setProfessional(offerProfessional.getProfessional());
+        dto.setOfferId(offerProfessional.getId());
+        dto.setProfessionalId(offerProfessional.getId());
         return dto;
     }
 
@@ -69,11 +74,11 @@ public class OfferProfessionalServiceImpl implements OfferProfessionalService{
 
     private OfferProfessional toOfferProfessional(OfferProfessionalDto dto) {
         OfferProfessional offerProfessional = new OfferProfessional();
-        dto.setStateId(offerProfessional.getStateId());
-        dto.setCreatedAt(offerProfessional.getCreatedAt());
-        dto.setUpdatedAt(offerProfessional.getUpdatedAt());
-        dto.setOffer(offerProfessional.getOffer()!= null ? offerProfessional.getOffer() : null);
-        dto.setProfessional(offerProfessional.getProfessional()!= null ? offerProfessional.getProfessional() : null);
+        offerProfessional.setStateId(dto.getStateId());
+        offerProfessional.setCreatedAt(dto.getCreatedAt());
+        offerProfessional.setUpdatedAt(dto.getUpdatedAt());
+        offerProfessional.setOffer(offersRepository.getOne(dto.getOfferId()));
+        offerProfessional.setProfessional(professionalRepository.getOne(dto.getProfessionalId()));
         return offerProfessional;
     }
 
@@ -97,8 +102,8 @@ public class OfferProfessionalServiceImpl implements OfferProfessionalService{
         offerProfessional.setStateId(dto.getStateId());
         offerProfessional.setUpdatedAt(dto.getUpdatedAt());
         offerProfessional.setCreatedAt(dto.getCreatedAt());
-        offerProfessional.setOffer(dto.getOffer());
-        offerProfessional.setProfessional(dto.getProfessional());
+        offerProfessional.setOffer(offersRepository.getOne(dto.getOfferId()));
+        offerProfessional.setProfessional(professionalRepository.getOne(dto.getProfessionalId()));
     }
     @Override
     public OfferProfessionalResponseDto deleteById(UUID id) {
