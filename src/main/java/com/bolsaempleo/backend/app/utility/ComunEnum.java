@@ -54,6 +54,7 @@ PATRON_FECHA1("yyyy/MM/dd"),
     MENSAJELOGINSUCCESSFUL("HAS INICIADO SESSION"),
     MENSAJELOGINUNSUCCESSFUL("Error en la autenticacion username o password incorrecto!"),
     MENSAJEREPORTFAILED("Error en la generacion del reporte"),
+    MENSAJEUSEREXIST("Usuario ya registrado"),
 
 	/**
 	 * VALOR PARA EL CAMPO TODOS

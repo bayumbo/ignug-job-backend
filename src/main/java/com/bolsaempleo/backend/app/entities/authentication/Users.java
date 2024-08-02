@@ -90,6 +90,7 @@ private static final long serialVersionUID = 1L;
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
+	@Column(unique=true)
 	private String username;
 
 	@ManyToMany
