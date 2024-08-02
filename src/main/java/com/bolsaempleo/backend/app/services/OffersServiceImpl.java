@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.bolsaempleo.backend.app.dto.OfferResponseDto;
 import com.bolsaempleo.backend.app.dto.OfferDto;
 import com.bolsaempleo.backend.app.entities.job_board.Offer;

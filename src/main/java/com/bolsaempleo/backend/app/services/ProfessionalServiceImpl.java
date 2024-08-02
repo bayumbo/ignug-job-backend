@@ -46,10 +46,9 @@ public class ProfessionalServiceImpl implements ProfessionalService{
             professionalsDto.setAboutMe(professionalsFinded.get().getAboutMe());
             professionalsDto.setIdentificationFamiliarDisabled(professionalsFinded.get().getIdentificationFamiliarDisabled());
             Date date=new Date(professionalsFinded.get().getCreatedAt().getTime());  
-            professionalsDto.setCreatedAt(date.toString());
-            //professionalsDto.setCreatedAt(professionalsFinded.get().getCreatedAt().toString());
-            professionalsDto.setDeletedAt(professionalsFinded.get().getDeletedAt()+"");
-            professionalsDto.setUpdatedAt(professionalsFinded.get().getUpdatedAt().toString());
+            professionalsDto.setCreatedAt(professionalsFinded.get().getCreatedAt());
+            professionalsDto.setDeletedAt(professionalsFinded.get().getDeletedAt());
+            professionalsDto.setUpdatedAt(professionalsFinded.get().getUpdatedAt());
             professionalsDto.setCatastrophicDiseased(professionalsFinded.get().getCatastrophicDiseased());
             professionalsDto.setFamiliarCatastrophicDiseased(professionalsFinded.get().getFamiliarCatastrophicDiseased());
             professionalsDto.setFamiliarDisabled(professionalsFinded.get().getFamiliarDisabled());

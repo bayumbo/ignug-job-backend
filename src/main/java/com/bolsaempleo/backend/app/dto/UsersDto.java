@@ -2,7 +2,13 @@ package com.bolsaempleo.backend.app.dto;
 
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.UUID;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,26 +16,25 @@ import lombok.Setter;
 @Setter
 public class UsersDto implements Serializable{
 
-
-    private String avatar;
-    private String birthdate;
-    private String bloodTypeId;
-    private String civilStatusId;
-    private String createdAt;
-    private String deletedAt;
-    private String email;
-    private String emailVerifiedAt;
-    private String ethnicOriginId;
-    private String genderId;
-    private String identificationTypeId;
-    private String lastname;
-    private String maxAttempts;
-    private String name;
-    private String passwordChanged;
-    private String phone;
-    private String rememberToken;
-    private String sexId;
-    private String updatedAt;
-    private String username;
-    private String password;
+	private String avatar;
+	private Date birthdate;
+	private Long bloodTypeId;
+	private Long civilStatusId;
+	private Timestamp createdAt;
+	private Timestamp deletedAt;
+	private String email;
+	private Timestamp emailVerifiedAt;
+	private Long ethnicOriginId;
+	private Long genderId;
+	private Long identificationTypeId;
+	private String lastname;
+	private Integer maxAttempts;
+	private String name;
+	private String password;
+	private Boolean passwordChanged;
+	private String phone;
+	private String rememberToken;
+	private Long sexId;
+	private Timestamp updatedAt;
+	private String username;
 }
