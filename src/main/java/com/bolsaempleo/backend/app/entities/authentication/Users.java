@@ -17,6 +17,8 @@ import java.util.UUID;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 /**
  * The persistent class for the users database table.
@@ -88,6 +90,7 @@ private static final long serialVersionUID = 1L;
 	@Column(name="updated_at")
 	private Timestamp updatedAt;
 
+	@Column(unique=true)
 	private String username;
 
 	@ManyToMany

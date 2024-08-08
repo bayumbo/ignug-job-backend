@@ -56,7 +56,7 @@ public class Professional implements Serializable {
 	private Timestamp updatedAt;
 
 	@Column(name="user_id", nullable=false)
-	private Long userId;
+	private UUID userId;
 
 	//bi-directional many-to-one association to AcademicFormation
 	@OneToMany(mappedBy="professional", fetch=FetchType.EAGER)
@@ -181,11 +181,11 @@ public class Professional implements Serializable {
 		this.updatedAt = updatedAt;
 	}
 
-	public Long getUserId() {
+	public UUID getUserId() {
 		return this.userId;
 	}
 
-	public void setUserId(Long userId) {
+	public void setUserId(UUID userId) {
 		this.userId = userId;
 	}
 

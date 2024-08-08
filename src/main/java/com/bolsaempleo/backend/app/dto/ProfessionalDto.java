@@ -1,7 +1,10 @@
 package com.bolsaempleo.backend.app.dto;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.UUID;
 
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 @Getter
@@ -9,14 +12,15 @@ import lombok.Setter;
 public class ProfessionalDto implements Serializable{
 
 
-    private String createdAt;
-    private String updatedAt;
-    private String deletedAt;
     private String aboutMe;
-    private boolean catastrophicDiseased;
-    private boolean familiarCatastrophicDiseased;
-    private boolean familiarDisabled;
-    private String identificationFamiliarDisabled;
-    private boolean traveled;
+	private Boolean catastrophicDiseased;
+	private Timestamp createdAt;
+	private Timestamp deletedAt;
+	private Boolean disabled;
+	private Boolean familiarCatastrophicDiseased;
+	private Boolean familiarDisabled;
+	private String identificationFamiliarDisabled;
+	private Boolean traveled;
+	private Timestamp updatedAt;
  
 }

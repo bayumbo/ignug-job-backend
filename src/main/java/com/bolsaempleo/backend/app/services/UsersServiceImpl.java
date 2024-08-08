@@ -61,25 +61,25 @@ public class UsersServiceImpl implements UsersService{
 
     public UsersDto crearModelo (Users u){
         UsersDto usersDto = new UsersDto();
-        if (u.getPasswordChanged() != null){usersDto.setPasswordChanged(u.getPasswordChanged().toString());}
+        if (u.getPasswordChanged() != null){usersDto.setPasswordChanged(u.getPasswordChanged());}
         if (u.getAvatar() != null){usersDto.setAvatar(u.getAvatar());}
-        if (u.getBirthdate() != null){usersDto.setBirthdate(u.getBirthdate().toString());}
-        if (u.getBloodTypeId() != null){usersDto.setBloodTypeId(u.getBloodTypeId().toString());}
-        if (u.getCivilStatusId() != null){usersDto.setCivilStatusId(u.getCivilStatusId().toString());}
-        if (u.getCreatedAt() != null){usersDto.setCreatedAt(u.getCreatedAt().toString());}
-        if (u.getDeletedAt() != null){usersDto.setDeletedAt(u.getDeletedAt().toString());}
+        if (u.getBirthdate() != null){usersDto.setBirthdate(u.getBirthdate());}
+        if (u.getBloodTypeId() != null){usersDto.setBloodTypeId(u.getBloodTypeId());}
+        if (u.getCivilStatusId() != null){usersDto.setCivilStatusId(u.getCivilStatusId());}
+        if (u.getCreatedAt() != null){usersDto.setCreatedAt(u.getCreatedAt());}
+        if (u.getDeletedAt() != null){usersDto.setDeletedAt(u.getDeletedAt());}
         if (u.getEmail() != null){usersDto.setEmail(u.getEmail());}
-        if (u.getEmailVerifiedAt() != null){usersDto.setEmailVerifiedAt(u.getEmailVerifiedAt().toString());}
-        if (u.getEthnicOriginId() != null){usersDto.setEthnicOriginId(u.getEthnicOriginId().toString());}
-        if (u.getGenderId() != null){usersDto.setGenderId(u.getGenderId().toString());}
-        if (u.getIdentificationTypeId() != null){usersDto.setIdentificationTypeId(u.getIdentificationTypeId().toString());}
+        if (u.getEmailVerifiedAt() != null){usersDto.setEmailVerifiedAt(u.getEmailVerifiedAt());}
+        if (u.getEthnicOriginId() != null){usersDto.setEthnicOriginId(u.getEthnicOriginId());}
+        if (u.getGenderId() != null){usersDto.setGenderId(u.getGenderId());}
+        if (u.getIdentificationTypeId() != null){usersDto.setIdentificationTypeId(u.getIdentificationTypeId());}
         if (u.getLastname() != null){usersDto.setLastname(u.getLastname());}
-        if (u.getMaxAttempts() != null){usersDto.setMaxAttempts(u.getMaxAttempts().toString());}
+        if (u.getMaxAttempts() != null){usersDto.setMaxAttempts(u.getMaxAttempts());}
         if (u.getName() != null){usersDto.setName(u.getName());}
         if (u.getPhone() != null){usersDto.setPhone(u.getPhone());}
         if (u.getRememberToken() != null){usersDto.setRememberToken(u.getRememberToken());}
-        if (u.getSexId() != null){usersDto.setSexId(u.getSexId().toString());}
-        if (u.getUpdatedAt() != null){usersDto.setUpdatedAt(u.getUpdatedAt().toString());}
+        if (u.getSexId() != null){usersDto.setSexId(u.getSexId());}
+        if (u.getUpdatedAt() != null){usersDto.setUpdatedAt(u.getUpdatedAt());}
         if (u.getUsername() != null){usersDto.setUsername(u.getUsername());}
         if (u.getPassword() != null){usersDto.setPassword(u.getPassword());}
         return usersDto;
@@ -151,7 +151,7 @@ public class UsersServiceImpl implements UsersService{
             if (u.getUsername() != null){users.setUsername(u.getUsername());}
             if (u.getEmail() != null){users.setEmail(u.getEmail());}
             if (u.getPassword()!= null){users.setPassword(passwordEncoder.encode(u.getPassword()));}
-            if (u.getPasswordChanged() != null){users.setPasswordChanged(Boolean.parseBoolean(u.getPasswordChanged()));}
+            if (u.getPasswordChanged() != null){users.setPasswordChanged(u.getPasswordChanged());}
             if (u.getRememberToken() != null){users.setRememberToken(u.getRememberToken());}
             if (u.getMaxAttempts() != null){users.setMaxAttempts(Integer.valueOf(u.getMaxAttempts()));}
             if (u.getEmailVerifiedAt() != null){
@@ -162,16 +162,16 @@ public class UsersServiceImpl implements UsersService{
                 }} 
             if (u.getPhone() != null){users.setPhone(u.getPhone());}
             if (u.getAvatar() != null){users.setAvatar(u.getAvatar());}
-            if (u.getBirthdate() != null){users.setBirthdate(Date.valueOf(u.getBirthdate()));}
+            if (u.getBirthdate() != null){users.setBirthdate(u.getBirthdate());}
             if (u.getCreatedAt() != null){users.setCreatedAt(FechasUtil.getFechaTimestamp());}
             if (u.getDeletedAt() != null){users.setDeletedAt(null);}
             if (u.getUpdatedAt() != null){users.setUpdatedAt(FechasUtil.getFechaTimestamp());}
-            if (u.getBloodTypeId() != null){users.setBloodTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getBloodTypeId())).getId());}
-            if (u.getCivilStatusId() != null){users.setCivilStatusId(catalogueRepository.findCatalogueById(Long.parseLong(u.getCivilStatusId())).getId());}
-            if (u.getEthnicOriginId() != null){users.setEthnicOriginId(catalogueRepository.findCatalogueById(Long.parseLong(u.getEthnicOriginId())).getId());}
-            if (u.getGenderId() != null){users.setGenderId(catalogueRepository.findCatalogueById(Long.parseLong(u.getGenderId())).getId());}
-            if (u.getIdentificationTypeId() != null){users.setIdentificationTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getIdentificationTypeId())).getId());}
-            if (u.getSexId() != null){users.setSexId(catalogueRepository.findCatalogueById(Long.parseLong(u.getSexId())).getId());}
+            if (u.getBloodTypeId() != null){users.setBloodTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getBloodTypeId().toString())).getId());}
+            if (u.getCivilStatusId() != null){users.setCivilStatusId(catalogueRepository.findCatalogueById(Long.parseLong(u.getCivilStatusId().toString())).getId());}
+            if (u.getEthnicOriginId() != null){users.setEthnicOriginId(catalogueRepository.findCatalogueById(Long.parseLong(u.getEthnicOriginId().toString())).getId());}
+            if (u.getGenderId() != null){users.setGenderId(catalogueRepository.findCatalogueById(Long.parseLong(u.getGenderId().toString())).getId());}
+            if (u.getIdentificationTypeId() != null){users.setIdentificationTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getIdentificationTypeId().toString())).getId());}
+            if (u.getSexId() != null){users.setSexId(catalogueRepository.findCatalogueById(Long.parseLong(u.getSexId().toString())).getId());}
         }else{
             users.setId(uFinded.getId());
             users.setName(u.getName());
@@ -179,7 +179,7 @@ public class UsersServiceImpl implements UsersService{
             users.setUsername(u.getUsername());
             users.setEmail(u.getEmail());
             users.setPassword(u.getPassword());
-            users.setPasswordChanged(Boolean.parseBoolean(u.getPasswordChanged()));
+            users.setPasswordChanged(u.getPasswordChanged());
             users.setRememberToken(u.getRememberToken());
             users.setMaxAttempts(Integer.valueOf(u.getMaxAttempts()));
                 try {
@@ -192,13 +192,13 @@ public class UsersServiceImpl implements UsersService{
                 }
             users.setPhone(u.getPhone());
             users.setAvatar(u.getAvatar());
-            users.setBirthdate(Date.valueOf(u.getBirthdate()));
-            users.setBloodTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getBloodTypeId())).getId());
-            users.setCivilStatusId(catalogueRepository.findCatalogueById(Long.parseLong(u.getCivilStatusId())).getId());
-            users.setEthnicOriginId(catalogueRepository.findCatalogueById(Long.parseLong(u.getEthnicOriginId())).getId());
-            users.setGenderId(catalogueRepository.findCatalogueById(Long.parseLong(u.getGenderId())).getId());
-            users.setIdentificationTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getIdentificationTypeId())).getId());
-            users.setSexId(catalogueRepository.findCatalogueById(Long.parseLong(u.getSexId())).getId());
+            users.setBirthdate(u.getBirthdate());
+            users.setBloodTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getBloodTypeId().toString())).getId());
+            users.setCivilStatusId(catalogueRepository.findCatalogueById(Long.parseLong(u.getCivilStatusId().toString())).getId());
+            users.setEthnicOriginId(catalogueRepository.findCatalogueById(Long.parseLong(u.getEthnicOriginId().toString())).getId());
+            users.setGenderId(catalogueRepository.findCatalogueById(Long.parseLong(u.getGenderId().toString())).getId());
+            users.setIdentificationTypeId(catalogueRepository.findCatalogueById(Long.parseLong(u.getIdentificationTypeId().toString())).getId());
+            users.setSexId(catalogueRepository.findCatalogueById(Long.parseLong(u.getSexId().toString())).getId());
         }
         return users;
     }
@@ -212,7 +212,7 @@ public class UsersServiceImpl implements UsersService{
             user=usersRepository.findUserById(Id);
         if (user != null){
             usersDto = crearModelo(user);
-            usersDto.setDeletedAt(FechasUtil.getFechaTimestamp().toString());
+            usersDto.setDeletedAt(FechasUtil.getFechaTimestamp());
             usersRepository.saveAndFlush(crearObjeto(usersDto));
             user=usersRepository.findUserById(Id);
             if (user == null){
