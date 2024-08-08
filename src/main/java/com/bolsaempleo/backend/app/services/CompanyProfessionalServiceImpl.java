@@ -11,6 +11,9 @@ import com.bolsaempleo.backend.app.dto.CompanyProfessionalDto;
 import com.bolsaempleo.backend.app.dto.CompanyProfessionalResponseDto;
 import com.bolsaempleo.backend.app.entities.job_board.CompanyProfessional;
 import com.bolsaempleo.backend.app.repositories.CompanyProfessionalRepository;
+import com.bolsaempleo.backend.app.repositories.CompanyRepository;
+import com.bolsaempleo.backend.app.repositories.OffersRepository;
+import com.bolsaempleo.backend.app.repositories.ProfessionalRepository;
 import com.bolsaempleo.backend.app.utility.ComunEnum;
 
 
@@ -19,6 +22,10 @@ public class CompanyProfessionalServiceImpl implements CompanyProfessionalServic
 
     @Autowired
     private CompanyProfessionalRepository companyProfessionalRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
+    @Autowired
+    private ProfessionalRepository professionalRepository;
 
     @Override
     public CompanyProfessionalResponseDto findAll() {
@@ -33,11 +40,12 @@ public class CompanyProfessionalServiceImpl implements CompanyProfessionalServic
     }
 private CompanyProfessionalDto toCompanyProfessionalDto(CompanyProfessional companyProfessional) {
     CompanyProfessionalDto dto = new CompanyProfessionalDto();
-        dto.setProfessional(companyProfessional.getProfessional() != null ? companyProfessional.getProfessional() : null);
+        dto.setStateId(companyProfessional.getStateId());    
         dto.setCreatedAt(companyProfessional.getCreatedAt());
         dto.setUpdatedAt(companyProfessional.getUpdatedAt());
-        dto.setCompany(companyProfessional.getCompany()!= null ? companyProfessional.getCompany() : null);
-        dto.setStateId(companyProfessional.getStateId());
+        dto.setCompanyId(companyProfessional.getId());
+        dto.setProfessionalId(companyProfessional.getId());
+        
         return dto;
     }
 
@@ -89,11 +97,12 @@ private CompanyProfessionalDto toCompanyProfessionalDto(CompanyProfessional comp
     }
 
     private void updateLocationFromDto(CompanyProfessionalDto dto, CompanyProfessional companyProfessional) {
-        companyProfessional.setProfessional(dto.getProfessional());
+       /*  companyProfessional.setStateId(dto.getStateId());
         companyProfessional.setCreatedAt(dto.getCreatedAt());
         companyProfessional.setUpdatedAt(dto.getUpdatedAt());
-        companyProfessional.setCompany(dto.getCompany());
-        companyProfessional.setStateId(dto.getStateId());
+        companyProfessional.setCompanyId(dto.getId()); 
+        companyProfessional.setProfessional(professionalRepository.getOne(dto.getProfessionalId()));
+       */
     }
 
 
@@ -107,20 +116,22 @@ private CompanyProfessionalDto toCompanyProfessionalDto(CompanyProfessional comp
 
     private CompanyProfessional toCompanyProffesional(CompanyProfessionalDto dto) {
         CompanyProfessional companyProfessional = new CompanyProfessional();
-        dto.setProfessional(companyProfessional.getProfessional() );
-        dto.setCreatedAt(companyProfessional.getCreatedAt());
-        dto.setUpdatedAt(companyProfessional.getUpdatedAt());
-        dto.setCompany(companyProfessional.getCompany());
-        dto.setStateId(companyProfessional.getStateId());
+        companyProfessional.setStateId(dto.getStateId());
+        companyProfessional.setCreatedAt(dto.getCreatedAt());
+        companyProfessional.setUpdatedAt(dto.getUpdatedAt());
+        companyProfessional.setCompany(companyRepository.getOne(dto.getCompanyId())); 
+        companyProfessional.setProfessional(professionalRepository.getOne(dto.getProfessionalId()));
+        
         return companyProfessional;
     }
     private CompanyProfessionalDto toCompanyProffesionalDto(CompanyProfessional companyProfessional) {
         CompanyProfessionalDto dto = new CompanyProfessionalDto();
-        dto.setProfessional(companyProfessional.getProfessional() );
+        dto.setStateId(companyProfessional.getStateId());
         dto.setCreatedAt(companyProfessional.getCreatedAt());
         dto.setUpdatedAt(companyProfessional.getUpdatedAt());
-        dto.setCompany(companyProfessional.getCompany());
-        dto.setStateId(companyProfessional.getStateId());
+        dto.setCompanyId(companyProfessional.getId());
+        dto.setProfessionalId(companyProfessional.getId() );
+        
         return dto;
     }
 }

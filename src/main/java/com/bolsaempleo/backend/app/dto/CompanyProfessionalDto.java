@@ -3,6 +3,7 @@ package com.bolsaempleo.backend.app.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 import com.bolsaempleo.backend.app.entities.job_board.Company;
 import com.bolsaempleo.backend.app.entities.job_board.Professional;
@@ -16,8 +17,8 @@ public class CompanyProfessionalDto implements Serializable{
 
  
     private Timestamp createdAt;
-    private Long stateId;
-    private Timestamp updatedAt;
-    private Company company;
-    private Professional professional;
+	private Long stateId;
+	private Timestamp updatedAt;
+	private UUID companyId;
+	private UUID professionalId;
 }
